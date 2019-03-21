@@ -18,7 +18,6 @@ module.exports = ({ config, db }) => {
       type: 'object',
       id
     }).then(response => {
-      console.log(id, response)
       apiStatus(res, {
         story: response._source
       })

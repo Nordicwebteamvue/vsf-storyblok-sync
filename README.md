@@ -8,7 +8,7 @@ Add to `vue-storefront/src/modules/index.ts`
 
 ```
 ...
-import { Storyblok } from './storyblok';
+import { Storyblok } from './storyblok-sync';
 
 export const registerModules: VueStorefrontModule[] = [
   ...
@@ -19,8 +19,6 @@ export const registerModules: VueStorefrontModule[] = [
 ### Config
 
 ```
-"registeredExtensions": ["storyblok-sync"],
-...
 "storyblok": {
   "endpoint": "http://localhost:8080/api/ext/storyblok-sync/story{{id}}"
 }
@@ -33,6 +31,8 @@ Copy `api/storyblok-sync` to `vue-storefront-api/src/api/extensions`.
 ### Config
 
 ```
+"registeredExtensions": ["storyblok-sync"],
+...
 "storyblok": {
   "accessToken": "__API_KEY_HERE__",
   "indexPrefix": "storyblok_",

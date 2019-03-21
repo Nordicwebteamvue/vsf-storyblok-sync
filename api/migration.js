@@ -21,7 +21,7 @@ module.exports.up = function(next) {
           parent_id: { type: 'integer' }
         }
       }
-    }).then(next);
+    }).then(() => next());
   });
 }
 

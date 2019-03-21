@@ -1,3 +1,6 @@
-export default interface StoryblokSyncState {
-  stories: Object
+export interface StoryblokSyncState {
+  story: Object | null;
+  loading: Boolean;
+  id: Number | null;
+  components: Object;
 }
