@@ -1,21 +1,17 @@
 <template>
-  <div class="sb-image" :style="{ backgroundImage: `url(${item.url})` }">a</div>
+  <div class="image" :style="{ backgroundImage: `url(${item.url})` }" />
 </template>
 
 <script>
+import Blok from './Blok'
 export default {
-  name: 'SbGrid',
-  props: {
-    item: {
-      type: Object,
-      required: true
-    }
-  }
+  name: 'Image',
+  extends: Blok
 }
 </script>
 
 <style lang="scss" scoped>
-.sb-image {
+.image {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

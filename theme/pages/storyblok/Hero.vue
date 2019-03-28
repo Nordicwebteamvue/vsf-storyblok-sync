@@ -97,13 +97,9 @@ section {
 </style>
 
 <script>
+import Blok from './Blok'
 export default {
   name: 'Hero',
-  props: {
-    item: {
-      type: Object,
-      required: true
-    }
-  }
+  extends: Blok
 }
 </script>

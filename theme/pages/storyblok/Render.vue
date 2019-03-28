@@ -5,7 +5,7 @@
 <script>
 import Vue from 'vue'
 export default Vue.extend({
-  name: 'SbRender',
+  name: 'Render',
   computed: {
     component: function () {
       return this.components[this.item.component] || this.components.debug

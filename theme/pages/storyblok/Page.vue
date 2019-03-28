@@ -1,5 +1,5 @@
 <template>
-  <div v-if="item.component === 'page'">
+  <div>
     <template v-for="_item in item.body">
       <sb-render :item="_item" :key="_item.uuid" />
     </template>
@@ -7,17 +7,9 @@
 </template>
 
 <script>
-import SbRender from './Render.vue'
+import Blok from './Blok'
 export default {
-  name: 'SbPage',
-  components: {
-    sbRender: SbRender
-  },
-  props: {
-    item: {
-      type: Object,
-      required: true
-    }
-  }
+  name: 'Page',
+  extends: Blok
 }
 </script>

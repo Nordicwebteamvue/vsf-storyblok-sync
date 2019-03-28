@@ -7,17 +7,9 @@
 </template>
 
 <script>
-import SbRender from './Render.vue'
+import Blok from './Blok'
 export default {
-  name: 'SbGrid',
-  components: {
-    sbRender: SbRender
-  },
-  props: {
-    item: {
-      type: Object,
-      required: true
-    }
-  }
+  name: 'Grid',
+  extends: Blok
 }
 </script>
