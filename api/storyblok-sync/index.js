@@ -14,7 +14,7 @@ module.exports = ({ config, db }) => {
   const getStory = (res, id) => db.get({
     index,
     type: 'object',
-    id: 'home'
+    id
   }).then(response => {
     apiStatus(res, {
       story: response._source
