@@ -1,7 +1,5 @@
 <template>
-  <div class="container" v-editable="item">
-    <component v-if="component" :is="component" :item="item" />
-  </div>
+  <component v-editable="item" v-if="component" :is="component" :item="item" />
 </template>
 
 <script>

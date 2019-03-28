@@ -1,8 +1,8 @@
 <template>
   <div v-if="item.component === 'page'">
-    <div v-for="_item in item.body" :key="_item.uuid">
-      <sb-render :item="_item" />
-    </div>
+    <template v-for="_item in item.body">
+      <sb-render :item="_item" :key="_item.uuid" />
+    </template>
   </div>
 </template>
 
