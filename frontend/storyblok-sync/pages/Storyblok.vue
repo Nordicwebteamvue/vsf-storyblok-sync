@@ -6,12 +6,12 @@
 
 <script>
 import StoryblokMixin from 'src/modules/storyblok-sync/components/StoryblokMixin'
-import SbRender from 'src/modules/storyblok-sync/components/SbRender.vue'
+import Render from 'src/modules/storyblok-sync/components/Render.vue'
 export default {
   name: 'StoryblokPage',
   mixins: [StoryblokMixin],
   components: {
-    sbRender: SbRender
+    sbRender: Render
   }
 }
 </script>

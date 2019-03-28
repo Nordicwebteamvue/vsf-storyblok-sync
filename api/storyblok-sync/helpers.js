@@ -1,8 +1,8 @@
-import request from 'request';
+import request from 'request'
 
-const baseUrl = 'https://api.storyblok.com/v1/cdn/stories';
+const baseUrl = 'https://api.storyblok.com/v1/cdn/stories'
 const objectToParams = object =>
-  Object.entries(object).map(([key, value]) => `${key}=${value}`).join('&');
+  Object.entries(object).map(([key, value]) => `${key}=${value}`).join('&')
 
 export const transformStory = (index) => (story) => ({
   index: index,
@@ -15,29 +15,29 @@ export const transformStory = (index) => (story) => ({
       language: story.lang,
       name: story.name,
       id: story.id,
-      parent_id: story.parent_id,
+      parent_id: story.parent_id
     }
   },
-  "doc_as_upsert" : true
+  'doc_as_upsert': true
 })
 
 export const getStories = (options, page = 1, language = null) => new Promise((resolve) => {
   const defaultOptions = {
     timestamp: Date.now(),
     per_page: 100,
-    page,
+    page
   }
   if (language) {
     options.starts_with = `${language}/*`
   }
-  const optString = objectToParams(Object.assign({}, defaultOptions, options));
+  const optString = objectToParams(Object.assign({}, defaultOptions, options))
   request({
     url: `${baseUrl}?${optString}`,
-    json: true,
+    json: true
   }, (error, response, body) => {
     if (error) {
-      throw new Error(error);
+      throw new Error(error)
     }
-    resolve(body.stories);
+    resolve(body.stories)
   })
-});
+})

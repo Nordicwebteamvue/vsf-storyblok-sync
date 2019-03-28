@@ -1,0 +1,45 @@
+{
+  "elasticsearch": {
+    "httpAuth": "",
+    "host": "storefront-ui:8080/api/catalog",
+    "index": "vue_storefront_catalog"
+  },
+  "theme": "@vue-storefront/theme-default",
+  "storyblok": {
+    "endpoint": "http://storefront-api:8080/api/ext/storyblok-sync/story{{id}}",
+    "accessToken": "mrpbBbrwJU75kaRRQBIyugtt"
+  },
+  "cart": {
+    "synchronize": true,
+    "create_endpoint": "http://storefront-ui:8080/api/cart/create?token={{token}}",
+    "updateitem_endpoint": "http://storefront-ui:8080/api/cart/update?token={{token}}&cartId={{cartId}}",
+    "deleteitem_endpoint": "http://storefront-ui:8080/api/cart/delete?token={{token}}&cartId={{cartId}}",
+    "pull_endpoint": "http://storefront-ui:8080/api/cart/pull?token={{token}}&cartId={{cartId}}"
+  },
+  "orders": {
+    "endpoint": "http://storefront-ui:8080/api/order"
+  },
+  "users": {
+    "endpoint": "http://storefront-ui:8080/api/user"
+  },
+  "stock": {
+    "endpoint": "http://storefront-ui:8080/api/stock"
+  },
+  "images": {
+    "baseUrl": "https://demo.vuestorefront.io/img/"
+  },
+  "install": {
+    "is_local_backend": false,
+    "backend_dir": "../vue-storefront-api"
+  },
+  "demomode": false,
+  "tax": {
+    "defaultCountry": "PL",
+    "defaultRegion": "",
+    "calculateServerSide": false
+  },
+  "i18n": {
+    "defaultCountry": "US",
+    "defaultLanguage": "EN"
+  }
+}

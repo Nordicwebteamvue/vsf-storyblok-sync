@@ -1,0 +1,12 @@
+version: '2.4'
+services:
+  storefront-api:
+    depends_on:
+      - elasticsearch
+      - redis
+  storefront-ui:
+    depends_on:
+      - storefront-api
+
+volumes:
+  esdat1:

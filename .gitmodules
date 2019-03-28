@@ -1,0 +1,6 @@
+[submodule "vue-storefront"]
+	path = vue-storefront
+	url = https://github.com/DivanteLtd/vue-storefront.git
+[submodule "vue-storefront-api"]
+	path = vue-storefront-api
+	url = https://github.com/DivanteLtd/vue-storefront-api.git

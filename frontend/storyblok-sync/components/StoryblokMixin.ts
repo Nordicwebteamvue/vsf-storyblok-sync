@@ -15,7 +15,6 @@ export default {
     if (params._storyblok) {
       // Fetch from storyblok
       return new Promise((resolve, reject) => {
-        store.dispatch('storyblok/subscribeToEvents')
         store.dispatch('storyblok/loadPreviewAsync', {
           id: params._storyblok,
           timestamp: params._storyblok_tk.timestamp,

@@ -1,4 +1,4 @@
-import { StoryblokSyncState } from '../types/StoryblokSyncState'
+import { StoryblokSyncState } from '../types/State'
 import { ActionTree } from 'vuex';
 import config from 'config'
 import fetch from 'isomorphic-fetch'
@@ -7,10 +7,6 @@ import { cacheStorage } from '../'
 export const actions: ActionTree<StoryblokSyncState, any> = {
   loading ({ commit }) {
     commit('loading')
-  },
-  loadComponent ({ commit, state }, { component, key }) {
-    // Not used for now
-    commit('loadComponent', { component, key })
   },
   async loadPreviewAsync ({ commit, state }, { id, timestamp, spaceId }): Promise<any> {
     const url = `https://api.storyblok.com/v1/cdn/stories/${id}?token=${config.storyblok.accessToken}&timestamp=${timestamp}&version=draft`

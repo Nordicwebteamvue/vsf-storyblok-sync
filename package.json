@@ -1,0 +1,24 @@
+{
+  "name": "vsf-storyblok-sync",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/kodbruket/vsf-storyblok-sync.git",
+  "author": "Max Malm <max@kodbruket.se>",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.6",
+    "eslint": "^4.16.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "eslint-plugin-vue": "^4.5.0",
+    "eslint-plugin-vue-storefront": "^0.0.1"
+  }
+}

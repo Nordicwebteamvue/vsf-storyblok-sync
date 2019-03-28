@@ -12,8 +12,5 @@ export const mutations: MutationTree<any> = {
   },
   update (state, {story}) {
     state.story = story
-  },
-  loadComponent (state, { component, key }) {
-    state.components[key] = component
   }
 }

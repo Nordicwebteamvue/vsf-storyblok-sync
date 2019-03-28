@@ -1,8 +1,6 @@
-import { StoryblokSyncState } from '../types/StoryblokSyncState'
+import { StoryblokSyncState } from '../types/State'
 
 export const state: StoryblokSyncState = {
   story: null,
-  loading: false,
-  id: null,
-  components: {}
+  loading: false
 }

@@ -50,3 +50,12 @@ Copy `api/storyblok-sync` to `vue-storefront-api/src/api/extensions`.
 To sync all posts there's a hook available at `http://localhost:8080/api/ext/storyblok-sync/`
 
 Follow the Storyblok documentation to enable it: https://www.storyblok.com/docs/Guides/using-storyblok-webhooks
+
+## Development
+
+```
+git submodule update --init --recursive
+docker-compose up
+```
+
+Go to http://localhost:8080/api/ext/storyblok-sync/hook to trigger the webhook and pull data from Storyblok. Now visit http://localhost:3000/test to see it in action

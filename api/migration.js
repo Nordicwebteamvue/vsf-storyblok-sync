@@ -1,12 +1,12 @@
 'use strict'
 
-const config = require('config');
-const common = require('./.common');
+const config = require('config')
+const common = require('./.common')
 const createIndex = require('../src/lib/elastic').createIndex
 
-module.exports.up = function(next) {
-  const indexPrefix = config.storyblok.indexPrefix || '';
-  const index = indexPrefix + 'stories';
+module.exports.up = function (next) {
+  const indexPrefix = config.storyblok.indexPrefix || ''
+  const index = indexPrefix + 'stories'
   createIndex(common.db, index, () => {
     common.db.indices.putMapping({
       index,
@@ -21,8 +21,8 @@ module.exports.up = function(next) {
           parent_id: { type: 'integer' }
         }
       }
-    }).then(() => next());
-  });
+    }).then(() => next())
+  })
 }
 
 module.exports.down = function (next) {
