@@ -1,3 +1,5 @@
+# vsf-storyblok-sync [![Build Status](https://travis-ci.org/kodbruket/vsf-storyblok-sync.svg?branch=master)](https://travis-ci.org/kodbruket/vsf-storyblok-sync)
+
 ## Vue Storefront
 
 `yarn add marked`
