@@ -35,6 +35,18 @@ module.exports = ({ config, db }) => {
   })
 
   api.get('/hook', (req, res) => {
+    if (config.storyblok.hookSecret && process.env.VS_ENV !== 'dev') {
+      if (!req.query.secret) {
+        return apiStatus(res, {
+          error: 'Missing secret query param'
+        }, 403)
+      }
+      if (req.query.secret !== config.storyblok.hookSecret) {
+        return apiStatus(res, {
+          error: 'Invalid secret'
+        }, 403)
+      }
+    }
     const languages = [null].concat(config.storyblok.extraLanguages || [])
     const promises = languages.map(lang => getStories({
       token: config.storyblok.accessToken
