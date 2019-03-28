@@ -1,5 +1,9 @@
 # vsf-storyblok-sync [![Build Status](https://travis-ci.org/kodbruket/vsf-storyblok-sync.svg?branch=master)](https://travis-ci.org/kodbruket/vsf-storyblok-sync)
 
+![Demo gif](demo.gif)
+
+> Example usage in Storyblok with demo components
+
 ## Vue Storefront
 
 ### Installation
