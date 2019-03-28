@@ -33,14 +33,14 @@ export const registerModules: VueStorefrontModule[] = [
 
 ### Usage
 
-See the `theme` folder for a demo implementation.
+See the `/frontend/theme` folder for a demo implementation.
 
 Notable files:
 
-* `/theme/pages/Storyblok.vue` - this should be a target in our router file.
-* `/theme/pages/storyblok/Render.vue` - the root component used to render the Storyblok content. This is where you register components.
-* `/theme/pages/storyblok/Debug.vue` - fallback component that renders a text about missing components. Only renders in development mode.
-* `/router/index.js` - example usage of the Storyblok page in the router
+* `pages/Storyblok.vue` - this should be a target in our router file.
+* `pages/storyblok/Render.vue` - the root component used to render the Storyblok content. This is where you register components.
+* `pages/storyblok/Debug.vue` - fallback component that renders a text about missing components. Only renders in development mode.
+* `router/index.js` - example usage of the Storyblok page in the router
 
 ## Vue Storefront API
 
