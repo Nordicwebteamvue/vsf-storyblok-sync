@@ -11,37 +11,27 @@ module.exports = ({ config, db }) => {
 
   let api = Router()
 
-  api.get('/story/', (req, res) => {
-    db.get({
-      index,
-      type: 'object',
-      id: 'home'
-    }).then(response => {
-      apiStatus(res, {
-        story: response._source
-      })
-    }).catch(() => {
-      apiStatus(res, {
-        story: false
-      }, 404)
+  const getStory = (res, id) => db.get({
+    index,
+    type: 'object',
+    id: 'home'
+  }).then(response => {
+    apiStatus(res, {
+      story: response._source
     })
+  }).catch(() => {
+    apiStatus(res, {
+      story: false
+    }, 404)
+  })
+
+  api.get('/story/', (req, res) => {
+    getStory(res, 'home')
   })
 
   api.get('/story/:story*', (req, res) => {
     const id = req.params.story + req.params[0]
-    db.get({
-      index,
-      type: 'object',
-      id
-    }).then(response => {
-      apiStatus(res, {
-        story: response._source
-      })
-    }).catch(() => {
-      apiStatus(res, {
-        story: false
-      }, 404)
-    })
+    getStory(res, id)
   })
 
   api.get('/hook', (req, res) => {
