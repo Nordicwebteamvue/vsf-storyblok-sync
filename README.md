@@ -2,7 +2,7 @@
 
 ## Vue Storefront
 
-`yarn add marked`
+### Installation
 
 Copy `frontend/storyblok-sync` to `vue-storefront/src/modules`.
 
@@ -27,6 +27,17 @@ export const registerModules: VueStorefrontModule[] = [
 }
 ```
 
+### Usage
+
+See the `theme` folder for a demo implementation.
+
+Notable files:
+
+* `/theme/pages/Storyblok.vue` - this should be a target in our router file.
+* `/theme/pages/storyblok/Render.vue` - the root component used to render the Storyblok content. This is where you register components.
+* `/theme/pages/storyblok/Debug.vue` - fallback component that renders a text about missing components. Only renders in development mode.
+* `/router/index.js` - example usage of the Storyblok page in the router
+
 ## Vue Storefront API
 
 Copy `api/storyblok-sync` to `vue-storefront-api/src/api/extensions`.
@@ -44,25 +55,27 @@ Copy `api/storyblok-sync` to `vue-storefront-api/src/api/extensions`.
 }
 ```
 
-#### `accessToken`
+## Reference
+
+### `accessToken`
 
 Go to `https://app.storyblok.com/#!/me/spaces/YOUR_SPACE_ID/edit?tab=api` and generate a preview token.
 
 On the backend we use it to fetch posts when the webhook is polled. In the UI it's used for the preview functionallity in Storyblok.
 
-#### `endpoint`
+### `endpoint`
 
 The URL the UI tries to fetch stories from
 
-#### `indexPrefix`
+### `indexPrefix`
 
 Prefix used for the ElasticSearch index
 
-#### `extraLanguages`
+### `extraLanguages`
 
 An array of extra languages to fetch stories for. The codes corresponds with the codes found at `https://app.storyblok.com/#!/me/spaces/YOUR_SPACE_ID/edit?tab=languages`
 
-#### `hookSecret`
+### `hookSecret`
 
 If this field is defined you have to provide this secret as a query param for your webhook. For example:
 
@@ -74,7 +87,7 @@ would be
 
 from our example config above. The secret is never needed in development mode.
 
-### Webhook
+## Webhook
 
 To sync all posts there's a hook available at `http://localhost:8080/api/ext/storyblok-sync/hook`
 
