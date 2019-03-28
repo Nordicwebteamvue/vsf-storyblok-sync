@@ -35,7 +35,6 @@ services:
       - './vue-storefront-api/var:/var/www/var'
       - './.extra/config/storefront-api.json:/var/www/config/local.json'
       - './.extra/db.js:/var/www/src/db.js'
-      - './api/migration.js:/var/www/migrations/1553111388330-storyblok-sync.js'
       - './api/storyblok-sync:/var/www/src/api/extensions/storyblok-sync'
   storefront-ui:
     build:
