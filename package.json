@@ -19,6 +19,19 @@
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.1.0",
     "eslint-plugin-vue": "^4.5.0",
-    "eslint-plugin-vue-storefront": "^0.0.1"
+    "eslint-plugin-vue-storefront": "^0.0.1",
+    "husky": ">=1",
+    "lint-staged": ">=8"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }
