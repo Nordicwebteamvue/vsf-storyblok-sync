@@ -5,7 +5,7 @@
 <script>
 import Vue from 'vue'
 export default Vue.extend({
-  name: 'Render',
+  name: 'RenderBlok',
   computed: {
     component: function () {
       return this.components[this.item.component] || this.components.debug
@@ -16,7 +16,10 @@ export default Vue.extend({
         page: () => import('./Page.vue'),
         grid: () => import('./Grid.vue'),
         image: () => import('./Image.vue'),
-        hero: () => import('./Hero.vue')
+        newsletter: () => import('./Newsletter.vue'),
+        textSection: () => import('./TextSection.vue'),
+        hero: () => import('./Hero.vue'),
+        spacer: () => import('./Spacer.vue')
       }
     }
   },

@@ -5,7 +5,7 @@
 <script>
 import Blok from './Blok'
 export default {
-  name: 'Image',
+  name: 'ImageBlok',
   extends: Blok
 }
 </script>

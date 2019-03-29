@@ -99,7 +99,7 @@ section {
 <script>
 import Blok from './Blok'
 export default {
-  name: 'Hero',
+  name: 'HeroBlok',
   extends: Blok
 }
 </script>

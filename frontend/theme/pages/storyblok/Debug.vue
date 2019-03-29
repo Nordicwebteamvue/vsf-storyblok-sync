@@ -8,7 +8,7 @@
 <script>
 import Blok from './Blok'
 export default {
-  name: 'Debug',
+  name: 'DebugBlok',
   extends: Blok,
   computed: {
     isEditable: function () {

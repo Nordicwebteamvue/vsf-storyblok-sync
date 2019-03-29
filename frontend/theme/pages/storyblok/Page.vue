@@ -9,7 +9,7 @@
 <script>
 import Blok from './Blok'
 export default {
-  name: 'Page',
+  name: 'PageBlok',
   extends: Blok
 }
 </script>
