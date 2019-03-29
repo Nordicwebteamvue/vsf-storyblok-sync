@@ -13,5 +13,5 @@ if (config.elasticsearch.user) {
 let client = new es.Client(esConfig)
 
 export default callback => {
-  callback(client);
+  callback(client)
 }
