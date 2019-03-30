@@ -30,6 +30,7 @@ export const registerModules: VueStorefrontModule[] = [
   "accessToken": "mrpbBbrwJU75kaRRQBIyugtt"
 }
 ```
+> `{{id}}` will be replaced by the content page url.
 
 ### Usage
 
