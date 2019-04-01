@@ -17,7 +17,7 @@ export default {
       id: params._storyblok,
       timestamp: params._storyblok_tk.timestamp,
       spaceId: params.space_id
-    }) : store.dispatch('storyblok/loadAsync', {
+    }) : store.dispatch('storyblok/loadStoryAsync', {
       id: route.fullPath
     })
     return dispatch.then(story => {

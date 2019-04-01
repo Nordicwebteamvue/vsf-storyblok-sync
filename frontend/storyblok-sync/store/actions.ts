@@ -18,7 +18,7 @@ export const actions: ActionTree<StoryblokSyncState, any> = {
     commit('set', {id, story})
     return story;
   },
-  async loadAsync ({ commit, state }, {id}): Promise<any> {
+  async loadStoryAsync ({ commit, state }, {id}): Promise<any> {
     commit('loading')
     const cachedStory = await cacheStorage.getItem(id)
     if (cachedStory) {
