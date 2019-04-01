@@ -1,0 +1,10 @@
+{
+  "name": "@kodbruket/vsf-storyblok-sync",
+  "version": "0.0.1",
+  "description": "Vue Storefront Storyblok consumer",
+  "main": "index.ts",
+  "repository": "https://github.com/kodbruket/vsf-storyblok-sync",
+  "author": "Max Malm",
+  "license": "MIT",
+  "private": false
+}

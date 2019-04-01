@@ -1,15 +1,18 @@
 {
   "name": "vsf-storyblok-sync",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "0.0.1",
+  "private": true,
   "repository": "https://github.com/kodbruket/vsf-storyblok-sync.git",
   "author": "Max Malm <max@kodbruket.se>",
   "license": "MIT",
   "scripts": {
+    "bootstrap": "lerna bootstrap",
     "preci": "node tools/wait-for",
     "ci": "cypress run",
     "cypress": "cypress open",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "dev": "docker-compose up",
+    "postinstall": "yarn bootstrap"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.6",
