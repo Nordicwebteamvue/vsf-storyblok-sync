@@ -8,13 +8,13 @@
 
 ### Installation
 
-Copy `frontend/storyblok-sync` to `vue-storefront/src/modules`.
+Copy `packages/vue-storyblok-sync` to `vue-storefront/src/modules`.
 
 Add to `vue-storefront/src/modules/index.ts`
 
 ```
 ...
-import { Storyblok } from './storyblok-sync';
+import { Storyblok } from './vue-storyblok-sync';
 
 export const registerModules: VueStorefrontModule[] = [
   ...
@@ -26,7 +26,7 @@ export const registerModules: VueStorefrontModule[] = [
 
 ```
 "storyblok": {
-  "endpoint": "http://localhost:8080/api/ext/storyblok-sync/story{{id}}",
+  "endpoint": "http://localhost:8080/api/ext/vsf-storyblok-sync-api/story{{id}}",
   "accessToken": "mrpbBbrwJU75kaRRQBIyugtt"
 }
 ```
@@ -45,12 +45,12 @@ Notable files:
 
 ## Vue Storefront API
 
-Copy `api/storyblok-sync` to `vue-storefront-api/src/api/extensions`.
+Copy `packages/vsf-storyblok-sync-api` to `vue-storefront-api/src/api/extensions`.
 
 ### Config
 
 ```
-"registeredExtensions": ["storyblok-sync"],
+"registeredExtensions": ["vsf-storyblok-sync-api"],
 ...
 "storyblok": {
   "accessToken": "__API_KEY_HERE__",
@@ -84,17 +84,17 @@ An array of extra languages to fetch stories for. The codes corresponds with the
 
 If this field is defined you have to provide this secret as a query param for your webhook. For example:
 
-`http://localhost:8080/api/ext/storyblok-sync/hook`
+`http://localhost:8080/api/ext/vsf-storyblok-sync-api/hook`
 
 would be
 
-`http://localhost:8080/api/ext/storyblok-sync/hook?secret=__SECRET_CHANGE_ME__`
+`http://localhost:8080/api/ext/vsf-storyblok-sync-api/hook?secret=__SECRET_CHANGE_ME__`
 
 from our example config above. The secret is never needed in development mode.
 
 ## Webhook
 
-To sync all posts there's a hook available at `http://localhost:8080/api/ext/storyblok-sync/hook`
+To sync all posts there's a hook available at `http://localhost:8080/api/ext/vsf-storyblok-sync-api/hook`
 
 Follow the Storyblok documentation to enable it: https://www.storyblok.com/docs/Guides/using-storyblok-webhooks
 

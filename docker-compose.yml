@@ -35,7 +35,7 @@ services:
       - './vue-storefront-api/var:/var/www/var'
       - './api/config.json:/var/www/config/local.json'
       - './api/db.js:/var/www/src/db.js'
-      - './api/storyblok-sync:/var/www/src/api/extensions/storyblok-sync'
+      - './packages/vsf-storyblok-sync-api:/var/www/src/api/extensions/vsf-storyblok-sync-api'
   storefront-ui:
     build:
       context: vue-storefront
@@ -64,4 +64,4 @@ services:
       - './frontend/config.json:/var/www/config/local.json'
       - './frontend/theme:/var/www/src/themes/default'
       - './frontend/modules.ts:/var/www/src/modules/index.ts'
-      - './frontend/storyblok-sync:/var/www/src/modules/storyblok-sync'
+      - './packages/vsf-storyblok-sync:/var/www/src/modules/vsf-storyblok-sync'
