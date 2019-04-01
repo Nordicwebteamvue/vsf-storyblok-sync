@@ -1,7 +1,6 @@
 language: node_js
 node_js:
   - "8"
-  - "9"
 
 cache: yarn
 
@@ -9,7 +8,7 @@ install: yarn
 
 env:
   global:
-    - DOCKER_COMPOSE_VERSION=1.21.1
+    - DOCKER_COMPOSE_VERSION=1.23.2
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
