@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import StoryblokMixin from 'src/modules/vsf-storyblok-sync/components/StoryblokMixin'
+import StoryblokMixin from 'src/modules/vsf-storyblok-module/components/StoryblokMixin'
 import Render from './storyblok/Render.vue'
 
 export default {

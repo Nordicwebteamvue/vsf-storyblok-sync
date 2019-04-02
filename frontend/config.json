@@ -6,7 +6,7 @@
   },
   "theme": "@vue-storefront/theme-default",
   "storyblok": {
-    "endpoint": "http://storefront-api:8080/api/ext/vsf-storyblok-sync-api/story{{id}}",
+    "endpoint": "http://storefront-api:8080/api/ext/vsf-storyblok-extension/story{{id}}",
     "accessToken": "mrpbBbrwJU75kaRRQBIyugtt"
   },
   "cart": {
