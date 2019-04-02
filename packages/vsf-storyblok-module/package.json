@@ -1,8 +1,8 @@
 {
-  "name": "@kodbruket/vsf-storyblok-sync-api",
+  "name": "@kodbruket/vsf-storyblok-module",
   "version": "0.0.1",
-  "description": "Vue Storefront Storyblok api provider",
-  "main": "index.js",
+  "description": "Vue Storefront Storyblok module",
+  "main": "index.ts",
   "repository": "https://github.com/kodbruket/vsf-storyblok-sync",
   "author": "Max Malm",
   "license": "MIT",

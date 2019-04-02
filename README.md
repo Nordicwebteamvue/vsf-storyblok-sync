@@ -8,13 +8,13 @@
 
 ### Installation
 
-Copy `packages/vue-storyblok-sync` to `vue-storefront/src/modules`.
+Copy `packages/vsf-storyblok-module` to `vue-storefront/src/modules`.
 
-Add to `vue-storefront/src/modules/index.ts`
+Add the following to `vue-storefront/src/modules/index.ts`
 
 ```
 ...
-import { Storyblok } from './vue-storyblok-sync';
+import { Storyblok } from './vsf-storyblok-module';
 
 export const registerModules: VueStorefrontModule[] = [
   ...
@@ -26,7 +26,7 @@ export const registerModules: VueStorefrontModule[] = [
 
 ```
 "storyblok": {
-  "endpoint": "http://localhost:8080/api/ext/vsf-storyblok-sync-api/story{{id}}",
+  "endpoint": "http://localhost:8080/api/ext/vsf-storyblok-extension/story{{id}}",
   "accessToken": "mrpbBbrwJU75kaRRQBIyugtt"
 }
 ```
@@ -45,12 +45,12 @@ Notable files:
 
 ## Vue Storefront API
 
-Copy `packages/vsf-storyblok-sync-api` to `vue-storefront-api/src/api/extensions`.
+Copy `packages/vsf-storyblok-extension` to `vue-storefront-api/src/api/extensions`.
 
 ### Config
 
 ```
-"registeredExtensions": ["vsf-storyblok-sync-api"],
+"registeredExtensions": ["vsf-storyblok-extension"],
 ...
 "storyblok": {
   "accessToken": "__API_KEY_HERE__",
@@ -84,25 +84,25 @@ An array of extra languages to fetch stories for. The codes corresponds with the
 
 If this field is defined you have to provide this secret as a query param for your webhook. For example:
 
-`http://localhost:8080/api/ext/vsf-storyblok-sync-api/hook`
+`http://localhost:8080/api/ext/vsf-storyblok-extension/hook`
 
 would be
 
-`http://localhost:8080/api/ext/vsf-storyblok-sync-api/hook?secret=__SECRET_CHANGE_ME__`
+`http://localhost:8080/api/ext/vsf-storyblok-extension/hook?secret=__SECRET_CHANGE_ME__`
 
 from our example config above. The secret is never needed in development mode.
 
 ## Webhook
 
-To sync all posts there's a hook available at `http://localhost:8080/api/ext/vsf-storyblok-sync-api/hook`
+To sync all posts there's a hook available at `http://localhost:8080/api/ext/vsf-storyblok-extension/hook`
 
 Follow the Storyblok documentation to enable it: https://www.storyblok.com/docs/Guides/using-storyblok-webhooks
 
 ## Development
 
 ```
-git submodule update --init --recursive
+git clone --recurse-submodules http://github.com/kodbruket/vsf-storyblok-sync.git
 docker-compose up
 ```
 
-Go to http://localhost:8080/api/ext/storyblok-sync/hook to trigger the webhook and pull data from Storyblok. Now visit http://localhost:3000/test to see it in action
+Go to http://localhost:8080/api/ext/storyblok-extension/hook to trigger the webhook and pull data from Storyblok. Now visit http://localhost:3000/test to see it in action

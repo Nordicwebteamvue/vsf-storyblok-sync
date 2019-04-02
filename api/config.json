@@ -4,7 +4,7 @@
   "esIndexes": [
     "vue_storefront_catalog"
   ],
-  "registeredExtensions": ["vsf-storyblok-sync-api"],
+  "registeredExtensions": ["vsf-storyblok-extension"],
   "storyblok": {
     "accessToken": "mrpbBbrwJU75kaRRQBIyugtt",
     "indexPrefix": "storyblok_",
