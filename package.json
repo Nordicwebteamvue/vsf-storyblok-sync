@@ -29,6 +29,7 @@
     "eslint-plugin-vue": "^4.5.0",
     "eslint-plugin-vue-storefront": "^0.0.1",
     "husky": ">=1",
+    "lerna": "^3.13.1",
     "lint-staged": ">=8",
     "wait-on": "^3.2.0"
   },
