@@ -18,7 +18,7 @@ const loadScript = (src, id)  => new Promise((resolve, reject) => {
   document.getElementsByTagName('head')[0].appendChild(script)
 })
 
-export function beforeRegistration(Vue, config, store, isServer) {
+export function beforeRegistration ({ Vue, config, store, isServer }) {
   if (!isServer) {
     const url = `https://app.storyblok.com/f/storyblok-latest.js?t=${config.storyblok.accessToken}`
     loadScript(url, 'storyblok-javascript-bridge').then(() => {
