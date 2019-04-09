@@ -3,13 +3,14 @@ services:
   elasticsearch:
     build: vue-storefront-api/docker/elasticsearch/
     volumes:
-      - ./vue-storefront-api/docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - >-
+        ./vue-storefront-api/docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
       - 'esdat1:/usr/share/elasticsearch/data'
     ports:
       - '9200:9200'
       - '9300:9300'
     environment:
-      ES_JAVA_OPTS: "-Xmx512m -Xms512m"
+      ES_JAVA_OPTS: '-Xmx512m -Xms512m'
   redis:
     image: 'redis:4-alpine'
     ports:
@@ -35,7 +36,8 @@ services:
       - './vue-storefront-api/var:/var/www/var'
       - './api/config.json:/var/www/config/local.json'
       - './api/db.js:/var/www/src/db.js'
-      - './api/storyblok-sync:/var/www/src/api/extensions/storyblok-sync'
+      - >-
+        ./packages/vsf-storyblok-extension:/var/www/src/api/extensions/vsf-storyblok-extension
   storefront-ui:
     build:
       context: vue-storefront
@@ -64,4 +66,5 @@ services:
       - './frontend/config.json:/var/www/config/local.json'
       - './frontend/theme:/var/www/src/themes/default'
       - './frontend/modules.ts:/var/www/src/modules/index.ts'
-      - './frontend/storyblok-sync:/var/www/src/modules/storyblok-sync'
+      - >-
+        ./packages/vsf-storyblok-module:/var/www/src/modules/vsf-storyblok-module

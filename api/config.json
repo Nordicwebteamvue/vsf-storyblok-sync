@@ -4,6 +4,7 @@
   "esIndexes": [
     "vue_storefront_catalog"
   ],
+  "registeredExtensions": ["vsf-storyblok-extension"],
   "storyblok": {
     "accessToken": "mrpbBbrwJU75kaRRQBIyugtt",
     "indexPrefix": "storyblok_",
@@ -25,8 +26,6 @@
   "kue": {},
 
   "platform": "magento2",
-  "registeredExtensions": ["storyblok-sync"],
-
   "extensions": {
     "mailchimp": {
       "listId": "e06875a7e1",
