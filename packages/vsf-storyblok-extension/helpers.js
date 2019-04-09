@@ -1,10 +1,19 @@
-import request from 'request'
+const request = require('request')
 
 const baseUrl = 'https://api.storyblok.com/v1/cdn/stories'
 const objectToParams = object =>
   Object.entries(object).map(([key, value]) => `${key}=${value}`).join('&')
 
-export const transformStory = (index) => (story) => ({
+function apiStatus (res, result = 'OK', code = 200, meta = null) {
+  let apiResult = { code: code, result: result }
+  if (meta !== null) {
+    apiResult.meta = meta
+  }
+  res.status(code).json(apiResult)
+  return result
+}
+
+const transformStory = (index) => (story) => ({
   index: index,
   type: 'object',
   id: story.full_slug,
@@ -21,7 +30,7 @@ export const transformStory = (index) => (story) => ({
   'doc_as_upsert': true
 })
 
-export const getStories = (options, page = 1, language = null) => new Promise((resolve) => {
+const getStories = (options, page = 1, language = null) => new Promise((resolve) => {
   const defaultOptions = {
     timestamp: Date.now(),
     per_page: 100,
@@ -41,3 +50,9 @@ export const getStories = (options, page = 1, language = null) => new Promise((r
     resolve(body.stories)
   })
 })
+
+module.exports = {
+  apiStatus,
+  getStories,
+  transformStory
+}

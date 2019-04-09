@@ -1,6 +1,5 @@
-import { apiStatus } from '../../../lib/util'
-import { Router } from 'express'
-import {getStories, transformStory} from './helpers'
+const { Router } = require('express')
+const {getStories, transformStory, apiStatus} = require('./helpers')
 
 module.exports = ({ config, db }) => {
   if (!config.storyblok || !config.storyblok.accessToken) {

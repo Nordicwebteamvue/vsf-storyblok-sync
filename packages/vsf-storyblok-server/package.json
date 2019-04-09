@@ -1,0 +1,24 @@
+{
+  "name": "@kodbruket/vsf-storyblok-server",
+  "version": "0.0.1",
+  "description": "Stand alone server for Storyblok sync",
+  "main": "index.js",
+  "repository": "https://github.com/kodbruket/vsf-storyblok-sync",
+  "author": "Max Malm",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "node index.js",
+    "dev": "backpack",
+    "build": "backpack build"
+  },
+  "dependencies": {
+    "@kodbruket/vsf-storyblok-extension": "^0.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.11"
+  },
+  "devDependencies": {
+    "backpack-core": "^0.8.3"
+  }
+}
