@@ -43,5 +43,8 @@
       "eslint --fix",
       "git add"
     ]
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
