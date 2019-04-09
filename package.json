@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "preci": "node tools/wait-for",
+    "preci": "wait-for url http://localhost:3000 --find \"index for default theme\"",
     "ci": "cypress run",
     "cypress": "cypress open",
     "lint": "eslint .",
@@ -15,6 +15,7 @@
     "postinstall": "yarn bootstrap"
   },
   "devDependencies": {
+    "@kodbruket/wait-for": "^1.0.0",
     "babel-eslint": "^8.2.6",
     "cross-fetch": "^3.0.2",
     "cypress": "^3.2.0",
