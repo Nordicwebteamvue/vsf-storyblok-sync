@@ -50,7 +50,7 @@ services:
     tmpfs:
       - /var/www/dist
     volumes:
-      - './vue-storefront/.babelrc:/var/www/.babelrc'
+      - './vue-storefront/babel.config.js:/var/www/babel.config.js'
       - './vue-storefront/config:/var/www/config'
       - './vue-storefront/core:/var/www/core'
       - './vue-storefront/ecosystem.json:/var/www/ecosystem.json'
