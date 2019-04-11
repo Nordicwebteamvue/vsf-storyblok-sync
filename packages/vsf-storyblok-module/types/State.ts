@@ -1,4 +1,7 @@
 export interface StoryblokSyncState {
-  story: Object | null;
+  id?: number;
   loading: Boolean;
+  previewToken?: String;
+  slug?: String;
+  story?: Object;
 }

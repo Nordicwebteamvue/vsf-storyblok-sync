@@ -1,32 +1,107 @@
+import config from 'config'
+import fetch from 'isomorphic-fetch'
 import { mapGetters } from 'vuex'
 import qs from 'qs'
+
+function loadScript (src, id) {
+  return new Promise((resolve, reject) => {
+    if (document.getElementById(id)) {
+      resolve()
+      return
+    }
+    var script = document.createElement('script')
+    script.async = true
+    script.src = src
+    script.id = id
+    script.onerror = function onError () {
+      reject(new Error('Failed to load' + src))
+    }
+    script.onload = function onLoad () {
+      resolve()
+    }
+    document.getElementsByTagName('head')[0].appendChild(script)
+  })
+}
+
+function getStoryblokQuery (route) {
+  const queryString = route.fullPath.replace(route.path, '')
+  /* eslint-disable camelcase */
+  const { _storyblok, _storyblok_c, _storyblok_tk = {} } = qs.parse(queryString, { ignoreQueryPrefix: true })
+  const {space_id, timestamp, token} = _storyblok_tk
+  /* eslint-enable camelcase */
+
+  return {
+    c: _storyblok_c,
+    id: _storyblok,
+    slug: route.path,
+    spaceId: space_id,
+    timestamp,
+    token
+  }
+}
 
 export default {
   name: 'Storyblok',
   computed: {
     ...mapGetters({
-      story: 'storyblok/getStory',
       isLoading: 'storyblok/isLoading',
-    })
-  },
-  asyncData ({ store, route, context }) {
-    const paramString = route.fullPath.replace(route.path, '');
-    const params = qs.parse(paramString, { ignoreQueryPrefix: true });
-    const isEditing = !!params._storyblok;
-    const dispatch = isEditing ? store.dispatch('storyblok/loadPreviewAsync', {
-      id: params._storyblok,
-      timestamp: params._storyblok_tk.timestamp,
-      spaceId: params.space_id
-    }) : store.dispatch('storyblok/loadStoryAsync', {
-      id: route.fullPath
-    })
-    return dispatch.then(story => {
-      if (context && !isEditing) {
-        context.output.cacheTags.add(`storyblok`)
-      }
-      return {story}
+      previewToken: 'storyblok/getPreviewToken',
+      story: 'storyblok/getStory'
     })
   },
   methods: {
+    async fetchStory () {
+      const { id, spaceId, timestamp, slug, token } = getStoryblokQuery(this.$route)
+
+      if (id) {
+        const previewToken = await this.$store.dispatch('storyblok/getPreviewToken', {
+          spaceId,
+          timestamp,
+          token
+        })
+
+        if (previewToken) {
+          return this.$store.dispatch('storyblok/loadDraftStory', {
+            id,
+            previewToken
+          })
+        }
+      }
+
+      return this.$store.dispatch('storyblok/loadStory', {
+        slug
+      })
+    }
+  },
+  async serverPrefetch () {
+    const story = await this.fetchStory()
+
+    const { id } = getStoryblokQuery(this.$route)
+
+    if (this.$context && !id) {
+      this.$context.output.cacheTags.add(`storyblok`)
+    }
+
+    return { story }
+  },
+  async mounted () {
+    if (!this.story) {
+      this.fetchStory()
+    }
+
+    if (this.previewToken) {
+      // TODO: Make sure we don't load this multiple times
+      const url = `https://app.storyblok.com/f/storyblok-latest.js?t=${this.previewToken}`
+
+      await loadScript(url, 'storyblok-javascript-bridge')
+
+      window['storyblok'].on(['input', 'published', 'change'], (event: any) => {
+        if (event.action === 'input') {
+          this.$store.commit('storyblok/update', {story: event.story})
+        } else if (!(event).slugChanged) {
+          window.location.reload()
+        }
+      })
+    }
   }
 }
