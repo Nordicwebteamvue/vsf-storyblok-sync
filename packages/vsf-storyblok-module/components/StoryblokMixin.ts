@@ -25,16 +25,14 @@ function loadScript (src, id) {
 
 function getStoryblokQuery (route) {
   const queryString = route.fullPath.replace(route.path, '')
-  /* eslint-disable camelcase */
-  const { _storyblok, _storyblok_c, _storyblok_tk = {} } = qs.parse(queryString, { ignoreQueryPrefix: true })
-  const {space_id, timestamp, token} = _storyblok_tk
-  /* eslint-enable camelcase */
+  const { _storyblok: id, _storyblok_c: c, _storyblok_tk: storyblok = {} } = qs.parse(queryString, { ignoreQueryPrefix: true })
+  const { space_id: spaceId, timestamp, token } = storyblok
 
   return {
-    c: _storyblok_c,
-    id: _storyblok,
+    c,
+    id,
     slug: route.path,
-    spaceId: space_id,
+    spaceId,
     timestamp,
     token
   }
