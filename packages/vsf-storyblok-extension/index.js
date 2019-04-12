@@ -74,7 +74,7 @@ module.exports = ({ config, db }) => {
   api.get('/validate-editor', async (req, res) => {
     const { spaceId, timestamp, token } = req.query
 
-    const validationString = spaceId + ':' + config.storyblok.previewToken + ':' + timestamp
+    const validationString = `${spaceId}:${config.storyblok.previewToken}:${timestamp}`
     const validationToken = crypto.createHash('sha1').update(validationString).digest('hex')
 
     // TODO: Give different error if timestamp is old
