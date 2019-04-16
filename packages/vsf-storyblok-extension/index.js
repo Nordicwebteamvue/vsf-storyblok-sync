@@ -1,10 +1,11 @@
 import { apiStatus } from '../../../lib/util'
 import { Router } from 'express'
 import {getStories, transformStory} from './helpers'
+import crypto from 'crypto'
 
 module.exports = ({ config, db }) => {
-  if (!config.storyblok || !config.storyblok.accessToken) {
-    throw new Error('🧱 : config.storyblok.accessToken not found')
+  if (!config.storyblok || !config.storyblok.previewToken) {
+    throw new Error('🧱 : config.storyblok.previewToken not found')
   }
   const indexPrefix = config.storyblok.indexPrefix || ''
   const index = indexPrefix + 'stories'
@@ -29,7 +30,7 @@ module.exports = ({ config, db }) => {
     console.log('🧱 : Fetching stories!') // eslint-disable-line no-console
     const languages = [null].concat(config.storyblok.extraLanguages || [])
     const promises = languages.map(lang => getStories({
-      token: config.storyblok.accessToken
+      token: config.storyblok.previewToken
     }, 1, lang))
     const result = await Promise.all(promises)
     const stories = [].concat.apply([], result).map(transformStory(index))
@@ -69,5 +70,25 @@ module.exports = ({ config, db }) => {
       error: false
     })
   })
+
+  api.get('/validate-editor', async (req, res) => {
+    const { spaceId, timestamp, token } = req.query
+
+    const validationString = `${spaceId}:${config.storyblok.previewToken}:${timestamp}`
+    const validationToken = crypto.createHash('sha1').update(validationString).digest('hex')
+
+    // TODO: Give different error if timestamp is old
+    if (token === validationToken && timestamp > Math.floor(Date.now() / 1000) - 3600) {
+      return apiStatus(res, {
+        previewToken: config.storyblok.previewToken,
+        error: false
+      })
+    }
+
+    return apiStatus(res, {
+      error: 'Unauthorized editor'
+    }, 403)
+  })
+
   return api
 }

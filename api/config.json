@@ -6,7 +6,7 @@
   ],
   "registeredExtensions": ["vsf-storyblok-extension"],
   "storyblok": {
-    "accessToken": "mrpbBbrwJU75kaRRQBIyugtt",
+    "previewToken": "mrpbBbrwJU75kaRRQBIyugtt",
     "indexPrefix": "storyblok_",
     "extraLanguages": ["de"],
     "hookSecret": "__SECRET_CHANGE_ME__"

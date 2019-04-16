@@ -1,6 +1,9 @@
 import { StoryblokSyncState } from '../types/State'
 
 export const state: StoryblokSyncState = {
-  story: null,
-  loading: false
+  id: undefined,
+  loading: false,
+  previewToken: undefined,
+  slug: undefined,
+  story: undefined
 }

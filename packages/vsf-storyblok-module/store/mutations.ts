@@ -1,16 +1,22 @@
 import { MutationTree } from 'vuex'
+import { StoryblokSyncState } from '../types/State'
 
-export const mutations: MutationTree<any> = {
-  loading (state) {
+export const mutations: MutationTree<StoryblokSyncState> = {
+  loadingStory (state: StoryblokSyncState) {
+    state.id = undefined
     state.loading = true
-    state.story = null
+    state.story = undefined
   },
-  set (state, {id, story}) {
+  setStory (state: StoryblokSyncState, {id, slug, story}) {
     state.id = id
-    state.story = story
     state.loading = false
+    state.slug = slug
+    state.story = story
   },
-  update (state, {story}) {
+  setPreviewToken (state: StoryblokSyncState, {previewToken}) {
+    state.previewToken = previewToken
+  },
+  updatStory (state: StoryblokSyncState, {story}) {
     state.story = story
   }
 }
