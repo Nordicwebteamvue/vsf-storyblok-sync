@@ -4,21 +4,11 @@ const baseUrl = 'https://api.storyblok.com/v1/cdn/stories'
 const objectToParams = object =>
   Object.entries(object).map(([key, value]) => `${key}=${value}`).join('&')
 
-export const transformStory = (index) => (story) => ({
+export const transformStory = (index) => ({ id, ...story } = {}) => ({
   index: index,
-  type: 'object',
-  id: story.full_slug,
-  body: {
-    doc: {
-      slug: story.slug,
-      content: story.content,
-      language: story.lang,
-      name: story.name,
-      id: story.id,
-      parent_id: story.parent_id
-    }
-  },
-  'doc_as_upsert': true
+  type: 'story', // XXX: Change to _doc once VSF supports Elasticsearch 6
+  id: id,
+  body: story
 })
 
 export const getStories = (options, page = 1, language = null) => new Promise((resolve) => {
