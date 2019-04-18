@@ -69,15 +69,16 @@ module.exports = ({ config, db }) => {
     return Promise.all(stories.map(story => db.index(story)))
   }
 
-  // Run once on startup
-  setTimeout(async () => {
+  db.ping().then(async (response) => {
     try {
       await syncStories()
       console.log('📖 : Stories synced!') // eslint-disable-line no-console
     } catch (error) {
       console.log('📖 : Stories not synced!') // eslint-disable-line no-console
     }
-  }, 10000) // Let elasticsearch start
+  }).catch(() => {
+    console.log('📖 : Stories not synced!') // eslint-disable-line no-console
+  })
 
   api.get('/story/', (req, res) => {
     getStory(res, 'home')
