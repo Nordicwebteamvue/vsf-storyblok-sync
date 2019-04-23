@@ -1,74 +1,82 @@
-import { apiStatus } from '../../../lib/util'
 import { Router } from 'express'
-import {getStories, transformStory} from './helpers'
 import crypto from 'crypto'
+import StoryblokClient from 'storyblok-js-client'
+import { apiStatus } from '../../../lib/util'
+import { hook } from './hook'
+import { syncStories } from './sync-stories'
 
 module.exports = ({ config, db }) => {
   if (!config.storyblok || !config.storyblok.previewToken) {
     throw new Error('🧱 : config.storyblok.previewToken not found')
   }
-  const indexPrefix = config.storyblok.indexPrefix || ''
+
+  const storyblokClientConfig = {
+    accessToken: config.storyblok.previewToken,
+    cache: {
+      type: 'memory'
+    }
+  }
+
+  const storyblokClient = new StoryblokClient(storyblokClientConfig)
+
+  const { indexPrefix = '' } = config.storyblok
   const index = indexPrefix + 'stories'
 
-  let api = Router()
+  const api = Router()
 
-  const getStory = (res, id) => db.get({
+  api.use(hook({ config, db, index, storyblokClient }))
+
+  const getStory = (res, path) => db.search({
     index,
-    type: 'object',
-    id
-  }).then(response => {
-    apiStatus(res, {
-      story: response._source
-    })
+    type: 'story',
+    body: {
+      query: {
+        constant_score: {
+          filter: {
+            term: {
+              'full_slug.keyword': path
+            }
+          }
+        }
+      }
+    }
+  }).then((response) => {
+    const { hits } = response
+    if (hits.total > 0) {
+      apiStatus(res, {
+        story: hits.hits[0]._source
+      })
+    } else {
+      apiStatus(res, {
+        story: false
+      }, 404)
+    }
   }).catch(() => {
     apiStatus(res, {
       story: false
-    }, 404)
+    }, 500)
   })
 
-  const fetchStories = async () => {
-    console.log('🧱 : Fetching stories!') // eslint-disable-line no-console
-    const languages = [null].concat(config.storyblok.extraLanguages || [])
-    const promises = languages.map(lang => getStories({
-      token: config.storyblok.previewToken
-    }, 1, lang))
-    const result = await Promise.all(promises)
-    const stories = [].concat.apply([], result).map(transformStory(index))
-    return Promise.all(stories.map(story => db.update(story)))
-  }
-
-  // Run once on startup
-  setTimeout(() => {
-    fetchStories()
-  }, 10000) // Let elasticsearch start
+  db.ping().then(async (response) => {
+    try {
+      console.log('📖 : Syncing published stories!') // eslint-disable-line no-console
+      await db.indices.delete({ ignore_unavailable: true, index })
+      await syncStories({ db, index, perPage: config.storyblok.perPage, storyblokClient })
+      console.log('📖 : Stories synced!') // eslint-disable-line no-console
+    } catch (error) {
+      console.log('📖 : Stories not synced!') // eslint-disable-line no-console
+    }
+  }).catch(() => {
+    console.log('📖 : Stories not synced!') // eslint-disable-line no-console
+  })
 
   api.get('/story/', (req, res) => {
     getStory(res, 'home')
   })
 
   api.get('/story/:story*', (req, res) => {
-    const id = req.params.story + req.params[0]
-    getStory(res, id)
-  })
-
-  api.get('/hook', async (req, res) => {
-    if (config.storyblok.hookSecret && process.env.VS_ENV !== 'dev') {
-      if (!req.query.secret) {
-        return apiStatus(res, {
-          error: 'Missing secret query param'
-        }, 403)
-      }
-      if (req.query.secret !== config.storyblok.hookSecret) {
-        return apiStatus(res, {
-          error: 'Invalid secret'
-        }, 403)
-      }
-    }
-    const stories = await fetchStories()
-    apiStatus(res, {
-      stories_found: stories.length,
-      error: false
-    })
+    const path = req.params.story + req.params[0]
+    getStory(res, path)
   })
 
   api.get('/validate-editor', async (req, res) => {

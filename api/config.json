@@ -8,7 +8,6 @@
   "storyblok": {
     "previewToken": "mrpbBbrwJU75kaRRQBIyugtt",
     "indexPrefix": "storyblok_",
-    "extraLanguages": ["de"],
     "hookSecret": "__SECRET_CHANGE_ME__"
   },
   "objHashSecret": "__SECRET_CHANGE_ME__",
