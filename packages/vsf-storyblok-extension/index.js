@@ -1,9 +1,9 @@
 import { Router } from 'express'
-import { getStories, transformStory } from './helpers'
 import crypto from 'crypto'
 import StoryblokClient from 'storyblok-js-client'
 import { apiStatus } from '../../../lib/util'
 import { hook } from './hook'
+import { syncStories } from './sync-stories'
 
 module.exports = ({ config, db }) => {
   if (!config.storyblok || !config.storyblok.previewToken) {
@@ -57,21 +57,11 @@ module.exports = ({ config, db }) => {
     }, 500)
   })
 
-  const syncStories = async () => {
-    console.log('📖 : Syncing published stories!') // eslint-disable-line no-console
-    const languages = [null].concat(config.storyblok.extraLanguages || [])
-    const promises = languages.map(lang => getStories({
-      token: config.storyblok.previewToken
-    }, 1, lang))
-    const result = await Promise.all(promises)
-    const stories = [].concat.apply([], result).map(transformStory(index))
-
-    return Promise.all(stories.map(story => db.index(story)))
-  }
-
   db.ping().then(async (response) => {
     try {
-      await syncStories()
+      console.log('📖 : Syncing published stories!') // eslint-disable-line no-console
+      await db.indices.delete({ ignore_unavailable: true, index })
+      await syncStories({ db, index, perPage: config.storyblok.perPage, storyblokClient })
       console.log('📖 : Stories synced!') // eslint-disable-line no-console
     } catch (error) {
       console.log('📖 : Stories not synced!') // eslint-disable-line no-console
