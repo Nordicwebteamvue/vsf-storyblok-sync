@@ -57,7 +57,9 @@ module.exports = ({ config, db }) => {
     }, 500)
   })
 
-  db.ping().then(async (response) => {
+  db.ping({
+    requestTimeout: 30000
+  }).then(async (response) => {
     try {
       console.log('📖 : Syncing published stories!') // eslint-disable-line no-console
       await db.indices.delete({ ignore_unavailable: true, index })
