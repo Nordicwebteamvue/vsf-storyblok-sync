@@ -4,7 +4,7 @@ services:
     build: .docker/vue-storefront-api/docker/elasticsearch/
     volumes:
       - >-
-        .docker/vue-storefront-api/docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+        ./.docker/vue-storefront-api/docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
       - 'esdat1:/usr/share/elasticsearch/data'
     ports:
       - '9200:9200'
