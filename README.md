@@ -26,10 +26,9 @@ export const registerModules: VueStorefrontModule[] = [
 
 ```
 "storyblok": {
-  "endpoint": "http://localhost:8080/api/ext/vsf-storyblok-extension/story{{id}}"
+  "endpoint": "http://localhost:8080/api/ext/vsf-storyblok-extension"
 }
 ```
-> `{{id}}` will be replaced by the content page url.
 
 ### Usage
 
@@ -60,11 +59,11 @@ Copy `packages/vsf-storyblok-extension` to `vue-storefront-api/src/api/extension
 
 ## Reference
 
-### `accessToken`
+### `previewToken`
 
 Go to `https://app.storyblok.com/#!/me/spaces/YOUR_SPACE_ID/edit?tab=api` and generate a preview token.
 
-On the backend we use it to fetch posts when the webhook is polled. In the UI it's used for the preview functionallity in Storyblok.
+Used to fetch posts and to provide preview while editing in Storyblok
 
 ### `endpoint`
 
@@ -73,10 +72,6 @@ The URL the UI tries to fetch stories from
 ### `indexPrefix`
 
 Prefix used for the ElasticSearch index
-
-### `extraLanguages`
-
-An array of extra languages to fetch stories for. The codes corresponds with the codes found at `https://app.storyblok.com/#!/me/spaces/YOUR_SPACE_ID/edit?tab=languages`
 
 ### `hookSecret`
 
