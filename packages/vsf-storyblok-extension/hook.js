@@ -54,7 +54,6 @@ function hook ({ config, db, index, storyblokClient }) {
   api.use(json())
 
   api.post('/hook', syncStory)
-  api.get('/hook', syncStory)
 
   return api
 }
