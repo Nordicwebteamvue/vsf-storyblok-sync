@@ -1,10 +1,10 @@
 version: '2.4'
 services:
   elasticsearch:
-    build: vue-storefront-api/docker/elasticsearch/
+    build: .docker/vue-storefront-api/docker/elasticsearch/
     volumes:
       - >-
-        ./vue-storefront-api/docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+        .docker/vue-storefront-api/docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
       - 'esdat1:/usr/share/elasticsearch/data'
     ports:
       - '9200:9200'
@@ -17,9 +17,9 @@ services:
       - '6379:6379'
   storefront-api:
     build:
-      context: vue-storefront-api
+      context: .docker/vue-storefront-api
       dockerfile: docker/vue-storefront-api/Dockerfile
-    env_file: vue-storefront-api/docker/vue-storefront-api/default.env
+    env_file: .docker/vue-storefront-api/docker/vue-storefront-api/default.env
     environment:
       VS_ENV: dev
     ports:
@@ -27,22 +27,22 @@ services:
     tmpfs:
       - /var/www/dist
     volumes:
-      - '.docker/vue-storefront-api/config:/var/www/config'
-      - '.docker/vue-storefront-api/ecosystem.json:/var/www/ecosystem.json'
-      - '.docker/vue-storefront-api/migrations:/var/www/migrations'
-      - '.docker/vue-storefront-api/package.json:/var/www/package.json'
-      - '.docker/vue-storefront-api/scripts:/var/www/scripts'
-      - '.docker/vue-storefront-api/src:/var/www/src'
-      - '.docker/vue-storefront-api/var:/var/www/var'
-      - '.docker/api/config.json:/var/www/config/local.json'
-      - '.docker/api/db.js:/var/www/src/db.js'
+      - './.docker/vue-storefront-api/config:/var/www/config'
+      - './.docker/vue-storefront-api/ecosystem.json:/var/www/ecosystem.json'
+      - './.docker/vue-storefront-api/migrations:/var/www/migrations'
+      - './.docker/vue-storefront-api/package.json:/var/www/package.json'
+      - './.docker/vue-storefront-api/scripts:/var/www/scripts'
+      - './.docker/vue-storefront-api/src:/var/www/src'
+      - './.docker/vue-storefront-api/var:/var/www/var'
+      - './.docker/api/config.json:/var/www/config/local.json'
+      - './.docker/api/db.js:/var/www/src/db.js'
       - >-
         ./packages/vsf-storyblok-extension:/var/www/src/api/extensions/vsf-storyblok-extension
   storefront-ui:
     build:
-      context: vue-storefront
+      context: .docker/vue-storefront
       dockerfile: docker/vue-storefront/Dockerfile
-    env_file: vue-storefront/docker/vue-storefront/default.env
+    env_file: .docker/vue-storefront/docker/vue-storefront/default.env
     environment:
       VS_ENV: dev
     ports:
@@ -50,21 +50,21 @@ services:
     tmpfs:
       - /var/www/dist
     volumes:
-      - '.docker/vue-storefront/babel.config.js:/var/www/babel.config.js'
-      - '.docker/vue-storefront/config:/var/www/config'
-      - '.docker/vue-storefront/core:/var/www/core'
-      - '.docker/vue-storefront/ecosystem.json:/var/www/ecosystem.json'
-      - '.docker/vue-storefront/.eslintignore:/var/www/.eslintignore'
-      - '.docker/vue-storefront/.eslintrc.js:/var/www/.eslintrc.js'
-      - '.docker/vue-storefront/lerna.json:/var/www/lerna.json'
-      - '.docker/vue-storefront/tsconfig.json:/var/www/tsconfig.json'
-      - '.docker/vue-storefront/tsconfig-build.json:/var/www/tsconfig-build.json'
-      - '.docker/vue-storefront/shims.d.ts:/var/www/shims.d.ts'
-      - '.docker/vue-storefront/package.json:/var/www/package.json'
-      - '.docker/vue-storefront/src:/var/www/src'
-      - '.docker/vue-storefront/var:/var/www/var'
-      - '.docker/frontend/config.json:/var/www/config/local.json'
-      - '.docker/frontend/modules.ts:/var/www/src/modules/index.ts'
-      - 'theme:/var/www/src/themes/default'
+      - './.docker/vue-storefront/babel.config.js:/var/www/babel.config.js'
+      - './.docker/vue-storefront/config:/var/www/config'
+      - './.docker/vue-storefront/core:/var/www/core'
+      - './.docker/vue-storefront/ecosystem.json:/var/www/ecosystem.json'
+      - './.docker/vue-storefront/.eslintignore:/var/www/.eslintignore'
+      - './.docker/vue-storefront/.eslintrc.js:/var/www/.eslintrc.js'
+      - './.docker/vue-storefront/lerna.json:/var/www/lerna.json'
+      - './.docker/vue-storefront/tsconfig.json:/var/www/tsconfig.json'
+      - './.docker/vue-storefront/tsconfig-build.json:/var/www/tsconfig-build.json'
+      - './.docker/vue-storefront/shims.d.ts:/var/www/shims.d.ts'
+      - './.docker/vue-storefront/package.json:/var/www/package.json'
+      - './.docker/vue-storefront/src:/var/www/src'
+      - './.docker/vue-storefront/var:/var/www/var'
+      - './.docker/frontend/config.json:/var/www/config/local.json'
+      - './.docker/frontend/modules.ts:/var/www/src/modules/index.ts'
+      - './theme:/var/www/src/themes/default'
       - >-
         ./packages/vsf-storyblok-module:/var/www/src/modules/vsf-storyblok-module
