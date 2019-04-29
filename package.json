@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "preci": "wait-for url http://localhost:3000 --timeout 5000 --find \"index for default theme\"",
+    "preci": "wait-for url http://localhost:3000 --max-retries 200 --timeout 5000 --find \"index for default theme\"",
     "ci": "cypress run",
     "cypress": "cypress open",
     "lint": "eslint .",
