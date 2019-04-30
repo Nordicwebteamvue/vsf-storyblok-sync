@@ -1,0 +1,21 @@
+version: '2.4'
+services:
+  cypress:
+    image: cypress
+    build:
+      context: .
+      dockerfile: ./cypress/Dockerfile
+    depends_on:
+      storefront-ui:
+        condition: service_healthy
+    environment:
+      - CYPRESS_baseUrl=http://storefront-ui:3000
+    command: yarn cypress run
+    volumes:
+      - ./cypress:/app/cypress:delegated
+  storefront-ui:
+    environment:
+      VS_ENV: prod
+
+volumes:
+  esdat1: null

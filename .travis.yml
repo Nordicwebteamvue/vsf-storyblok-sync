@@ -1,14 +1,16 @@
 language: node_js
+
 node_js:
   - "8"
 
-cache: yarn
+services:
+  - docker
 
-install: yarn
+cache: yarn
 
 env:
   global:
-    - DOCKER_COMPOSE_VERSION=1.23.2
+    - DOCKER_COMPOSE_VERSION=1.24.0
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
@@ -16,13 +18,9 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 
-before_script:
-  - sleep 3
-  - docker-compose up -d --build
-
 script:
   - yarn lint
-  - yarn ci
+  - yarn test:ci
 
 after_script:
   - docker-compose down
