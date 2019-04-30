@@ -36,15 +36,15 @@ services:
     volumes:
       - './vue-storefront-api/config:/var/www/config'
       - './vue-storefront-api/ecosystem.json:/var/www/ecosystem.json'
-      - './vue-storefront-api/migrations:/var/www/migrations'
+      - './vue-storefront-api/migrations:/var/www/migrations:delegated'
       - './vue-storefront-api/package.json:/var/www/package.json'
-      - './vue-storefront-api/scripts:/var/www/scripts'
-      - './vue-storefront-api/src:/var/www/src'
-      - './vue-storefront-api/var:/var/www/var'
+      - './vue-storefront-api/scripts:/var/www/scripts:delegated'
+      - './vue-storefront-api/src:/var/www/src:delegated'
+      - './vue-storefront-api/var:/var/www/var:delegated'
       - './api/config.json:/var/www/config/local.json'
       - './api/db.js:/var/www/src/db.js'
       - >-
-        ./packages/vsf-storyblok-extension:/var/www/src/api/extensions/vsf-storyblok-extension
+        ./packages/vsf-storyblok-extension:/var/www/src/api/extensions/vsf-storyblok-extension:delegated
     healthcheck:
       test: [ "CMD", "curl", "-f", "-s", "-S", "http://localhost:8080/api" ]
   storefront-ui:
@@ -61,7 +61,7 @@ services:
     volumes:
       - './vue-storefront/babel.config.js:/var/www/babel.config.js'
       - './vue-storefront/config:/var/www/config'
-      - './vue-storefront/core:/var/www/core'
+      - './vue-storefront/core:/var/www/core:delegated'
       - './vue-storefront/ecosystem.json:/var/www/ecosystem.json'
       - './vue-storefront/.eslintignore:/var/www/.eslintignore'
       - './vue-storefront/.eslintrc.js:/var/www/.eslintrc.js'
@@ -70,13 +70,13 @@ services:
       - './vue-storefront/tsconfig-build.json:/var/www/tsconfig-build.json'
       - './vue-storefront/shims.d.ts:/var/www/shims.d.ts'
       - './vue-storefront/package.json:/var/www/package.json'
-      - './vue-storefront/src:/var/www/src'
-      - './vue-storefront/var:/var/www/var'
+      - './vue-storefront/src:/var/www/src:delegated'
+      - './vue-storefront/var:/var/www/var:delegated'
       - './frontend/config.json:/var/www/config/local.json'
       - './frontend/theme:/var/www/src/themes/default'
       - './frontend/modules.ts:/var/www/src/modules/index.ts'
       - >-
-        ./packages/vsf-storyblok-module:/var/www/src/modules/vsf-storyblok-module
+        ./packages/vsf-storyblok-module:/var/www/src/modules/vsf-storyblok-module:delegated
     healthcheck:
       test: [ "CMD", "wget", "-q", "--tries=1", "--spider", "http://localhost:3000" ]
       start_period: 10m
