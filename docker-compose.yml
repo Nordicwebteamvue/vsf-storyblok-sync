@@ -73,6 +73,7 @@ services:
       - './vue-storefront/src:/var/www/src:delegated'
       - './vue-storefront/var:/var/www/var:delegated'
       - './frontend/config.json:/var/www/config/local.json'
+      - './frontend/package.json:/var/www/package.json'
       - './frontend/theme:/var/www/src/themes/default'
       - './frontend/modules.ts:/var/www/src/modules/index.ts'
       - >-
