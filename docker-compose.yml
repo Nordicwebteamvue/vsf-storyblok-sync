@@ -80,4 +80,4 @@ services:
         ./packages/vsf-storyblok-module:/var/www/src/modules/vsf-storyblok-module:delegated
     healthcheck:
       test: [ "CMD", "wget", "-q", "--tries=1", "--spider", "http://localhost:3000" ]
-      start_period: 10m
+      start_period: 20m

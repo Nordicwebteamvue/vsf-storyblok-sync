@@ -23,8 +23,6 @@ script:
   # Output something every 10 minutes or Travis kills the job
   - while sleep 9m; do echo "=====[ $SECONDS seconds still running ]====="; done &
   - yarn test:ci
-  - docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.test.yml logs -f &
-  - exit $(docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.test.yml ps -q cypress | xargs docker inspect -f '{{ .State.ExitCode }}')
   # Killing background sleep loop
   - kill %1
 
