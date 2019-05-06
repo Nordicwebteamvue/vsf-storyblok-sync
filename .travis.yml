@@ -20,7 +20,7 @@ before_install:
 
 script:
   - yarn lint
-  - yarn test:ci
+  - travis_wait 50 yarn test:ci
 
 after_script:
   - docker-compose down
