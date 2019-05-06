@@ -18,14 +18,10 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 
-before_script:
+script:
   # Output something every 10 minutes or Travis kills the job
   - while sleep 9m; do echo "[ Prevent Travis timeout after $SECONDS seconds ]"; done &
-
-script:
   - yarn lint
   - yarn test:ci
-
-after_script:
   # Killing background sleep loop
   - kill %1
