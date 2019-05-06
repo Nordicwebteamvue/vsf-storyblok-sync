@@ -18,6 +18,9 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 
+before_script:
+  - docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.test.yml build
+
 script:
   # Output something every 10 minutes or Travis kills the job
   - while sleep 9m; do echo "[ Prevent Travis timeout after $SECONDS seconds ]"; done &
