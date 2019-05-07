@@ -34,6 +34,7 @@ services:
     tmpfs:
       - /var/www/dist
     volumes:
+      - './.docker/vue-storefront-api/babel.config.js:/var/www/babel.config.js'
       - './.docker/vue-storefront-api/config:/var/www/config'
       - './.docker/vue-storefront-api/ecosystem.json:/var/www/ecosystem.json'
       - './.docker/vue-storefront-api/migrations:/var/www/migrations:delegated'
