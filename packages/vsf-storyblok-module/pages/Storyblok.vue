@@ -5,13 +5,13 @@
 </template>
 
 <script>
-import StoryblokMixin from "../components/StoryblokMixin";
-import Render from "../components/Render.vue";
+import StoryblokMixin from '../components/StoryblokMixin'
+import Render from '../components/Render.vue'
 export default {
-  name: "StoryblokPage",
+  name: 'StoryblokPage',
   mixins: [StoryblokMixin],
   components: {
     sbRender: Render
   }
-};
+}
 </script>
