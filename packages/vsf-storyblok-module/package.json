@@ -2,15 +2,22 @@
   "name": "@kodbruket/vsf-storyblok-module",
   "version": "0.0.1",
   "description": "Vue Storefront Storyblok module",
-  "main": "index.ts",
-  "repository": "https://github.com/kodbruket/vsf-storyblok-sync",
+  "module": "index.ts",
+  "repository": "https://github.com/kodbruket/vsf-storyblok-sync.git",
   "author": "Max Malm",
   "license": "MIT",
-  "private": false,
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
     "storyblok-js-client": "^1.0.22",
     "storyblok-vue": "^1.0.5",
     "vuex": "^3.1.0"
-  }
+  },
+  "files": [
+    "components",
+    "hooks",
+    "pages",
+    "store",
+    "types",
+    "index.ts"
+  ]
 }
