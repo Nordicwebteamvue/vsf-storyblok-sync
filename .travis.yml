@@ -1,14 +1,16 @@
 language: node_js
+
 node_js:
   - "8"
 
-cache: yarn
+services:
+  - docker
 
-install: yarn
+cache: yarn
 
 env:
   global:
-    - DOCKER_COMPOSE_VERSION=1.23.2
+    - DOCKER_COMPOSE_VERSION=1.24.0
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
@@ -17,12 +19,12 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 before_script:
-  - sleep 3
-  - docker-compose up -d --build
+  - docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.test.yml build
 
 script:
+  # Output something every 10 minutes or Travis kills the job
+  - while sleep 9m; do echo "[ Prevent Travis timeout after $SECONDS seconds ]"; done &
   - yarn lint
-  - yarn ci
-
-after_script:
-  - docker-compose down
+  - yarn test:ci
+  # Killing background sleep loop
+  - kill %1

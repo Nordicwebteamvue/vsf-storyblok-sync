@@ -2,11 +2,14 @@ version: '2.4'
 services:
   storefront-api:
     depends_on:
-      - elasticsearch
-      - redis
+      elasticsearch:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
   storefront-ui:
     depends_on:
-      - storefront-api
+      storefront-api:
+        condition: service_healthy
 
 volumes:
-  esdat1:
+  esdat1: null

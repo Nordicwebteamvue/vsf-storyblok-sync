@@ -4,7 +4,7 @@
 
 > Example usage in Storyblok with demo components
 
-## Vue Storefront
+## Vue Storefront UI
 
 ### Installation
 
@@ -26,15 +26,14 @@ export const registerModules: VueStorefrontModule[] = [
 
 ```
 "storyblok": {
-  "endpoint": "http://localhost:8080/api/ext/vsf-storyblok-extension/story{{id}}",
-  "accessToken": "mrpbBbrwJU75kaRRQBIyugtt"
+  "endpoint": "http://localhost:8080/api/ext/vsf-storyblok-extension/story{{id}}"
 }
 ```
 > `{{id}}` will be replaced by the content page url.
 
 ### Usage
 
-See the `/frontend/theme` folder for a demo implementation.
+See the `/theme` folder for a demo implementation.
 
 Notable files:
 
@@ -53,9 +52,8 @@ Copy `packages/vsf-storyblok-extension` to `vue-storefront-api/src/api/extension
 "registeredExtensions": ["vsf-storyblok-extension"],
 ...
 "storyblok": {
-  "accessToken": "__API_KEY_HERE__",
+  "previewToken": "__API_KEY_HERE__",
   "indexPrefix": "storyblok_",
-  "extraLanguages": ["de"],
   "hookSecret": "__SECRET_CHANGE_ME__"
 }
 ```
