@@ -16,7 +16,8 @@
     "vue-no-ssr": "^0.2.2",
     "vue-progressbar": "^0.7.5",
     "vuelidate": "^0.6.2",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "@kodbruket/vsf-storyblok-module": "./@kodbruket/vsf-storyblok-module"
   },
   "publishConfig": {
     "access": "public"

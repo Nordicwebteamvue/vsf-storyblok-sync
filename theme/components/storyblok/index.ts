@@ -1,4 +1,4 @@
-import { add } from 'src/modules/vsf-storyblok-module/components'
+import { add } from '@kodbruket/vsf-storyblok-module/components'
 
 add('hero', () => import('./Hero.vue'))
 add('demoImage', () => import('./Image.vue'))

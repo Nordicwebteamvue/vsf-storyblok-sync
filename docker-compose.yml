@@ -75,9 +75,9 @@ services:
       - './.docker/vue-storefront/var:/var/www/var:delegated'
       - './.docker/frontend/config.json:/var/www/config/local.json'
       - './.docker/frontend/modules.ts:/var/www/src/modules/index.ts'
-      - './theme:/var/www/src/themes/default'
+      - './theme:/var/www/src/themes/default:delegated'
       - >-
-        ./packages/vsf-storyblok-module:/var/www/src/modules/vsf-storyblok-module:delegated
+        ./packages/vsf-storyblok-module:/var/www/@kodbruket/vsf-storyblok-module:delegated
     healthcheck:
       test:
         ['CMD', 'wget', '-q', '--tries=1', '--spider', 'http://localhost:3000']

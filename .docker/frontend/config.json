@@ -10,7 +10,7 @@
   },
   "theme": "@vue-storefront/theme-default",
   "storyblok": {
-    "endpoint": "http://storefront-api:8080/api/ext/vsf-storyblok-extension"
+    "endpoint": "http://storefront-api:8080/api/ext/@kodbruket/vsf-storyblok-extension"
   },
   "cart": {
     "synchronize": true,

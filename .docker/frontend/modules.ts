@@ -19,7 +19,7 @@ import { PaymentBackendMethods } from './payment-backend-methods'
 import { PaymentCashOnDelivery } from './payment-cash-on-delivery'
 import { RawOutputExample } from './raw-output-example'
 import { Magento2CMS } from './magento-2-cms'
-import { Storyblok } from './vsf-storyblok-module'
+import { Storyblok } from '@kodbruket/vsf-storyblok-module'
 
 export const registerModules: VueStorefrontModule[] = [
   Checkout,
