@@ -4,7 +4,7 @@
   "esIndexes": [
     "vue_storefront_catalog"
   ],
-  "registeredExtensions": ["vsf-storyblok-extension"],
+  "registeredExtensions": ["@kodbruket/vsf-storyblok-extension"],
   "storyblok": {
     "previewToken": "mrpbBbrwJU75kaRRQBIyugtt",
     "indexPrefix": "storyblok_",

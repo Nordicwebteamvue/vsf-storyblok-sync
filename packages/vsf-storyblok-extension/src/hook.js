@@ -1,5 +1,5 @@
 import { json, Router } from 'express'
-import { apiStatus } from '../../../lib/util'
+import { apiStatus } from './utils'
 
 const transformStory = (index) => ({ id, ...story } = {}) => ({
   index: index,

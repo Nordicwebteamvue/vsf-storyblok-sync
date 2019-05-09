@@ -2,7 +2,8 @@
   "name": "@kodbruket/vsf-storyblok-extension",
   "version": "0.0.1",
   "description": "Vue Storefront Storyblok extension",
-  "module": "index.js",
+  "module": "src/index.js",
+  "main": "dist/index.js",
   "repository": "https://github.com/kodbruket/vsf-storyblok-sync.git",
   "author": "Max Malm",
   "license": "MIT",
@@ -10,8 +11,15 @@
     "storyblok-js-client": "^1.0.22"
   },
   "files": [
-    "hook.js",
-    "index.js",
-    "sync-stories.js"
-  ]
+    "dist"
+  ],
+  "scripts": {
+    "build": "babel src -s -D -d dist",
+    "prepublishOnly": "yarn build"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4"
+  }
 }
