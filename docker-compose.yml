@@ -44,7 +44,7 @@ services:
       - './.docker/vue-storefront-api/var:/var/www/var:delegated'
       - './.docker/api/config.json:/var/www/config/local.json'
       - './.docker/api/db.js:/var/www/src/db.js'
-      - './.docker/api/package.json:/var/www/package.json'
+      - './.docker/api/package.json:/var/www/src/api/extensions/safira-api/package.json'
       - >-
         ./packages/vsf-storyblok-extension:/var/www/@kodbruket/vsf-storyblok-extension:delegated
     healthcheck:
