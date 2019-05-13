@@ -16,7 +16,7 @@ export const mutations: MutationTree<StoryblokSyncState> = {
   setPreviewToken (state: StoryblokSyncState, {previewToken}) {
     state.previewToken = previewToken
   },
-  updatStory (state: StoryblokSyncState, {story}) {
+  updateStory (state: StoryblokSyncState, {story}) {
     state.story = story
   }
 }

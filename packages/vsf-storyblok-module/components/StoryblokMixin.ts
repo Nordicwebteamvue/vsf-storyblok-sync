@@ -95,7 +95,7 @@ export default {
 
       window['storyblok'].on(['input', 'published', 'change'], (event: any) => {
         if (event.action === 'input') {
-          this.$store.commit('storyblok/update', {story: event.story})
+          this.$store.commit('storyblok/updateStory', {story: event.story})
         } else if (!(event).slugChanged) {
           window.location.reload()
         }
