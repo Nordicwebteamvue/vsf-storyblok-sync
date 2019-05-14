@@ -1,4 +1,8 @@
 {
+  "server": {
+    "dynamicConfigReload": true,
+    "dynamicConfigContinueOnError": true
+  },
   "elasticsearch": {
     "httpAuth": "",
     "host": "storefront-api:8080/api/catalog",

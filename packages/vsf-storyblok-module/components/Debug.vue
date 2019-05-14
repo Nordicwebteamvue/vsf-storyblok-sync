@@ -1,28 +1,14 @@
 <template>
-  <div v-editable="item">
+  <div>
     Missing component <strong>{{ item.component }}</strong>
     <pre>{{ item | pretty }}</pre>
   </div>
 </template>
 
 <script>
+import Blok from './Blok'
 export default {
-  name: 'SbDebug',
-  computed: {
-    isEditable: function () {
-      return process.env.VS_ENV === 'dev'
-    }
-  },
-  filters: {
-    pretty ({_editable, _uid, ...value}) {
-      return JSON.stringify(value, null, 2)
-    }
-  },
-  props: {
-    item: {
-      type: Object,
-      required: true
-    }
-  }
+  name: 'DebugBlok',
+  extends: Blok
 }
 </script>

@@ -1,5 +1,6 @@
 import StoryblokClient from 'storyblok-js-client'
 import StoryblokVue from 'storyblok-vue'
+import Render from '../components/Render.vue'
 
 function beforeRegistration ({ Vue, config, store }) {
   const storyblokClientConfig = {
@@ -15,6 +16,7 @@ function beforeRegistration ({ Vue, config, store }) {
   store.$storyblokClient = storyblokClient
 
   Vue.use(StoryblokVue)
+  Vue.component('sb-render', Render)
 }
 
 export { beforeRegistration }
