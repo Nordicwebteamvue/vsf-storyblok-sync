@@ -1,21 +1,17 @@
 <template>
-  <div class="container" v-editable="item">
+  <div v-editable="item">
     <component v-if="component" :is="component" :item="item" />
   </div>
 </template>
 
 <script>
-import Vue from 'vue'
-export default Vue.extend({
-  name: 'SbRender',
+import { components } from './'
+
+export default {
+  name: 'RenderBlok',
   computed: {
     component: function () {
-      return this.components[this.item.component] || this.components.debug
-    },
-    components: function () {
-      return {
-        debug: () => import('./Debug.vue')
-      }
+      return components[this.item.component] || components.debug
     }
   },
   props: {
@@ -24,5 +20,5 @@ export default Vue.extend({
       required: true
     }
   }
-})
+}
 </script>

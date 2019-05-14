@@ -40,7 +40,6 @@ section {
   }
   .text {
     position: relative;
-    z-index: 2;
     height: 100%;
     width: 100%;
     display: flex;
@@ -97,7 +96,7 @@ section {
 </style>
 
 <script>
-import Blok from './Blok'
+import { Blok } from 'src/modules/vsf-storyblok-module/components'
 export default {
   name: 'HeroBlok',
   extends: Blok

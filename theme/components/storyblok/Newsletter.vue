@@ -1,11 +1,10 @@
 <template>
   <form @submit.prevent="submit(onSuccesfulSubmission)" novalidate>
-    <div class="mb35">
+    <div>
       <p>
         {{ item.title }}
       </p>
       <base-input
-        focus
         type="email"
         name="email"
         v-model="email"
@@ -24,7 +23,6 @@
       />
     </div>
     <button-full
-      class="mb35"
       type="submit"
       :disabled="this.$v.$invalid"
       @click.native="$v.email.$touch"
@@ -40,7 +38,7 @@ import i18n from '@vue-storefront/i18n'
 
 import ButtonFull from 'theme/components/theme/ButtonFull.vue'
 import BaseInput from 'theme/components/core/blocks/Form/BaseInput.vue'
-import Blok from './Blok'
+import { Blok } from 'src/modules/vsf-storyblok-module/components'
 
 export default {
   beforeDestroy () {
@@ -69,11 +67,10 @@ export default {
 
 <style lang="scss" scoped>
 form {
-  height: 480px;
-  padding: 10px;
+  height: 100%;
+  padding: 0 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #ffe7e5;
 }
 </style>

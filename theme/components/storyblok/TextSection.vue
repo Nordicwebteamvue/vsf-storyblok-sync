@@ -27,7 +27,7 @@ section {
 </style>
 
 <script>
-import Blok from './Blok'
+import { Blok } from 'src/modules/vsf-storyblok-module/components'
 export default {
   name: 'TextSectionBlok',
   extends: Blok

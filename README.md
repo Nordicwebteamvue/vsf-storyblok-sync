@@ -26,21 +26,19 @@ export const registerModules: VueStorefrontModule[] = [
 
 ```
 "storyblok": {
-  "endpoint": "http://localhost:8080/api/ext/vsf-storyblok-extension/story{{id}}"
+  "endpoint": "http://localhost:8080/api/ext/vsf-storyblok-extension"
 }
 ```
-> `{{id}}` will be replaced by the content page url.
 
 ### Usage
 
 See the `/theme` folder for a demo implementation.
 
-Notable files:
+Notable paths:
 
-* `pages/Storyblok.vue` - this should be a target in our router file.
-* `pages/storyblok/Render.vue` - the root component used to render the Storyblok content. This is where you register components.
-* `pages/storyblok/Debug.vue` - fallback component that renders a text about missing components. Only renders in development mode.
-* `router/index.js` - example usage of the Storyblok page in the router
+* `router/index.js` - How to load the Storyblok page
+* `components/storyblok` - Directory with a few demo components
+* `index.js` - How to register components
 
 ## Vue Storefront API
 
@@ -60,11 +58,11 @@ Copy `packages/vsf-storyblok-extension` to `vue-storefront-api/src/api/extension
 
 ## Reference
 
-### `accessToken`
+### `previewToken`
 
 Go to `https://app.storyblok.com/#!/me/spaces/YOUR_SPACE_ID/edit?tab=api` and generate a preview token.
 
-On the backend we use it to fetch posts when the webhook is polled. In the UI it's used for the preview functionallity in Storyblok.
+On the backend we use it to fetch posts when the webhook is polled. In the UI it's used for the preview functionality in Storyblok.
 
 ### `endpoint`
 
@@ -73,10 +71,6 @@ The URL the UI tries to fetch stories from
 ### `indexPrefix`
 
 Prefix used for the ElasticSearch index
-
-### `extraLanguages`
-
-An array of extra languages to fetch stories for. The codes corresponds with the codes found at `https://app.storyblok.com/#!/me/spaces/YOUR_SPACE_ID/edit?tab=languages`
 
 ### `hookSecret`
 
