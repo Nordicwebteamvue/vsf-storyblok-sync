@@ -38,7 +38,7 @@ import i18n from '@vue-storefront/i18n'
 
 import ButtonFull from 'theme/components/theme/ButtonFull.vue'
 import BaseInput from 'theme/components/core/blocks/Form/BaseInput.vue'
-import { Blok } from 'src/modules/vsf-storyblok-module/components'
+import { Blok } from '@kodbruket/vsf-storyblok-module/components'
 
 export default {
   beforeDestroy () {

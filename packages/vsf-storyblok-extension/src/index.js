@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import crypto from 'crypto'
 import StoryblokClient from 'storyblok-js-client'
-import { apiStatus } from '../../../lib/util'
+import { apiStatus } from './utils'
 import { hook } from './hook'
 import { syncStories } from './sync-stories'
 

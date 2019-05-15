@@ -1,0 +1,11 @@
+{
+  "name": "safira-api",
+  "version": "1.0.0-alpha.1",
+  "private": true,
+  "description": "Dummy extension to include other extensions, because of the docker setup",
+  "author": "Simon Fridlund <simon@fridlund.email>",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@kodbruket/vsf-storyblok-extension": "./@kodbruket/vsf-storyblok-extension"
+  }
+}
