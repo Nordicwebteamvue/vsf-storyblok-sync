@@ -5,7 +5,7 @@ export const components = {
   tile: () => import('./Tile.vue')
 }
 
-export function add(key: string, component: any, options: any = {}) {
+export function add (key: string, component: any, options: any = {}) {
   if (components[key] && !options.force) {
     console.log(`Component with key ${key} already exists, skipping...`)
     return
