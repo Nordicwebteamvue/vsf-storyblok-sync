@@ -1,11 +1,9 @@
 <template>
-  <div v-editable="item">
-    <component v-if="component" :is="component" :item="item" />
-  </div>
+  <component v-if="component" v-editable="item" :is="component" :item="item" />
 </template>
 
 <script>
-import { components } from './'
+import { components } from '.'
 
 export default {
   name: 'RenderBlok',

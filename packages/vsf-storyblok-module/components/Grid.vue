@@ -7,7 +7,8 @@
 </template>
 
 <script>
-import Blok from './Blok'
+import { Blok } from '.'
+
 export default {
   extends: Blok,
   name: 'GridBlok'

@@ -1,8 +1,6 @@
-import { StoryblokSyncState } from '../types/State'
+import { StoryblokState } from '../types/State'
 import { GetterTree } from 'vuex'
 
-export const getters: GetterTree<StoryblokSyncState, any> = {
-  getPreviewToken: (state) => state.previewToken,
-  getStory: (state) => state.story,
-  isLoading: (state) => state.loading
+export const getters: GetterTree<StoryblokState, any> = {
+  isLoading: (state) => Object.values(state.stories).find(story => story.loading) || false
 }

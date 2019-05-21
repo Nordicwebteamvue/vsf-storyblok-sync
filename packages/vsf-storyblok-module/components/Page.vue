@@ -1,13 +1,12 @@
 <template>
   <div>
-    <template v-for="child in item.body">
-      <sb-render :item="child" :key="child.uuid" />
-    </template>
+    <sb-render v-for="child in item.body" :item="child" :key="child.uuid" />
   </div>
 </template>
 
 <script>
-import Blok from './Blok'
+import { Blok } from '.'
+
 export default {
   extends: Blok,
   name: 'PageBlok'
