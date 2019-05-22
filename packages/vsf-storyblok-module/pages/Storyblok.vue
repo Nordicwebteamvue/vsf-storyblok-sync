@@ -1,6 +1,6 @@
 <template>
   <div>
-    <sb-render v-if="story && story.content" :item="story.content"/>
+    <sb-render v-if="story && story.content" :item="story.content" />
   </div>
 </template>
 
