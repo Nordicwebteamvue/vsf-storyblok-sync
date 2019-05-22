@@ -25,15 +25,21 @@ function loadScript (src, id) {
   })
 }
 
-function getStoryblokQuery (route, path = route.path) {
+function getStoryblokQueryParams (route) {
   const queryString = route.fullPath.replace(route.path, '')
   const { _storyblok: id, _storyblok_c: c, _storyblok_tk: storyblok = {} } = qs.parse(queryString, { ignoreQueryPrefix: true })
   const { space_id: spaceId, timestamp, token } = storyblok
 
+  let [_, ...fullSlug] = route.path
+
+  if (!fullSlug) {
+    fullSlug = "home"
+  }
+
   return {
     c,
     id,
-    slug: path,
+    fullSlug,
     spaceId,
     timestamp,
     token
@@ -43,24 +49,24 @@ function getStoryblokQuery (route, path = route.path) {
 export default {
   name: 'Storyblok',
   computed: {
+    ...mapGetters(KEY, [
+      'loading'
+    ]),
     ...mapState(KEY, {
+      previewToken: (state: StoryblokState) => state.previewToken,
       story(state: StoryblokState) {
-        const { id, slug } = getStoryblokQuery(this.$route, this.storyblokPath)
-        const key = this.storyblokPath || id || slug
-        console.log({key})
-        return state.stories[key] && state.stories[key].story
+        const { id, fullSlug } = getStoryblokQueryParams(this.$route)
+
+        const key = this.storyFullSlug || id || fullSlug
+        return state.stories[key].story
       }
     }),
-    ...mapGetters([
-      'isLoading',
-      'previewToken'
-    ])
   },
   methods: {
     async fetchStory () {
-      const { id, spaceId, timestamp, slug, token } = getStoryblokQuery(this.$route, this.storyblokPath)
+      const { id, fullSlug, spaceId, timestamp, token } = getStoryblokQueryParams(this.$route)
 
-      if (id && !this.storyblokPath) {
+      if (id && !this.storyFullSlug) {
         const previewToken = await this.$store.dispatch(`${KEY}/getPreviewToken`, {
           spaceId,
           timestamp,
@@ -76,12 +82,12 @@ export default {
       }
 
       return this.$store.dispatch(`${KEY}/loadStory`, {
-        slug
+        fullSlug: this.storyFullSlug || fullSlug
       })
     }
   },
   async serverPrefetch () {
-    const { id } = getStoryblokQuery(this.$route, this.storyblokPath)
+    const { id } = getStoryblokQueryParams(this.$route)
 
     if (this.$context && !id) {
       this.$context.output.cacheTags.add(KEY)
@@ -93,19 +99,18 @@ export default {
   },
   async mounted () {
     if (!this.story) {
-      const { full_slug } = this.fetchStory()
-      this.storyblokPath = full_slug;
+      const { full_slug } = await this.fetchStory()
+      this.storyFullSlug = full_slug
     }
 
     if (this.previewToken) {
-      // TODO: Make sure we don't load this multiple times
       const url = `https://app.storyblok.com/f/storyblok-latest.js?t=${this.previewToken}`
 
       await loadScript(url, 'storyblok-javascript-bridge')
 
       window['storyblok'].on(['input', 'published', 'change'], (event: any) => {
         if (event.action === 'input') {
-          this.$store.commit(`${KEY}/updateStory`, {story: event.story})
+          this.$store.commit(`${KEY}/updateStory`, { key: event.story.id, story: event.story })
         } else if (!(event).slugChanged) {
           window.location.reload()
         }

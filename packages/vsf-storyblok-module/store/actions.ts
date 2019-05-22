@@ -32,16 +32,16 @@ export const actions: ActionTree<StoryblokState, RootState> = {
     commit('setStory', { key: id, story })
     return story
   },
-  async loadStory ({ commit, state }, { slug }) {
-    commit('loadingStory', { key: slug })
+  async loadStory ({ commit, state }, { fullSlug }) {
+    commit('loadingStory', { key: fullSlug })
 
-    const cachedStory = state.stories[slug].story
+    const cachedStory = state.stories[fullSlug].story
 
     if (cachedStory) {
       return cachedStory
     }
 
-    const url = `${config.storyblok.endpoint}/story${slug}`
+    const url = `${config.storyblok.endpoint}/story/${fullSlug}`
 
     const response = await fetch(url, {
       headers: { 'Content-Type': 'application/json' },
@@ -50,7 +50,7 @@ export const actions: ActionTree<StoryblokState, RootState> = {
 
     const { result: { story } } = await response.json()
 
-    commit('setStory', { key: slug, story })
+    commit('setStory', { key: fullSlug, story })
     return story
   }
 }
