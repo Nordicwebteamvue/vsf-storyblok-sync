@@ -58,7 +58,7 @@ export default {
         const { id, fullSlug } = getStoryblokQueryParams(this.$route)
 
         const key = this.storyFullSlug || id || fullSlug
-        return state.stories[key].story
+        return state.stories[key] && state.stories[key].story
       }
     }),
   },
