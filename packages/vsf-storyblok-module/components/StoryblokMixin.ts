@@ -47,6 +47,10 @@ export default {
       story: 'storyblok/getStory'
     })
   },
+  beforeRouteUpdate(to, from, next) {
+    this.fetchStory()
+    next();
+  },
   methods: {
     async fetchStory () {
       const { id, spaceId, timestamp, slug, token } = getStoryblokQuery(this.$route)
@@ -88,7 +92,6 @@ export default {
     }
 
     if (this.previewToken) {
-      // TODO: Make sure we don't load this multiple times
       const url = `https://app.storyblok.com/f/storyblok-latest.js?t=${this.previewToken}`
 
       await loadScript(url, 'storyblok-javascript-bridge')
