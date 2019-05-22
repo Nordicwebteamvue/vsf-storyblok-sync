@@ -62,6 +62,11 @@ export default {
       }
     }),
   },
+  data () {
+    return {
+      storyFullSlug: ''
+    }
+  },
   methods: {
     async fetchStory () {
       const { id, fullSlug, spaceId, timestamp, token } = getStoryblokQueryParams(this.$route)
