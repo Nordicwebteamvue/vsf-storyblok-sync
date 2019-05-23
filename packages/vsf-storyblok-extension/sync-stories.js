@@ -8,14 +8,10 @@ function mapStoryToBulkAction ({ index, story: { id } }) {
   }
 }
 
-function mapStoryToBulkDocument ({ id, ...story }) {
-  return story
-}
-
 function indexStories ({ db, index, stories = [] }) {
   const bulkOps = stories.reduce((accumulator, story) => {
     accumulator.push(mapStoryToBulkAction({ index, story }))
-    accumulator.push(mapStoryToBulkDocument(story))
+    accumulator.push(story)
     return accumulator
   }, [])
 
