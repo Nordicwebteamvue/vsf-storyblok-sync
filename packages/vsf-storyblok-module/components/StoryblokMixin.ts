@@ -107,6 +107,10 @@ export default {
       await this.fetchStory()
     }
 
+    if (!this.storyFullSlug && !this.story) {
+      this.$router.replace({ name: 'page-not-found' })
+    }
+
     if (this.previewToken) {
       const url = `https://app.storyblok.com/f/storyblok-latest.js?t=${this.previewToken}`
 

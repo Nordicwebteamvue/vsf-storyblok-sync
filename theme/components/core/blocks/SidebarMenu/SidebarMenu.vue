@@ -74,13 +74,13 @@
               {{ $t('Test') }}
             </router-link>
           </li>
-          <li @click="closeMenu" v-if="compareIsActive && isCurrentMenuShowed" class="bg-cl-secondary">
+          <li @click="closeMenu" v-if="isCurrentMenuShowed" class="bg-cl-secondary">
             <router-link
               class="block px25 py20 brdr-bottom-1 brdr-cl-secondary cl-accent no-underline fs-medium-small"
-              :to="localizedRoute('/compare')"
+              :to="localizedRoute('/dead-link')"
               exact
             >
-              {{ $t('Compare products') }}
+              {{ $t('Dead link') }}
             </router-link>
           </li>
           <li @click="login" class="brdr-bottom-1 brdr-cl-secondary bg-cl-secondary flex">
