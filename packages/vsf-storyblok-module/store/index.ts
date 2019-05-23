@@ -4,9 +4,9 @@ import { mutations } from './mutations'
 import { getters } from './getters'
 import { actions } from './actions'
 import { state } from './state'
-import { StoryblokSyncState } from '../types/State'
+import { StoryblokState } from '../types/State'
 
-export const module: Module<StoryblokSyncState, RootState> = {
+export const module: Module<StoryblokState, RootState> = {
   namespaced: true,
   state,
   getters,

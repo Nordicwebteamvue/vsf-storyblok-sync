@@ -59,19 +59,19 @@
           <li @click="closeMenu" v-if="isCurrentMenuShowed" class="bg-cl-secondary">
             <router-link
               class="block px25 py20 brdr-bottom-1 brdr-cl-secondary cl-accent no-underline fs-medium-small"
-              :to="localizedRoute('/sale')"
+              :to="localizedRoute('/ci')"
               exact
             >
-              {{ $t('Sale') }}
+              {{ $t('CI') }}
             </router-link>
           </li>
           <li @click="closeMenu" v-if="isCurrentMenuShowed" class="bg-cl-secondary">
             <router-link
               class="block px25 py20 brdr-bottom-1 brdr-cl-secondary cl-accent no-underline fs-medium-small"
-              :to="localizedRoute('/magazine')"
+              :to="localizedRoute('/test')"
               exact
             >
-              {{ $t('Magazine') }}
+              {{ $t('Test') }}
             </router-link>
           </li>
           <li @click="closeMenu" v-if="compareIsActive && isCurrentMenuShowed" class="bg-cl-secondary">

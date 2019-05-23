@@ -1,9 +1,6 @@
-import { StoryblokSyncState } from '../types/State'
+import { StoryblokState } from '../types/State'
 
-export const state: StoryblokSyncState = {
-  id: undefined,
-  loading: false,
-  previewToken: undefined,
-  slug: undefined,
-  story: undefined
+export const state: StoryblokState = {
+  previewToken: '',
+  stories: {}
 }

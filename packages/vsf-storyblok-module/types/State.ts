@@ -1,7 +1,11 @@
-export interface StoryblokSyncState {
-  id?: number;
-  loading: Boolean;
-  previewToken?: String;
-  slug?: String;
-  story?: Object;
+export interface StoryblokStories {
+  [key: string]: {
+    loading: boolean;
+    story: object;
+  }
+}
+
+export interface StoryblokState {
+  previewToken?: string;
+  stories: StoryblokStories;
 }
