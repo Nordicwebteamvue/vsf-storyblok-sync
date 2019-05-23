@@ -10,6 +10,6 @@ context('CI', () => {
 
   it('redirects to 404 page', () => {
     cy.visit('dead-link')
-    cy.url().should('eq', 'http://localhost:3000/page-not-found')
+  cy.url().should('contain', '/page-not-found')
   })
 })
