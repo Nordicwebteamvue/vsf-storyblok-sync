@@ -104,8 +104,7 @@ export default {
   },
   async mounted () {
     if (!this.story) {
-      const { full_slug } = await this.fetchStory()
-      this.storyFullSlug = full_slug
+      await this.fetchStory()
     }
 
     if (this.previewToken) {
