@@ -7,4 +7,9 @@ context('CI', () => {
     cy.get('a').first().click()
     cy.contains('ci=startpage')
   })
+
+  it('redirects to 404 page', () => {
+    cy.visit('dead-link')
+    cy.url().should('eq', 'http://localhost:3000/page-not-found')
+  })
 })
