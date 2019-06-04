@@ -10,4 +10,6 @@ const moduleConfig: VueStorefrontModuleConfig = {
   beforeRegistration
 }
 
+export { urlExtend } from './urlExtend'
+
 export const Storyblok = new VueStorefrontModule(moduleConfig)
