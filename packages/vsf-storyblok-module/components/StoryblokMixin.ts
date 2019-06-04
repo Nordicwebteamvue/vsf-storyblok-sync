@@ -49,10 +49,13 @@ function getStoryblokQueryParams (route) {
 export default {
   name: 'Storyblok',
   computed: {
-    ...mapGetters(KEY, [
-      'loading'
-    ]),
     ...mapState(KEY, {
+      loadingStory(state: StoryblokState) {
+        const { id, fullSlug } = getStoryblokQueryParams(this.$route)
+
+        const key = this.storyFullSlug || id || fullSlug
+        return state.stories[key] && state.stories[key].loading || false
+      },
       previewToken: (state: StoryblokState) => state.previewToken,
       story(state: StoryblokState) {
         const { id, fullSlug } = getStoryblokQueryParams(this.$route)
