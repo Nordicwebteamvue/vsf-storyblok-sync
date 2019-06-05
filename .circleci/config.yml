@@ -3,7 +3,8 @@ version: 2.1
 
 jobs:
   test:
-    image: node:8
+    docker:
+      image: node:8
     steps:
       - setup_remote_docker:
         docker_layer_caching: true
