@@ -1,6 +1,6 @@
 import config from 'config'
 import fetch from 'isomorphic-fetch'
-import { mapGetters, mapState } from 'vuex'
+import { mapState } from 'vuex'
 import qs from 'qs'
 import { KEY } from ".."
 import { StoryblokState } from '../types/State';
