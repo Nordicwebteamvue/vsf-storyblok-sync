@@ -9,5 +9,6 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - checkout
+      - run: yarn
       - run: yarn lint
       - run: yarn test:ci
