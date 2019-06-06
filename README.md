@@ -13,8 +13,11 @@ Copy `packages/vsf-storyblok-module` to `vue-storefront/src/modules`.
 Add the following to `vue-storefront/src/modules/index.ts`
 
 ```
+import { extendModule } from '@vue-storefront/core/lib/module'
 ...
-import { Storyblok } from './vsf-storyblok-module';
+import { Storyblok, urlExtend } from './vsf-storyblok-module';
+
+extendModule(urlExtend)
 
 export const registerModules: VueStorefrontModule[] = [
   ...
@@ -45,6 +48,18 @@ Notable paths:
 * `router/index.js` - How to load the Storyblok page
 * `components/storyblok` - Directory with a few demo components
 * `index.js` - How to register components
+
+#### `theme/router/index.js`
+
+```js
+import { StoryblokRoutes } from 'src/modules/vsf-storyblok-module'
+...
+let routes = ...
+...
+routes = routes.concat(StoryblokRoutes)
+
+export default routes
+```
 
 ## Vue Storefront API
 
