@@ -15,7 +15,8 @@ Add the following to `vue-storefront/src/modules/index.ts`
 ```
 import { extendModule } from '@vue-storefront/core/lib/module'
 ...
-import { Storyblok, urlExtend } from './vsf-storyblok-module';
+import { Storyblok } from './vsf-storyblok-module'
+import urlExtend from './vsf-storyblok-module/urlExtend'
 
 extendModule(urlExtend)
 

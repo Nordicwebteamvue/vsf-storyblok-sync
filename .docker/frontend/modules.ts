@@ -21,7 +21,8 @@ import { RawOutputExample } from './raw-output-example'
 import { Magento2CMS } from './magento-2-cms'
 import { Url } from '@vue-storefront/core/modules/url'
 import { InstantCheckout } from './instant-checkout'
-import { Storyblok, urlExtend } from './vsf-storyblok-module'
+import { Storyblok } from './vsf-storyblok-module'
+import urlExtend from './vsf-storyblok-module/urlExtend'
 
 extendModule(urlExtend)
 
