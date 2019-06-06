@@ -17,6 +17,7 @@ before_install:
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
+  - sed -i.bak 's/package.json/package.json yarn.lock/' .docker/vue-storefront/docker/vue-storefront/Dockerfile
 
 before_script:
   - docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.test.yml build
