@@ -2,11 +2,13 @@ import { actions } from '@vue-storefront/core/modules/url/store/actions'
 import { ActionTree } from 'vuex';
 import SearchQuery from '@vue-storefront/core/lib/search/searchQuery'
 import { removeStoreCodeFromRoute } from '@vue-storefront/core/lib/multistore'
+import { KEY } from '.'
 
-const forProduct = async ({ dispatch }, url, params) => {
-  const productQuery = new SearchQuery()
+const forProduct = async ({ dispatch }, { url, params }) => {
   url = (removeStoreCodeFromRoute(url) as string)
-  productQuery.applyFilter({key: 'url_path', value: {'eq': url}}) // Tees category
+  const productQuery = new SearchQuery()
+  const productSlug = url.split('/').reverse()[0]
+  productQuery.applyFilter({key: 'url_path', value: {'eq': productSlug}})
   const products = await dispatch('product/list', { query: productQuery }, { root: true })
   if (products && products.items && products.items.length) {
     const product = products.items[0]
@@ -21,7 +23,8 @@ const forProduct = async ({ dispatch }, url, params) => {
   }
 }
 
-const forCategory = async ({ dispatch }, url) => {
+const forCategory = async ({ dispatch }, { url }) => {
+  url = (removeStoreCodeFromRoute(url) as string)
   try {
     const category = await dispatch('category/single', { key: 'url_path', value: url }, { root: true })
     if (category !== null) {
@@ -38,25 +41,35 @@ const forCategory = async ({ dispatch }, url) => {
   }
 }
 
+const forStory = async ({ dispatch }, { url: fullSlug }) => {
+  const story = await dispatch(`${KEY}/loadStory`, { fullSlug }, { root: true })
+  if (story) {
+    return {
+      name: 'storyblok',
+      params: {
+        // TODO: Why does this need to be here?
+        slug: 'storyblok'
+      }
+    }
+  }
+}
+
 const extendUrlVuex = {
   actions: {
-    async mappingFallback ({ dispatch }, { url, params }: { url: string, params: any}) {
-      url = (removeStoreCodeFromRoute(url) as string)
-      const product = await forProduct({ dispatch }, url, params)
+    async mappingFallback ({ dispatch }, payload: { url: string, params: any}) {
+      const product = await forProduct({ dispatch }, payload)
       if (product) {
         return product
       }
-      const category = await forCategory({ dispatch }, url)
+      const category = await forCategory({ dispatch }, payload)
       if (category) {
         return category
       }
-      return {
-        name: 'storyblok',
-        params: {
-          // TODO: Why does this need to be here?
-          slug: 'storyblok'
-        }
+      const story = await forStory({ dispatch }, payload)
+      if (story) {
+        return story
       }
+      throw new Error('No route found')
     }
   }
 }

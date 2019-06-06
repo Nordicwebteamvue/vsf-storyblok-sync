@@ -2,7 +2,7 @@ import config from 'config'
 import fetch from 'isomorphic-fetch'
 import { mapState } from 'vuex'
 import qs from 'qs'
-import { KEY } from ".."
+import { KEY } from '..'
 import { StoryblokState } from '../types/State';
 
 function loadScript (src, id) {
