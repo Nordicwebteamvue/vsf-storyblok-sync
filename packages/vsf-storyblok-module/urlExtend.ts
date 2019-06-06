@@ -28,7 +28,6 @@ const forCategory = async ({ dispatch }, { url }) => {
   try {
     const category = await dispatch('category/single', { key: 'url_path', value: url }, { root: true })
     if (category !== null) {
-      console.log('category.slug', category.slug)
       return {
         name: 'category',
         params: {
