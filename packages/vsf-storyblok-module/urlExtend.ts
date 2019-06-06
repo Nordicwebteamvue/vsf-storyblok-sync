@@ -53,7 +53,8 @@ const extendUrlVuex = {
       return {
         name: 'storyblok',
         params: {
-          slug: 'toppar'
+          // TODO: Why does this need to be here?
+          slug: 'storyblok'
         }
       }
     }
