@@ -1,5 +1,5 @@
 import config from 'config'
-// const Home = () => import(/* webpackChunkName: "vsf-home" */ 'theme/pages/Home.vue')
+import { StoryblokRoutes } from 'src/modules/vsf-storyblok-module'
 const PageNotFound = () => import(/* webpackChunkName: "vsf-not-found" */ 'theme/pages/PageNotFound.vue')
 const ErrorPage = () => import(/* webpackChunkName: "vsf-error" */ 'theme/pages/Error.vue')
 const Product = () => import(/* webpackChunkName: "vsf-product" */ 'theme/pages/Product.vue')
@@ -12,11 +12,8 @@ const MyAccount = () => import(/* webpackChunkName: "vsf-my-account" */ 'theme/p
 const Static = () => import(/* webpackChunkName: "vsf-static" */ 'theme/pages/Static.vue')
 const CustomCmsPage = () => import(/* webpackChunkName: "vsf-custom-cms" */ 'theme/pages/CustomCmsPage.vue')
 const CmsData = () => import(/* webpackChunkName: "vsf-data" */ 'src/modules/magento-2-cms/components/CmsData')
-const Storyblok = () => import(/* webpackChunkName: "vsf-sb-sync" */ 'src/modules/vsf-storyblok-module/pages/Storyblok')
 
 let routes = [
-  // { name: 'home', path: '/', component: Home, alias: '/pwa.html' },
-  { name: 'home', path: '/', component: Storyblok, alias: '/pwa.html' },
   { name: 'checkout', path: '/checkout', component: Checkout },
   { name: 'legal', path: '/legal', component: Static, props: {page: 'lorem', title: 'Legal Notice'}, meta: {title: 'Legal Notice', description: 'Legal Notice - example of description usage'} },
   { name: 'privacy', path: '/privacy', component: Static, props: {page: 'lorem', title: 'Privacy'} },
@@ -43,8 +40,7 @@ let routes = [
   { name: 'error', path: '/error', component: ErrorPage, meta: { layout: 'minimal' } },
   { name: 'custom-cms-page', path: '/custom-cms-page', component: CustomCmsPage },
   { name: 'cms-block-demo-page-ssr', path: '/cms-block-demo-page-ssr', component: CmsBlockDemoPageSsr },
-  { name: 'cms-page-sync', path: '/cms-page-sync', component: CmsData, props: {identifier: 'about-us', type: 'Page', sync: true} },
-  { name: 'storyblok', path: '/*', component: Storyblok }
+  { name: 'cms-page-sync', path: '/cms-page-sync', component: CmsData, props: {identifier: 'about-us', type: 'Page', sync: true} }
 ]
 if (!config.products.useShortCatalogUrls) {
   routes = routes.concat([
@@ -71,5 +67,7 @@ if (!config.products.useShortCatalogUrls) {
     { name: 'category', path: '/:slug', component: Category }
   ])
 }
+
+routes = routes.concat(StoryblokRoutes)
 
 export default routes

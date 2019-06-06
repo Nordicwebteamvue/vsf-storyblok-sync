@@ -28,11 +28,12 @@ function hook ({ config, db, index, storyblokClient }) {
       }
     }
 
+    const cv = Date.now() // bust cache
     const { story_id: id, action } = req.body
 
     try {
       if (action === 'published') {
-        const { data: { story } } = await storyblokClient.get(`cdn/stories/${id}`)
+        const { data: { story } } = await storyblokClient.get(`cdn/stories/${id}`, { cv })
         const transformedStory = transformStory(index)(story)
 
         await db.index(transformedStory)

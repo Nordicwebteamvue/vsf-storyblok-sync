@@ -1,4 +1,4 @@
-// import { extendModule } from '@vue-storefront/core/lib/module'
+import { extendModule } from '@vue-storefront/core/lib/module'
 import { VueStorefrontModule } from '@vue-storefront/core/lib/module'
 import { Catalog } from '@vue-storefront/core/modules/catalog'
 import { Cart } from '@vue-storefront/core/modules/cart'
@@ -19,7 +19,11 @@ import { PaymentBackendMethods } from './payment-backend-methods'
 import { PaymentCashOnDelivery } from './payment-cash-on-delivery'
 import { RawOutputExample } from './raw-output-example'
 import { Magento2CMS } from './magento-2-cms'
-import { Storyblok } from './vsf-storyblok-module'
+import { Url } from '@vue-storefront/core/modules/url'
+import { InstantCheckout } from './instant-checkout'
+import { Storyblok, urlExtend } from './vsf-storyblok-module'
+
+extendModule(urlExtend)
 
 export const registerModules: VueStorefrontModule[] = [
   Checkout,
@@ -41,5 +45,7 @@ export const registerModules: VueStorefrontModule[] = [
   PaymentCashOnDelivery,
   RawOutputExample,
   AmpRenderer,
+  InstantCheckout,
+  Url,
   Storyblok
 ]

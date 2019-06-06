@@ -119,3 +119,11 @@ docker-compose up
 ```
 
 Go to http://localhost:8080/api/ext/storyblok-extension/hook to trigger the webhook and pull data from Storyblok. Now visit http://localhost:3000/test to see it in action
+
+### Seed products
+
+```
+docker-compose exec storefront-api yarn mage2vs import
+docker-compose exec storefront-api yarn restore
+docker-compose exec storefront-api yarn migrate
+```
