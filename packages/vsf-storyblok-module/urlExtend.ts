@@ -3,6 +3,7 @@ import { ActionTree } from 'vuex';
 import SearchQuery from '@vue-storefront/core/lib/search/searchQuery'
 import { removeStoreCodeFromRoute } from '@vue-storefront/core/lib/multistore'
 import { KEY } from '.'
+import { getStoryblokQueryParams } from './helpers'
 
 const forProduct = async ({ dispatch }, { url, params }) => {
   url = (removeStoreCodeFromRoute(url) as string)
@@ -40,16 +41,20 @@ const forCategory = async ({ dispatch }, { url }) => {
   }
 }
 
-const forStory = async ({ dispatch }, { url: fullSlug }) => {
+const forStory = async ({ dispatch }, { url: fullSlug, params }) => {
+  const result = {
+    name: 'storyblok',
+    params: {
+      // TODO: Why does this need to be here?
+      slug: 'storyblok'
+    }
+  }
+  if (params._storyblok) {
+    return result
+  }
   const story = await dispatch(`${KEY}/loadStory`, { fullSlug }, { root: true })
   if (story) {
-    return {
-      name: 'storyblok',
-      params: {
-        // TODO: Why does this need to be here?
-        slug: 'storyblok'
-      }
-    }
+    return result
   }
 }
 
