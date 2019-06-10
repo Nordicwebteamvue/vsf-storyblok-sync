@@ -23,7 +23,8 @@ function indexStories ({ db, index, stories = [] }) {
 async function syncStories ({ db, index, page = 1, perPage = 100, storyblokClient }) {
   const { data: { stories }, total } = await storyblokClient.get('cdn/stories', {
     page,
-    per_page: perPage
+    per_page: perPage,
+    resolve_links: 'url'
   })
 
   const promise = indexStories({ db, index, stories })
