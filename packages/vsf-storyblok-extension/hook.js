@@ -33,7 +33,10 @@ function hook ({ config, db, index, storyblokClient }) {
 
     try {
       if (action === 'published') {
-        const { data: { story } } = await storyblokClient.get(`cdn/stories/${id}`, { cv })
+        const { data: { story } } = await storyblokClient.get(`cdn/stories/${id}`, {
+          cv,
+          resolve_links: 'url'
+        })
         const transformedStory = transformStory(index)(story)
 
         await db.index(transformedStory)
