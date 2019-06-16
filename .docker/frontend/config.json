@@ -12,7 +12,6 @@
   "storyblok": {
     "endpoint": "http://storefront-api:8080/api/ext/vsf-storyblok-extension",
     "settings": {
-      "extendUrlModule": true,
       "addRoutes": true
     }
   },
