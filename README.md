@@ -45,21 +45,8 @@ See the `/theme` folder for a demo implementation.
 
 Notable paths:
 
-* `router/index.js` - How to load the Storyblok page
 * `components/storyblok` - Directory with a few demo components
 * `index.js` - How to register components
-
-#### `theme/router/index.js`
-
-```js
-import { StoryblokRoutes } from 'src/modules/vsf-storyblok-module'
-...
-let routes = ...
-...
-routes = routes.concat(StoryblokRoutes)
-
-export default routes
-```
 
 ## Vue Storefront API
 
@@ -72,7 +59,6 @@ Copy `packages/vsf-storyblok-extension` to `vue-storefront-api/src/api/extension
 ...
 "storyblok": {
   "previewToken": "__API_KEY_HERE__",
-  "indexPrefix": "storyblok_",
   "hookSecret": "__SECRET_CHANGE_ME__"
 }
 ```
@@ -88,10 +74,6 @@ On the backend we use it to fetch posts when the webhook is polled. In the UI it
 ### `endpoint`
 
 The URL the UI tries to fetch stories from
-
-### `indexPrefix`
-
-Prefix used for the ElasticSearch index
 
 ### `hookSecret`
 
@@ -118,7 +100,7 @@ git clone --recurse-submodules http://github.com/kodbruket/vsf-storyblok-sync.gi
 docker-compose up
 ```
 
-Go to http://localhost:8080/api/ext/storyblok-extension/hook to trigger the webhook and pull data from Storyblok. Now visit http://localhost:3000/test to see it in action
+Visit http://localhost:3000/ci to see it in action
 
 ### Seed products
 

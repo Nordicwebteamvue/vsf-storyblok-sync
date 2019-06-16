@@ -1,5 +1,5 @@
 import config from 'config'
-import { StoryblokRoutes } from 'src/modules/vsf-storyblok-module'
+const Home = () => import(/* webpackChunkName: "vsf-home" */ 'theme/pages/Home.vue')
 const PageNotFound = () => import(/* webpackChunkName: "vsf-not-found" */ 'theme/pages/PageNotFound.vue')
 const ErrorPage = () => import(/* webpackChunkName: "vsf-error" */ 'theme/pages/Error.vue')
 const Product = () => import(/* webpackChunkName: "vsf-product" */ 'theme/pages/Product.vue')
@@ -14,6 +14,7 @@ const CustomCmsPage = () => import(/* webpackChunkName: "vsf-custom-cms" */ 'the
 const CmsData = () => import(/* webpackChunkName: "vsf-data" */ 'src/modules/magento-2-cms/components/CmsData')
 
 let routes = [
+  { name: 'home', path: '/', component: Home, alias: '/pwa.html' },
   { name: 'checkout', path: '/checkout', component: Checkout },
   { name: 'legal', path: '/legal', component: Static, props: {page: 'lorem', title: 'Legal Notice'}, meta: {title: 'Legal Notice', description: 'Legal Notice - example of description usage'} },
   { name: 'privacy', path: '/privacy', component: Static, props: {page: 'lorem', title: 'Privacy'} },
@@ -67,7 +68,5 @@ if (!config.products.useShortCatalogUrls) {
     { name: 'category', path: '/:slug', component: Category }
   ])
 }
-
-routes = routes.concat(StoryblokRoutes)
 
 export default routes

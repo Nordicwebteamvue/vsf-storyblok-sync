@@ -1,5 +1,6 @@
 <template>
   <footer :class="{ 'brdr-top-1 brdr-cl-secondary': isCheckoutPage }">
+    <newsletter class=" flex brdr-bottom-1 brdr-cl-secondary" v-if="!isCheckoutPage"/>
     <div
       class="footer-links flex pt30 pb60 px40 bg-cl-secondary"
       v-if="!isCheckoutPage"
@@ -145,6 +146,7 @@
 <script>
 import CurrentPage from 'theme/mixins/currentPage'
 import LanguageSwitcher from '../../LanguageSwitcher.vue'
+import Newsletter from 'theme/components/core/blocks/Footer/Newsletter'
 
 export default {
   mixins: [CurrentPage],
@@ -158,6 +160,7 @@ export default {
     }
   },
   components: {
+    Newsletter,
     LanguageSwitcher
   }
 }

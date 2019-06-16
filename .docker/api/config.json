@@ -7,7 +7,6 @@
   "registeredExtensions": ["vsf-storyblok-extension"],
   "storyblok": {
     "previewToken": "mrpbBbrwJU75kaRRQBIyugtt",
-    "indexPrefix": "storyblok_",
     "hookSecret": "__SECRET_CHANGE_ME__"
   },
   "objHashSecret": "__SECRET_CHANGE_ME__",
