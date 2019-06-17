@@ -52,6 +52,14 @@ function getStoryblokQueryParams (route) {
 
 export default {
   name: 'Storyblok',
+  metaInfo () {
+    if (!this.isStatic && this.story) {
+      return {
+        title: this.story.name
+      }
+    }
+    return {}
+  },
   computed: {
     ...mapState(KEY, {
       loadingStory(state: StoryblokState) {
@@ -66,6 +74,9 @@ export default {
 
         const key = this.storyblokPath || id || fullSlug
         return state.stories[key] && state.stories[key].story
+      },
+      isStatic() {
+        return this.storyFullSlug || this.storyblok.path || false
       },
       storyblokPath() {
         const {storeCode} = currentStoreView()
