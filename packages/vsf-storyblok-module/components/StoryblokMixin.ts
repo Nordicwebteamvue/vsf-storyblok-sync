@@ -1,11 +1,12 @@
 import config from 'config'
 import fetch from 'isomorphic-fetch'
 import { mapState } from 'vuex'
+import { currentStoreView } from '@vue-storefront/core/lib/multistore'
 import qs from 'qs'
 import { KEY } from '..'
-import { StoryblokState } from '../types/State';
+import { StoryblokState } from '../types/State'
 
-function loadScript (src, id) {
+function loadScript (src: string, id: string) {
   return new Promise((resolve, reject) => {
     if (document.getElementById(id)) {
       resolve()
@@ -53,28 +54,40 @@ export default {
       loadingStory(state: StoryblokState) {
         const { id, fullSlug } = getStoryblokQueryParams(this.$route)
 
-        const key = this.storyFullSlug || id || fullSlug
+        const key = this.storyblokPath || id || fullSlug
         return state.stories[key] && state.stories[key].loading || false
       },
       previewToken: (state: StoryblokState) => state.previewToken,
       story(state: StoryblokState) {
         const { id, fullSlug } = getStoryblokQueryParams(this.$route)
 
-        const key = this.storyFullSlug || id || fullSlug
+        const key = this.storyblokPath || id || fullSlug
         return state.stories[key] && state.stories[key].story
+      },
+      storyblokPath() {
+        const {storeCode} = currentStoreView()
+        const path = this.storyFullSlug || this.storyblok.path // backwards compatible
+        if (this.storyblok.prependStorecode && config.storeViews.multistore && storeCode) {
+          return `${storeCode}/${path}`
+        }
+        return path
       }
     }),
   },
   data () {
     return {
-      storyFullSlug: ''
+      storyFullSlug: '', // backwards compatible
+      storyblok: {
+        prependStorecode: false,
+        path: '',
+      }
     }
   },
   methods: {
     async fetchStory () {
       const { id, fullSlug, spaceId, timestamp, token } = getStoryblokQueryParams(this.$route)
 
-      if (id && !this.storyFullSlug) {
+      if (id && !this.storyblokPath) {
         const previewToken = await this.$store.dispatch(`${KEY}/getPreviewToken`, {
           spaceId,
           timestamp,
@@ -90,7 +103,7 @@ export default {
       }
 
       return this.$store.dispatch(`${KEY}/loadStory`, {
-        fullSlug: this.storyFullSlug || fullSlug
+        fullSlug: this.storyblokPath || fullSlug
       })
     }
   },
