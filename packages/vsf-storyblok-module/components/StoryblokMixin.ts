@@ -1,7 +1,7 @@
 import config from 'config'
 import fetch from 'isomorphic-fetch'
 import { mapState } from 'vuex'
-import { currentStoreView } from '@vue-storefront/core/lib/multistore'
+import { currentStoreView, removeStoreCodeFromRoute } from '@vue-storefront/core/lib/multistore'
 import qs from 'qs'
 import { KEY } from '..'
 import { StoryblokState } from '../types/State'
@@ -35,6 +35,9 @@ function getStoryblokQueryParams (route) {
 
   if (!fullSlug) {
     fullSlug = "home"
+  }
+  if (fullSlug === removeStoreCodeFromRoute(fullSlug)) {
+    fullSlug = `${fullSlug}/home`
   }
 
   return {
