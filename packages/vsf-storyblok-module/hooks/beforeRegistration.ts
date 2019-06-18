@@ -6,15 +6,7 @@ import { RouterManager } from '@vue-storefront/core/lib/router-manager'
 import { setupMultistoreRoutes } from '@vue-storefront/core/lib/multistore'
 import Render from '../components/Render.vue'
 import { StoryblokRoutes } from '../pages/routes'
-
-const defaultSettings = {
-  addRoutes: true
-}
-
-const getSettings = (settings = {}) => ({
-  ...defaultSettings,
-  ...settings
-})
+import { getSettings } from '../helpers'
 
 function beforeRegistration ({ Vue, config, store }) {
   const settings = getSettings(config.storyblok.settings)
