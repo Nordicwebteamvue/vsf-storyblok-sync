@@ -76,11 +76,11 @@ export default {
         return state.stories[key] && state.stories[key].story
       },
       isStatic() {
-        return this.storyFullSlug || this.storyblok.path || false
+        return !!this.storyblok.path
       },
       storyblokPath() {
         const {storeCode} = currentStoreView()
-        const path = this.storyFullSlug || this.storyblok.path // backwards compatible
+        const path = this.storyblok.path
         if (this.storyblok.prependStorecode && config.storeViews.multistore && storeCode) {
           return `${storeCode}/${path}`
         }
@@ -90,7 +90,6 @@ export default {
   },
   data () {
     return {
-      storyFullSlug: '', // backwards compatible
       storyblok: {
         prependStorecode: false,
         path: '',
