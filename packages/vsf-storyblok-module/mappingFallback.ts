@@ -3,6 +3,10 @@ import { removeStoreCodeFromRoute } from '@vue-storefront/core/lib/multistore'
 
 export const forStoryblok = async ({ dispatch }, { url }) => {
   url = url.replace(/\/$/, "")
+  // TODO: use config.storeViews.defaultStoreCode
+  // if (url === removeStoreCodeFromRoute(url) && config.storeViews.defaultStoreCode) {
+  //   url = `${config.storeViews.defaultStoreCode}/url`
+  // }
   if (config.storeViews.multistore && url === removeStoreCodeFromRoute(url)) {
     url = `${url}/home`
   }
