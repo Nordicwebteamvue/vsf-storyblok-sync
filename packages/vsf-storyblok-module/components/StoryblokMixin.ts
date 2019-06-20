@@ -33,12 +33,10 @@ function getStoryblokQueryParams (route) {
 
   let [_, ...fullSlug] = route.path
 
-  if (!fullSlug) {
-    fullSlug = "home"
-  }
-  if (fullSlug === removeStoreCodeFromRoute(fullSlug)) {
-    fullSlug = `${fullSlug}/home`
-  }
+  // XXX: Not sure if this is needed, will look into it
+  // if (config.storeViews.multistore && config.defaultStoreCode && fullSlug === removeStoreCodeFromRoute(fullSlug)) {
+  //   fullSlug = `${config.defaultStoreCode}/${fullSlug}`
+  // }
 
   return {
     c,
@@ -52,6 +50,12 @@ function getStoryblokQueryParams (route) {
 
 export default {
   name: 'Storyblok',
+  props: {
+    storyblokFullSlug: {
+      type: String,
+      default: ''
+    }
+  },
   metaInfo () {
     if (!this.isStatic && this.story) {
       return {
@@ -80,7 +84,7 @@ export default {
       },
       storyblokPath() {
         const {storeCode} = currentStoreView()
-        const path = this.storyblok.path
+        const path = this.storyblokFullSlug || this.storyblok.path
         if (this.storyblok.prependStorecode && config.storeViews.multistore && storeCode) {
           return `${storeCode}/${path}`
         }
