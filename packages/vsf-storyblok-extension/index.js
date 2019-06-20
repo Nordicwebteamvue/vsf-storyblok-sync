@@ -30,8 +30,16 @@ module.exports = ({ config, db }) => {
       query: {
         constant_score: {
           filter: {
-            term: {
-              'full_slug.keyword': path
+            bool: {
+              should: [{
+                term: {
+                  'full_slug.keyword': path
+                }
+              }, {
+                term: {
+                  'full_slug.keyword': `${path}/`
+                }
+              }]
             }
           }
         }
@@ -69,13 +77,8 @@ module.exports = ({ config, db }) => {
     console.log('📖 : Stories not synced!') // eslint-disable-line no-console
   })
 
-  api.get('/story/', (req, res) => {
-    getStory(res, 'home')
-  })
-
-  api.get('/story/:story*', (req, res) => {
-    const path = req.params.story + req.params[0]
-    getStory(res, path)
+  api.get('/story(/?*)', (req, res) => {
+    getStory(res, req.params[1])
   })
 
   api.get('/validate-editor', async (req, res) => {
