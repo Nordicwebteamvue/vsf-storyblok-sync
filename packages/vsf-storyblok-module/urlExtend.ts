@@ -3,6 +3,7 @@ import { ActionTree } from 'vuex';
 import SearchQuery from '@vue-storefront/core/lib/search/searchQuery'
 import { removeStoreCodeFromRoute } from '@vue-storefront/core/lib/multistore'
 import { KEY } from '.'
+import { forStoryblok } from './mappingFallback'
 
 const forProduct = async ({ dispatch }, { url, params }) => {
   url = (removeStoreCodeFromRoute(url) as string)
@@ -40,19 +41,6 @@ const forCategory = async ({ dispatch }, { url }) => {
   }
 }
 
-const forStory = async ({ dispatch }, { url: fullSlug }) => {
-  const story = await dispatch(`${KEY}/loadStory`, { fullSlug }, { root: true })
-  if (story) {
-    return {
-      name: 'storyblok',
-      params: {
-        // TODO: Why does this need to be here?
-        slug: 'storyblok'
-      }
-    }
-  }
-}
-
 const extendUrlVuex = {
   actions: {
     async mappingFallback ({ dispatch }, payload: { url: string, params: any}) {
@@ -64,7 +52,7 @@ const extendUrlVuex = {
       if (category) {
         return category
       }
-      const story = await forStory({ dispatch }, payload)
+      const story = await forStoryblok({ dispatch }, payload)
       if (story) {
         return story
       }
