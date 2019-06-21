@@ -9,5 +9,10 @@ export default {
     pretty (value) {
       return value
     }
+  },
+  metaInfo: {
+    meta: [
+      { charset: 'utf-8' }
+    ]
   }
 }
