@@ -25,12 +25,6 @@ export const registerModules: VueStorefrontModule[] = [
 ]
 ```
 
-Add a key to your `router-view` to trigger re-renders, something like this:
-
-```
-<router-view :key="$route.path" />
-```
-
 ### Config
 
 ```
