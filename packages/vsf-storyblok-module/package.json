@@ -7,9 +7,10 @@
   "author": "Max Malm",
   "license": "MIT",
   "dependencies": {
+    "core-js": "3",
     "isomorphic-fetch": "^2.2.1",
     "lodash.get": "^4.4.2",
-    "storyblok-js-client": "^1.0.22",
+    "storyblok-js-client": "^1.0.29",
     "storyblok-vue": "^1.0.5",
     "vuex": "^3.1.0"
   },

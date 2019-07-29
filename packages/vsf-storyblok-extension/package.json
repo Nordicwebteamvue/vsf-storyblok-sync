@@ -7,7 +7,7 @@
   "author": "Max Malm",
   "license": "MIT",
   "dependencies": {
-    "storyblok-js-client": "^1.0.22"
+    "storyblok-js-client": "^1.0.29"
   },
   "files": [
     "hook.js",
