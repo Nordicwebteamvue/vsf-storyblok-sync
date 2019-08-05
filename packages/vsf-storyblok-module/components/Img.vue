@@ -10,7 +10,7 @@ export default {
     image () {
       const { images } = this.$store.state.config
       const src = this.src.substring(0, 2) === '//' ? `https:${this.src}` : this.src
-      const imageUrl = `${images.baseUrl}?url=${src}&width=${this.width}&height=${this.height}&action=fit`
+      const imageUrl = `${images.baseUrl}?width=${this.width}&height=${this.height}&action=fit&url=${src}`
       return imageUrl
     }
   },
