@@ -30,7 +30,12 @@ async function syncStories ({ db, index, page = 1, perPage = 100, storyblokClien
     resolve_links: 'url'
   })
 
-  const promise = indexStories({ db, index, stories })
+  const newStories = stories.map(story => ({
+    ...story,
+    full_slug: story.full_slug.replace(/^\/|\/$/g, '')
+  }))
+
+  const promise = indexStories({ db, index, stories: newStories })
 
   const lastPage = Math.ceil((total / perPage))
 

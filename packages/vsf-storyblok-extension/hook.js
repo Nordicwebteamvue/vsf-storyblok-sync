@@ -3,6 +3,7 @@ import { apiStatus } from '../../../lib/util'
 
 const transformStory = (index) => ({ id, ...story } = {}) => {
   story.content = JSON.stringify(story.content)
+  story.full_slug = story.full_slug.replace(/^\/|\/$/g, '')
   return {
     index: index,
     type: 'story', // XXX: Change to _doc once VSF supports Elasticsearch 6
