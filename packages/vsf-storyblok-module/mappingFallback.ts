@@ -1,7 +1,18 @@
 import config from 'config'
 import { removeStoreCodeFromRoute, storeCodeFromRoute } from '@vue-storefront/core/lib/multistore'
 
-export const forStoryblok = async ({ dispatch }, { url }) => {
+const route = {
+  name: 'storyblok',
+  params: {
+    // TODO: Why does this need to be here?
+    slug: 'storyblok'
+  }
+}
+
+export const forStoryblok = async ({ dispatch }, { url, params }) => {
+  if (params && params._storyblok) {
+    return route
+  }
   url = url.replace(/\/$/, "") // remove trailing slash
   const storeCode = storeCodeFromRoute(url)
   if (config.storeViews.multistore && storeCode && url === removeStoreCodeFromRoute(url)) {
@@ -9,12 +20,6 @@ export const forStoryblok = async ({ dispatch }, { url }) => {
   }
   const story = await dispatch(`storyblok/loadStory`, { fullSlug: url }, { root: true })
   if (story) {
-    return {
-      name: 'storyblok',
-      params: {
-        // TODO: Why does this need to be here?
-        slug: 'storyblok'
-      }
-    }
+    return route
   }
 }
