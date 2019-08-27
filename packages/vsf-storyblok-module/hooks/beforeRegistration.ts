@@ -23,12 +23,11 @@ function beforeRegistration ({ Vue, config, store }) {
     ...config.storyblok
   }
 
+  const storyblokClient = new StoryblokClient(storyblokClientConfig)
+  Vue.prototype.$storyblokClient = storyblokClient
+  store.$storyblokClient = storyblokClient
+
   once('__VUE_USE_STORYBLOK__', () => {
-    const storyblokClient = new StoryblokClient(storyblokClientConfig)
-
-    Vue.prototype.$storyblokClient = storyblokClient
-    store.$storyblokClient = storyblokClient
-
     Vue.use(StoryblokVue)
   })
   Vue.component('sb-render', Render)
