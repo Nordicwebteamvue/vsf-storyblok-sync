@@ -3,13 +3,17 @@
 </template>
 
 <script>
-import { components } from '.'
+import { components } from ".";
 
 export default {
-  name: 'RenderBlok',
+  name: "RenderBlok",
   computed: {
-    component: function () {
-      return components[this.item.component] || components.debug
+    component() {
+      return (
+        this.components[this.item.component] ||
+        components[this.item.component] ||
+        components.debug
+      );
     }
   },
   props: {
@@ -18,5 +22,5 @@ export default {
       required: true
     }
   }
-}
+};
 </script>

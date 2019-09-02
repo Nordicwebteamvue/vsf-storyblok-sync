@@ -23,20 +23,22 @@ export default {
         const { id, fullSlug } = getStoryblokQueryParams(this.$route)
 
         const key = this.storyblokPath || id || fullSlug
-        return state.stories[key] && state.stories[key].loading || false
+        const storyData = state.stories[key]
+        return storyData && storyData.loading || false
       },
       previewToken: (state: StoryblokState) => state.previewToken,
       story(state: StoryblokState) {
         const { id, fullSlug } = getStoryblokQueryParams(this.$route)
 
         const key = this.storyblokPath || id || fullSlug
-        return state.stories[key] && state.stories[key].story
+        const storyData = state.stories[key]
+        return storyData && storyData.story
       },
       isStatic() {
         return !!this.storyblok.path
       },
       storyblokPath() {
-        const {storeCode} = currentStoreView()
+        const { storeCode } = currentStoreView()
         const path = this.storyblok.path
         if (this.storyblok.prependStorecode && config.storeViews.multistore && storeCode) {
           return `${storeCode}/${path}`

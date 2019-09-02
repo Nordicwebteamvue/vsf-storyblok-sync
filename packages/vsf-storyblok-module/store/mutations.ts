@@ -2,7 +2,7 @@ import { MutationTree } from 'vuex'
 import { StoryblokState } from '../types/State'
 
 export const mutations: MutationTree<StoryblokState> = {
-  loadingStory (state: StoryblokState, { key }) {
+  loadingStory (state: StoryblokState, { key }: { key: string }) {
     state.stories = {
       ...state.stories,
       [key]: {
@@ -11,7 +11,7 @@ export const mutations: MutationTree<StoryblokState> = {
       }
     }
   },
-  setStory (state: StoryblokState, { key, story }) {
+  setStory (state: StoryblokState, { key, story }: { key: string, story: object }) {
     state.stories = {
       ...state.stories,
       [key]: {
@@ -21,7 +21,7 @@ export const mutations: MutationTree<StoryblokState> = {
       }
     }
   },
-  setPreviewToken (state: StoryblokState, { previewToken }) {
+  setPreviewToken (state: StoryblokState, { previewToken }: { previewToken: string }) {
     state.previewToken = previewToken
   },
   updateStory (state: StoryblokState, { key, story }) {

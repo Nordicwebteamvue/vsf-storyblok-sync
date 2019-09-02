@@ -1,6 +1,6 @@
 const StoryblokPage = () => import(/* webpackChunkName: "vsf-storyblok" */ './Storyblok.vue')
 
-export const StoryblokRoutes = [
+export const storyblokRoutes = [
   {
     name: 'storyblok',
     path: '/storyblok',

@@ -1,8 +1,10 @@
+export interface StoryblokStoryData {
+  loading: boolean;
+  story: object;
+}
+
 export interface StoryblokStories {
-  [key: string]: {
-    loading: boolean;
-    story: object;
-  }
+  [key: string]: StoryblokStoryData
 }
 
 export interface StoryblokState {
