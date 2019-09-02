@@ -1,4 +1,5 @@
-import { removeStoreCodeFromRoute, storeCodeFromRoute } from '@vue-storefront/core/lib/multistore'
+import { currentStoreView } from '@vue-storefront/core/lib/multistore'
+import config from 'config'
 import qs from 'qs'
 
 export function loadScript (src: string, id: string) {
@@ -26,14 +27,10 @@ export function getStoryblokQueryParams (route) {
   const { _storyblok: id, _storyblok_c: c, _storyblok_tk: storyblok = {} } = qs.parse(queryString, { ignoreQueryPrefix: true })
   const { space_id: spaceId, timestamp, token } = storyblok
 
-  let [_, ...fullSlug] = route.path
+  let fullSlug = route.path.slice(1)
 
-  if (!fullSlug) {
-    fullSlug = "home"
-  }
-  const storeCode = storeCodeFromRoute(fullSlug)
-  if (storeCode && fullSlug === removeStoreCodeFromRoute(fullSlug)) {
-    fullSlug = `${fullSlug}/home`
+  if (!fullSlug && currentStoreView().storeCode === config.defaultStoreCode) {
+    fullSlug = config.defaultStoreCode
   }
 
   return {

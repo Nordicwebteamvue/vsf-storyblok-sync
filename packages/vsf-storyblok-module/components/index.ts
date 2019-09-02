@@ -5,9 +5,10 @@ export const components = {
   tile: () => import('./Tile.vue')
 }
 
-export function add (key: string, component: any, options: any = {}) {
-  if (components[key] && !options.force) {
+export function registerComponent (key: string, component: any, options: any = {}) {
+  if (components[key] && !options.replace) {
     console.log(`Component with key ${key} already exists, skipping...`)
+    console.log('Use "{ replace: true }" as an option to replace the component')
     return
   }
   components[key] = component

@@ -34,8 +34,16 @@ module.exports = ({ config, db }) => {
       query: {
         constant_score: {
           filter: {
-            term: {
-              'full_slug.keyword': path
+            bool: {
+              should: [{
+                term: {
+                  'full_slug.keyword': path
+                }
+              }, {
+                term: {
+                  'full_slug.keyword': `${path}/`
+                }
+              }]
             }
           }
         }
@@ -89,15 +97,7 @@ module.exports = ({ config, db }) => {
     log('Stories not synced!')
   })
 
-  api.get('/story/', (req, res) => {
-    getStory(res, 'home')
-  })
-
-  api.get('/story/:story*', (req, res) => {
-    let path = req.params.story + req.params[0]
-    if (config.storeViews[path]) {
-      path += '/home'
-    }
+  api.get('/story(/?*)', ({ params: { [1]: path } }, res) => {
     getStory(res, path)
   })
 
