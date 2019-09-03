@@ -1,6 +1,10 @@
 import { json, Router } from 'express'
 import { apiStatus } from '../../../lib/util'
 
+const log = (string) => {
+  console.log('📖 : ' + string) // eslint-disable-line no-console
+}
+
 const transformStory = (index) => ({ id, ...story } = {}) => {
   story.content = JSON.stringify(story.content)
   story.full_slug = story.full_slug.replace(/^\/|\/$/g, '')
@@ -44,13 +48,16 @@ function hook ({ config, db, index, storyblokClient }) {
         const transformedStory = transformStory(index)(story)
 
         await db.index(transformedStory)
+        log(`Published ${story.full_slug}`)
       } else if (action === 'unpublished') {
         const transformedStory = transformStory(index)({ id })
         await db.delete(transformedStory)
+        log(`Unpublished ${id}`)
       }
 
       return apiStatus(res)
     } catch (error) {
+      console.log('Failed fetching story', error)
       return apiStatus(res, {
         error: 'Fetching story failed'
       })
