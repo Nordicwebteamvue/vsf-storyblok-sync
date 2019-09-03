@@ -5414,10 +5414,10 @@ static-extend@^0.1.1:
     define-property "^0.2.5"
     object-copy "^0.1.0"
 
-storyblok-js-client@^1.0.29:
-  version "1.0.29"
-  resolved "https://registry.yarnpkg.com/storyblok-js-client/-/storyblok-js-client-1.0.29.tgz#8f8a326753e80c06f9ce239a5640443cec8c3b43"
-  integrity sha512-zP2ZlJeP7zrPVY7UsjuwSQDZmnOJhILYT7nWtV+FI29N0ox+h58wAxAtQDcYac7fpbcLYQs0ZB0KZ0Yk5PQtqA==
+storyblok-js-client@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/storyblok-js-client/-/storyblok-js-client-2.0.0.tgz#b2b2f628140b91a7133e9cb52e19920c7e136867"
+  integrity sha512-bQbJPwQCDxtY7S7x6cQA/E5h5fb0RrW8ElEd6Bui+UujumyBvlELiLvAKCEhxAYeeHwP9pPbI+X7XurjIfqPmQ==
   dependencies:
     "@babel/runtime-corejs3" "^7.4.5"
     axios "^0.19.0"
