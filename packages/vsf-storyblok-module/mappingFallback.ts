@@ -10,7 +10,7 @@ const route = {
 }
 
 export const forStoryblok = async ({ dispatch }, { url, params }) => {
-  if (params && params._storyblok) {
+  if (params && params._storyblok_c && params._storyblok_c === 'page') {
     return route
   }
   url = url.replace(/\/$/, "") // remove trailing slash
