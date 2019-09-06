@@ -77,14 +77,14 @@ export default {
       })
     }
   },
-  async serverPrefetch () {
-    const { id } = getStoryblokQueryParams(this.$route)
+  async asyncData ({ store, route, context }) {
+    const { id, fullSlug } = getStoryblokQueryParams(route)
 
-    if (this.$context && !id) {
-      this.$context.output.cacheTags.add(KEY)
+    if (context && !id) {
+      context.output.cacheTags.add(KEY)
     }
 
-    const story = await this.fetchStory()
+    const story = await store.dispatch(`${KEY}/loadStory`, { fullSlug })
 
     return { story }
   },
