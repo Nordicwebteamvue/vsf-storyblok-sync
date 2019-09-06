@@ -77,16 +77,18 @@ export default {
       })
     }
   },
-  async asyncData ({ store, route, context }) {
-    const { id, fullSlug } = getStoryblokQueryParams(route)
-
-    if (context && !id) {
-      context.output.cacheTags.add(KEY)
-    }
-
-    const story = await store.dispatch(`${KEY}/loadStory`, { fullSlug })
-
+  async serverPrefetch () {
+    const story = await this.fetchStory()
     return { story }
+  },
+  async asyncData ({ route, context }) {
+    return new Promise((resolve) => {
+      const { id } = getStoryblokQueryParams(route)
+      if (context && !id) {
+        context.output.cacheTags.add(KEY)
+      }
+      resolve()
+    })
   },
   async mounted () {
     if (!this.story) {
