@@ -8,14 +8,10 @@ import get from 'lodash.get'
 import { getSettings } from '../helpers'
 import { storeCodeFromRoute } from '@vue-storefront/core/lib/multistore'
 import StoryblokMixin from '../components/StoryblokMixin'
-import Render from '../components/Render.vue'
 
 export default {
   name: 'StoryblokPage',
   mixins: [StoryblokMixin],
-  components: {
-    sbRender: Render
-  },
   metaInfo () {
     const {hreflangPrefix} = getSettings(config.storyblok.settings)
     if (hreflangPrefix && this.story && this.story.alternates.length > 0) {

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { components } from '.'
+import { components } from '../'
 
 export default {
   name: 'RenderBlok',
