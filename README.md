@@ -42,6 +42,43 @@ Notable paths:
 * `components/storyblok` - Directory with a few demo components
 * `index.js` - How to register components
 
+### Built in components
+
+#### `<sb-router-link />`
+
+To be used with the `Weblink/Storylink` field type (https://www.storyblok.com/docs/terminology/field-type)
+
+`<sb-router-link :link="item.link">{{ item.title }}</sb-router-link>`
+
+#### `<sb-img />`
+
+Wrapper around the Storyblok Image Server API - https://www.storyblok.com/docs/image-service
+
+##### Props
+`height`  
+Height in pixels
+
+`width`  
+Width in pixels
+
+`src`  
+Original path to image from `Image` Field Type
+
+`div`  
+If set to true you can instead use this component as a div with background. Example: `<sb-img :src="item.background">My content here</sb-img>`
+
+`smart`  
+A smart filter that crops around the focal point, which is determined by a smart algorithm
+
+`fit-in`  
+The fit-in argument specifies that the image should not be auto-cropped but auto-resized (shrunk) to fit inside an imaginary box of width and height, instead.
+
+`filters`  
+Array of filters to apply. For example `<sb-img :src="item.imageSrc" :width="800" :height="200" :fit-in="true" :filters="['fill(CCCCCC)', 'format(png)']" />`
+
+`lazy`  
+If true the image will be lazy loaded. Does not work if `div` is `true`
+
 ## Vue Storefront API
 
 Copy `packages/vsf-storyblok-extension` to `vue-storefront-api/src/api/extensions`.
