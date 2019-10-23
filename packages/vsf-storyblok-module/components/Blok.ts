@@ -1,3 +1,5 @@
+import { getStoryblokQueryParams } from '../helpers'
+
 export default {
   props: {
     item: {
@@ -8,6 +10,12 @@ export default {
   filters: {
     pretty (value) {
       return value
+    }
+  },
+  computed: {
+    isStoryblokPreview () {
+      const { id } = getStoryblokQueryParams(this.$route)
+      return !!id
     }
   },
   metaInfo: {
