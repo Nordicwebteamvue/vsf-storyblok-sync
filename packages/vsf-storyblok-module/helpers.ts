@@ -1,4 +1,5 @@
-import { removeStoreCodeFromRoute, storeCodeFromRoute } from '@vue-storefront/core/lib/multistore'
+import { removeStoreCodeFromRoute } from '@vue-storefront/core/lib/multistore'
+import storeCodeFromRoute from '@vue-storefront/core/lib/storeCodeFromRoute'
 import qs from 'qs'
 
 export function loadScript (src: string, id: string) {
