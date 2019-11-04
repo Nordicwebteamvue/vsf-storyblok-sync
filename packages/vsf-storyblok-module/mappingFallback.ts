@@ -1,5 +1,6 @@
 import config from 'config'
-import { removeStoreCodeFromRoute, storeCodeFromRoute } from '@vue-storefront/core/lib/multistore'
+import { removeStoreCodeFromRoute } from '@vue-storefront/core/lib/multistore'
+import storeCodeFromRoute from '@vue-storefront/core/lib/storeCodeFromRoute'
 
 const route = {
   name: 'storyblok',
