@@ -91,7 +91,7 @@ Copy `packages/vsf-storyblok-extension` to `vue-storefront-api/src/api/extension
 "storyblok": {
   "previewToken": "__API_KEY_HERE__",
   "hookSecret": "__SECRET_CHANGE_ME__",
-  "invalidate": "http://localhost:3000/invalidate?tag=*&key=aeSu7aip"
+  "invalidate": "http://localhost:3000/invalidate?tag=storyblok&key=aeSu7aip"
 }
 ```
 
