@@ -1,5 +1,9 @@
 import { json, Router } from 'express'
+import request from 'request'
+import { promisify } from 'util'
 import { apiStatus } from '../../../lib/util'
+
+const rp = promisify(request)
 
 const log = (string) => {
   console.log('📖 : ' + string) // eslint-disable-line no-console
@@ -54,7 +58,13 @@ function hook ({ config, db, index, storyblokClient }) {
         await db.delete(transformedStory)
         log(`Unpublished ${id}`)
       }
-
+      if (config.storyblok.invalidate) {
+        log(`Invalidating cache... (${config.storyblok.invalidate})`)
+        await rp({
+          uri: config.storyblok.invalidate
+        })
+        log('Invalidated cache ✅')
+      }
       return apiStatus(res)
     } catch (error) {
       console.log('Failed fetching story', error)
@@ -68,6 +78,9 @@ function hook ({ config, db, index, storyblokClient }) {
 
   api.use(json())
 
+  api.get('/hook', (req, res) => {
+    res.send('You should POST to this endpoint')
+  })
   api.post('/hook', syncStory)
 
   return api

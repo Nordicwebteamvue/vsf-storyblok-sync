@@ -90,7 +90,8 @@ Copy `packages/vsf-storyblok-extension` to `vue-storefront-api/src/api/extension
 ...
 "storyblok": {
   "previewToken": "__API_KEY_HERE__",
-  "hookSecret": "__SECRET_CHANGE_ME__"
+  "hookSecret": "__SECRET_CHANGE_ME__",
+  "invalidate": "http://localhost:3000/invalidate?tag=storyblok&key=aeSu7aip"
 }
 ```
 
@@ -117,6 +118,10 @@ would be
 `http://localhost:8080/api/ext/vsf-storyblok-extension/hook?secret=__SECRET_CHANGE_ME__`
 
 from our example config above. The secret is never needed in development mode.
+
+### `invalidate`
+
+URL to call after hook has been called
 
 ## Webhook
 
