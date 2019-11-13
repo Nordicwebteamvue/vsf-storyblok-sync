@@ -5,7 +5,7 @@
 <script>
 
 export default {
-  name: 'RichTextResolver',
+  name: 'RichText',
   props: {
     text: {
       type: Object,
