@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 
 export default {
   name: 'RichTextResolver',
@@ -15,7 +14,7 @@ export default {
   },
   computed: {
     html () {
-      return Vue.prototype.$storyblokClient.richTextResolver.render(this.richText)
+      return this.$storyblokClient.richTextResolver.render(this.richText)
     }
   }
 }
