@@ -79,6 +79,14 @@ Array of filters to apply. For example `<sb-img :src="item.imageSrc" :width="800
 `lazy`  
 If true the image will be lazy loaded. Does not work if `div` is `true`
 
+#### `<sb-rich-text-resolver />`
+
+Parse and convert the Storyblok Richtext field into html - https://www.storyblok.com/docs/richtext-field
+
+##### Props
+`text`  
+JSON object from Storyblok Richtext field
+
 ## Vue Storefront API
 
 Copy `packages/vsf-storyblok-extension` to `vue-storefront-api/src/api/extensions`.

@@ -7,14 +7,14 @@
 export default {
   name: 'RichTextResolver',
   props: {
-    richText: {
+    text: {
       type: Object,
       required: true
     }
   },
   computed: {
     html () {
-      return this.$storyblokClient.richTextResolver.render(this.richText)
+      return this.$storyblokClient.richTextResolver.render(this.text)
     }
   }
 }
