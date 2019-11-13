@@ -82,6 +82,7 @@ If true the image will be lazy loaded. Does not work if `div` is `true`
 #### `<sb-rich-text-resolver />`
 
 Parse and convert the Storyblok Richtext field into html - https://www.storyblok.com/docs/richtext-field
+`<sb-rich-text-resolver :text="item.myRichTextField" />`
 
 ##### Props
 `text`  
