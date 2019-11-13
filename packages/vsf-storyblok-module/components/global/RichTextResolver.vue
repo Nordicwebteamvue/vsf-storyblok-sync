@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import { Blok } from 'src/modules/vsf-storyblok-module/components'
 import Vue from 'vue'
 
 export default {
