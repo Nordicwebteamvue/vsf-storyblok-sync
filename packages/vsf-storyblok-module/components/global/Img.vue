@@ -13,7 +13,7 @@
 import { isServer } from '@vue-storefront/core/helpers'
 function canUseWebP () {
   if (isServer) {
-    return true;
+    return true
   }
 
   const elem = document.createElement('canvas')
