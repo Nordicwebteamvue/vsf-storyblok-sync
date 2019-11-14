@@ -45,8 +45,9 @@ export default {
           mod += '/smart'
         }
       }
-      mod += '/filters:' + this.computedFilters.join(':')
-
+      if (this.computedFilters.length) {
+        mod += '/filters:' + this.computedFilters.join(':')
+      }
       return 'https://img2.storyblok.com' + mod + resource
     }
   },
