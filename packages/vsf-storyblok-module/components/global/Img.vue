@@ -10,9 +10,26 @@
 </template>
 
 <script>
+import { isServer } from '@vue-storefront/core/helpers'
+function canUseWebP () {
+  if (!isServer) {
+    const elem = document.createElement('canvas')
+    if ((elem.getContext && elem.getContext('2d'))) {
+      return elem.toDataURL('image/webp').indexOf('data:image/webp') === 0
+    }
+  }
+  return false
+}
+
 export default {
   name: 'StoryblokImage',
   computed: {
+    computedFilters () {
+      if (this.detectWebp && canUseWebP()) {
+        return [...this.filters, 'format(webp)']
+      }
+      return this.filters
+    },
     image () {
       if (!this.src.includes('//a.storyblok.com')) {
         return this.src
@@ -27,15 +44,17 @@ export default {
         if (this.smart) {
           mod += '/smart'
         }
-        if (this.filters.length > 0) {
-          mod += '/filters:' + this.filters.join(':')
-        }
       }
+      mod += '/filters:' + this.computedFilters.join(':')
 
       return 'https://img2.storyblok.com' + mod + resource
     }
   },
   props: {
+    detectWebp: {
+      type: Boolean,
+      default: true
+    },
     height: {
       type: Number,
       default: 0
