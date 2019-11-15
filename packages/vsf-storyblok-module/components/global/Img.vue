@@ -11,6 +11,9 @@
 
 <script>
 import { isServer } from '@vue-storefront/core/helpers'
+import get from 'lodash-es/get'
+import { config } from 'config'
+
 function canUseWebP () {
   if (!isServer) {
     const elem = document.createElement('canvas')
@@ -54,7 +57,7 @@ export default {
   props: {
     detectWebp: {
       type: Boolean,
-      default: true
+      default: get(config, 'storyblok.imageService.defaultWebp', true)
     },
     height: {
       type: Number,
