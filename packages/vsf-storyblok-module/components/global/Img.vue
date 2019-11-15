@@ -1,12 +1,22 @@
 <template>
-  <div v-if="div && lazy" v-lazy:background-image="image">
+  <div v-if="canUsePictureTag">
+    <picture>
+      <source type="image/webp" :srcset="image">
+      <img v-if="lazy" v-lazy="image">
+      <img v-else :src="image">
+    </picture>
     <slot />
   </div>
-  <div v-else-if="div" :style="{ backgroundImage: 'url(\'' + image + '\')' }">
-    <slot />
+  <div v-else>
+    <div v-if="div && lazy" v-lazy:background-image="image">
+      <slot />
+    </div>
+    <div v-else-if="div" :style="{ backgroundImage: 'url(\'' + image + '\')' }">
+      <slot />
+    </div>
+    <img v-else-if="lazy" v-lazy="image">
+    <img v-else :src="image">
   </div>
-  <img v-else-if="lazy" v-lazy="image">
-  <img v-else :src="image">
 </template>
 
 <script>
@@ -27,6 +37,16 @@ function canUseWebP () {
 export default {
   name: 'StoryblokImage',
   computed: {
+    canUsePictureTag () {
+      if (isServer) {
+        return true
+      }
+
+      if (window.HTMLPictureElement) {
+        return true
+      }
+      return false
+    },
     computedFilters () {
       if (this.detectWebp && canUseWebP()) {
         return [...this.filters, 'format(webp)']
