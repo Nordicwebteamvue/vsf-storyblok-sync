@@ -12,7 +12,7 @@
 <script>
 import { isServer } from '@vue-storefront/core/helpers'
 import get from 'lodash-es/get'
-import { config } from 'config'
+import config from 'config'
 
 function canUseWebP () {
   if (!isServer) {
