@@ -15,9 +15,16 @@ export default {
   metaInfo () {
     const {hreflangPrefix} = getSettings(config.storyblok.settings)
     if (hreflangPrefix && this.story && this.story.alternates.length > 0) {
+      const mappingStoreCodeConfig = config.storyblok.mappingStoreUrl
       const metaInfo = {
         link: this.story.alternates.map(link => {
-          const storeCode = storeCodeFromRoute(link.full_slug)
+          let fullSlug = link.full_slug
+          mappingStoreCodeConfig.forEach((mapStoreConfig) => {
+            if (link.full_slug.includes(mapStoreConfig.storyblok_code)) {
+              fullSlug = link.full_slug.replace(mapStoreConfig.storyblok_code, mapStoreConfig.m2_store_code)
+            }
+          })
+          const storeCode = storeCodeFromRoute(fullSlug)
           const locale = get(config.storeViews, [storeCode, 'i18n/defaultLocale'], storeCode)
           return {
             rel: 'alternate',
