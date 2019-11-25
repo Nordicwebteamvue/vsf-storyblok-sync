@@ -3,11 +3,7 @@ import crypto from 'crypto'
 import StoryblokClient from 'storyblok-js-client'
 import { apiStatus } from '../../../lib/util'
 import { hook } from './hook'
-import { syncStories } from './sync-stories'
-
-const log = (string) => {
-  console.log('📖 : ' + string) // eslint-disable-line no-console
-}
+import { fullSync, log } from './fullSync'
 
 module.exports = ({ config, db }) => {
   if (!config.storyblok || !config.storyblok.previewToken) {
@@ -66,21 +62,7 @@ module.exports = ({ config, db }) => {
     requestTimeout: 30000
   }).then(async (response) => {
     try {
-      log('Syncing published stories!')
-      await db.indices.delete({ ignore_unavailable: true, index })
-      await db.indices.create({
-        index,
-        body: {
-          index: {
-            mapping: {
-              total_fields: {
-                limit: config.storyblok.fieldLimit || 1000
-              }
-            }
-          }
-        }
-      })
-      await syncStories({ db, index, perPage: config.storyblok.perPage, storyblokClient })
+      fullSync(db, config, storyblokClient, index)
       log('Stories synced!')
     } catch (error) {
       log('Stories not synced!')

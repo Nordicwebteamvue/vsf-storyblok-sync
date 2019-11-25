@@ -2,6 +2,9 @@ import { json, Router } from 'express'
 import request from 'request'
 import { promisify } from 'util'
 import { apiStatus } from '../../../lib/util'
+import { fullSync } from './fullSync'
+
+const rp = promisify(request)
 
 const rp = promisify(request)
 
@@ -44,19 +47,30 @@ function hook ({ config, db, index, storyblokClient }) {
     const { story_id: id, action } = req.body
 
     try {
-      if (action === 'published') {
-        const { data: { story } } = await storyblokClient.get(`cdn/stories/${id}`, {
-          cv,
-          resolve_links: 'url'
-        })
-        const transformedStory = transformStory(index)(story)
+      switch (action) {
+        case 'published':
+          const { data: { story } } = await storyblokClient.get(`cdn/stories/${id}`, {
+            cv,
+            resolve_links: 'url'
+          })
+          const publishedStory = transformStory(index)(story)
 
-        await db.index(transformedStory)
-        log(`Published ${story.full_slug}`)
-      } else if (action === 'unpublished') {
-        const transformedStory = transformStory(index)({ id })
-        await db.delete(transformedStory)
-        log(`Unpublished ${id}`)
+          await db.index(publishedStory)
+          log(`Published ${story.full_slug}`)
+          break
+
+        case 'unpublished':
+          const unpublishedStory = transformStory(index)({ id })
+          await db.delete(unpublishedStory)
+          log(`Unpublished ${id}`)
+          break
+
+        case 'release_merged':
+        case 'branch_deployed':
+          await fullSync(db, config, storyblokClient, index)
+          break
+        default:
+          break
       }
       if (config.storyblok.invalidate) {
         log(`Invalidating cache... (${config.storyblok.invalidate})`)
