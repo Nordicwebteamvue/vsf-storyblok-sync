@@ -1,8 +1,8 @@
 <template>
-  <div v-if="div && lazy" v-lazy:background-image="image">
+  <div v-if="div && lazy" v-lazy:background-image="backgroundImage">
     <slot />
   </div>
-  <div v-else-if="div" :style="{ backgroundImage: 'url(\'' + image + '\')' }">
+  <div v-else-if="div" :style="{ backgroundImage: 'url(\'' + backgroundImage + '\')' }">
     <slot />
   </div>
   <img v-else-if="lazy" v-lazy="image">
@@ -24,13 +24,23 @@ function canUseWebP () {
 export default {
   name: 'StoryblokImage',
   computed: {
-    computedFilters () {
-      if (this.detectWebp && canUseWebP()) {
-        return [...this.filters, 'format(webp)']
-      }
-      return this.filters
-    },
     image () {
+      const filters = [...this.filters, 'format(webp)']
+      return this.getImageUrl(filters)
+    },
+    backgroundImage () {
+      if (isServer) {
+        return null
+      }
+      if (canUseWebP()) {
+        const filters = [...this.filters, 'format(webp)']
+        return this.getImageUrl(filters)
+      }
+      return this.getImageUrl(this.filters)
+    }
+  },
+  methods: {
+    getImageUrl (filters) {
       if (!this.src.includes('//a.storyblok.com')) {
         return this.src
       }
@@ -45,17 +55,11 @@ export default {
           mod += '/smart'
         }
       }
-      if (this.computedFilters.length) {
-        mod += '/filters:' + this.computedFilters.join(':')
-      }
+      mod += '/filters:' + filters.join(':')
       return 'https://img2.storyblok.com' + mod + resource
     }
   },
   props: {
-    detectWebp: {
-      type: Boolean,
-      default: true
-    },
     height: {
       type: Number,
       default: 0

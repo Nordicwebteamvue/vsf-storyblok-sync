@@ -1,6 +1,5 @@
 import StoryblokClient from 'storyblok-js-client'
 import StoryblokVue from 'storyblok-vue'
-import { extendModule } from '@vue-storefront/core/lib/module'
 import { router } from '@vue-storefront/core/app'
 import { RouterManager } from '@vue-storefront/core/lib/router-manager'
 import { setupMultistoreRoutes } from '@vue-storefront/core/lib/multistore'
@@ -9,10 +8,30 @@ import Img from '../components/global/Img.vue'
 import RouterLink from '../components/global/RouterLink.vue'
 import RichText from '../components/global/RichText.vue'
 import { once } from '@vue-storefront/core/helpers'
+import VueLazyload from 'vue-lazyload'
 import { StoryblokRoutes } from '../pages/routes'
 import { getSettings } from '../helpers'
 
 function beforeRegistration ({ Vue, config, store }) {
+  once('__VUE_EXTEND_LAZY__', () => {
+    console.log('init webp (before)')
+    Vue.use(VueLazyload, {
+      attempt: 2,
+      preLoad: 1.5,
+      filter: {
+        webp (listener, options) {
+          console.log('webp (before)', options.supportWebp)
+          if (!options.supportWebp) {
+            const isCDN = /img2.storyblok.com/
+            if (isCDN.test(listener.src)) {
+              // TODO: Make sure it works with other filters
+              listener.src = listener.src.replace('filters:format(webp)/', '')
+            }
+          }
+        }
+      }
+    })
+  })
   const settings = getSettings(config.storyblok.settings)
   if (settings.addRoutes) {
     RouterManager.addRoutes(StoryblokRoutes, router)
