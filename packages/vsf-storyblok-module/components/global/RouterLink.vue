@@ -1,8 +1,8 @@
 <template>
-  <router-link v-if="link && link.linktype === 'story'" :to="url">
+  <router-link v-if="!isExternal" :to="url">
     <slot />
   </router-link>
-  <a :href="link.url" v-else-if="link && link.url">
+  <a v-else :href="url" rel="noopener noreferrer">
     <slot />
   </a>
 </template>
@@ -24,16 +24,19 @@ export default {
     ...mapState('storyblok', {
       storeCodeFromHeader: (state) => state.storeCode
     }),
-    url () {
-      let url = `/${this.link.cached_url}`
-      const addStoreCode = get(config, 'storyblok.settings.appendStoreCodeFromHeader')
-      if (this.link.linktype === 'story') {
-        if (addStoreCode && this.storeCodeFromHeader && url.startsWith(`/${this.storeCodeFromHeader}`)) {
-          return url.replace(`/${this.storeCodeFromHeader}`, '')
-        }
-        return url
+    isExternal () {
+      if (this.link && this.link.linktype === 'story') {
+        return true
       }
-      return this.link.url
+      return /^((http|https|ftp):\/\/)/.test(this.url)
+    },
+    url () {
+      let url = this.link.cached_url || this.link.url
+      const addStoreCode = get(config, 'storyblok.settings.appendStoreCodeFromHeader')
+      if (addStoreCode && this.storeCodeFromHeader && url.startsWith(`/${this.storeCodeFromHeader}`)) {
+        return url.replace(`/${this.storeCodeFromHeader}`, '')
+      }
+      return url
     }
   }
 }
