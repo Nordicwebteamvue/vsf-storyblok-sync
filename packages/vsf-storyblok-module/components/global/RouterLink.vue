@@ -1,8 +1,8 @@
 <template>
-  <router-link v-if="link && link.linktype === 'story'" :to="url" class="link-cached-url">
+  <router-link v-if="link && link.linktype === 'story'" :to="url">
     <slot />
   </router-link>
-  <a :href="link.url" v-else-if="link && link.url" class="link-linked-url">
+  <a :href="link.url" v-else-if="link && link.url">
     <slot />
   </a>
 </template>
