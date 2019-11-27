@@ -23,7 +23,7 @@ export default {
       loadingStory(state: StoryblokState) {
         const { id, fullSlug } = getStoryblokQueryParams(this.$route)
 
-        const key = this.storyblokPath || id || fullSlug
+        const key = this.storyblokPath || id || this.formatFullSlug(fullSlug)
         return state.stories[key] && state.stories[key].loading || false
       },
       previewToken: (state: StoryblokState) => state.previewToken,
@@ -31,7 +31,7 @@ export default {
       story(state: StoryblokState) {
         const { id, fullSlug } = getStoryblokQueryParams(this.$route)
 
-        const key = this.storyblokPath || id || fullSlug
+        const key = this.storyblokPath || id || this.formatFullSlug(fullSlug)
         return state.stories[key] && state.stories[key].story
       },
       isStatic() {
@@ -82,7 +82,6 @@ export default {
         }
       }
 
-      console.log('this.storyblokPath', this.storyblokPath || this.formatFullSlug(fullSlug))
       return this.$store.dispatch(`${KEY}/loadStory`, {
         fullSlug: this.storyblokPath || this.formatFullSlug(fullSlug)
       })
