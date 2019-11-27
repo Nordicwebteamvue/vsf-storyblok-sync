@@ -1,6 +1,5 @@
 import StoryblokClient from 'storyblok-js-client'
 import StoryblokVue from 'storyblok-vue'
-import { extendModule } from '@vue-storefront/core/lib/module'
 import { router } from '@vue-storefront/core/app'
 import { RouterManager } from '@vue-storefront/core/lib/router-manager'
 import { setupMultistoreRoutes } from '@vue-storefront/core/lib/multistore'

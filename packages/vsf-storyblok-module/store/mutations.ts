@@ -2,6 +2,9 @@ import { MutationTree } from 'vuex'
 import { StoryblokState } from '../types/State'
 
 export const mutations: MutationTree<StoryblokState> = {
+  setStoreCode(state: StoryblokState, storeCode) {
+    state.storeCode = storeCode
+  },
   loadingStory (state: StoryblokState, { key }) {
     state.stories = {
       ...state.stories,
