@@ -12,7 +12,6 @@ const moduleConfig: VueStorefrontModuleConfig = {
   afterRegistration
 }
 
-export { urlExtend } from './urlExtend'
 export { StoryblokRoutes } from './pages/routes'
 
 export const Storyblok = new VueStorefrontModule(moduleConfig)
