@@ -3,8 +3,6 @@ services:
   elasticsearch:
     build: .docker/vue-storefront-api/docker/elasticsearch/
     volumes:
-      - >-
-        ./.docker/vue-storefront-api/docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
       - ./.docker/api/elasticsearch-healthcheck.sh:/healthcheck.sh
       - 'esdat1:/usr/share/elasticsearch/data'
     ports:
@@ -12,17 +10,13 @@ services:
       - '9300:9300'
     environment:
       ES_JAVA_OPTS: '-Xmx512m -Xms512m'
-    healthcheck:
-      test: ['CMD', 'sh', '/healthcheck.sh']
+  
   redis:
     image: 'redis:4-alpine'
     ports:
       - '6379:6379'
-    volumes:
-      - ./.docker/api/redis-healthcheck.sh:/healthcheck.sh
-    healthcheck:
-      test: ['CMD', 'sh', '/healthcheck.sh']
-  storefront-api:
+  
+  api:
     build:
       context: .docker/vue-storefront-api
       dockerfile: docker/vue-storefront-api/Dockerfile
@@ -46,9 +40,8 @@ services:
       - './.docker/api/db.js:/var/www/src/db.js'
       - >-
         ./packages/vsf-storyblok-extension:/var/www/src/api/extensions/vsf-storyblok-extension:delegated
-    healthcheck:
-      test: ['CMD', 'curl', '-f', '-s', '-S', 'http://localhost:8080/api']
-  storefront-ui:
+  
+  ui:
     build:
       context: .docker/vue-storefront
       dockerfile: docker/vue-storefront/Dockerfile
@@ -78,7 +71,3 @@ services:
       - './theme:/var/www/src/themes/default'
       - >-
         ./packages/vsf-storyblok-module:/var/www/src/modules/vsf-storyblok-module:delegated
-    healthcheck:
-      test:
-        ['CMD', 'wget', '-q', '--tries=1', '--spider', 'http://localhost:3000']
-      start_period: 30m

@@ -1,15 +1,11 @@
 version: '2.4'
 services:
-  storefront-api:
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-  storefront-ui:
-    depends_on:
-      storefront-api:
-        condition: service_healthy
+  api:
+    labels:
+      bundle: "vue-storefront-api"
+  ui:
+    labels:
+      bundle: "vue-storefront"
 
 volumes:
   esdat1: null

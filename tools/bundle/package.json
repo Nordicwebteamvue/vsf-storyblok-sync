@@ -1,0 +1,14 @@
+{
+  "name": "@kodbruket/docker-compose-bundler",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^3.0.0",
+    "deepmerge": "^4.0.0",
+    "fs-extra": "^7.0.1",
+    "js-yaml": "^3.13.1",
+    "lodash.get": "^4.4.2",
+    "sane": "^4.1.0"
+  }
+}
