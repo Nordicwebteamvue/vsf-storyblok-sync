@@ -5,7 +5,7 @@ submodules:
 	git submodule update --init
 
 prebundle: submodules
-	mkdir -p frontend/upstream/var
+	mkdir -p .docker/vue-storefront/var
 	cd tools/bundle && yarn
 
 bundle: prebundle
