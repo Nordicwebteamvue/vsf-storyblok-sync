@@ -13,5 +13,5 @@ bundle: prebundle
 	ex +g/mage2vuestorefront/d -cwq ./.output/vue-storefront-api/package.json
 
 ci-start:
-	cd .output/vue-storefront-api && yarn && yarn start
-	cd .output/vue-storefront && yarn && yarn start
+	cd .output/vue-storefront-api && yarn && yarn build && yarn start
+	cd .output/vue-storefront && yarn && yarn build && yarn start

@@ -69,5 +69,5 @@ services:
       - './.docker/frontend/config.json:/var/www/config/local.json'
       - './.docker/frontend/modules.ts:/var/www/src/modules/index.ts'
       - './theme:/var/www/src/themes/default'
-      - >-
-        ./packages/vsf-storyblok-module:/var/www/src/modules/vsf-storyblok-module:delegated
+      - './packages/vsf-storyblok-module:/var/www/src/modules/vsf-storyblok-module:delegated'
+      - './.docker/frontend/vsf-mapping-fallback:/var/www/src/modules/vsf-mapping-fallback:delegated'
