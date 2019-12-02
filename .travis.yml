@@ -33,4 +33,4 @@ install: yarn
 script:
   - yarn lint
   - make bundle
-  - make ci
+  - make ci-start
