@@ -10,6 +10,7 @@ prebundle: submodules
 
 bundle: prebundle
 	node tools/bundle/index.js
+	ex +g/mage2vuestorefront/d -cwq ./.output/vue-storefront-api/package.json
 
 ci-start:
 	cd .output/vue-storefront-api && yarn && yarn start
