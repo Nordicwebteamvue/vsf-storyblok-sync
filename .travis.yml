@@ -34,3 +34,4 @@ script:
   - yarn lint
   - make bundle
   - make ci-start
+  - yarn test:ci
