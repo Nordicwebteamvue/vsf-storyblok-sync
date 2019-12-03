@@ -6,8 +6,6 @@ import { fullSync } from './fullSync'
 
 const rp = promisify(request)
 
-const rp = promisify(request)
-
 const log = (string) => {
   console.log('📖 : ' + string) // eslint-disable-line no-console
 }
