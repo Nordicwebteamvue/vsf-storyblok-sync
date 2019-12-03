@@ -62,7 +62,7 @@ module.exports = ({ config, db }) => {
     requestTimeout: 30000
   }).then(async (response) => {
     try {
-      fullSync(db, config, storyblokClient, index)
+      await fullSync(db, config, storyblokClient, index)
       log('Stories synced!')
     } catch (error) {
       log('Stories not synced!')
