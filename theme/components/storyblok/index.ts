@@ -5,4 +5,3 @@ add('demoImage', () => import('./Image.vue'))
 add('ciLink', () => import('./Link.vue'))
 // Overwrite an existing component
 // add('tile', () => import('./Tile.vue'), { force: true })
-add('newsletter', () => import('./Newsletter.vue'))
