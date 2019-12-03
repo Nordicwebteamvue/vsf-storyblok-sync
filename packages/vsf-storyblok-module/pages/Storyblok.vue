@@ -19,11 +19,13 @@ export default {
       const metaInfo = {
         link: this.story.alternates.map(link => {
           let fullSlug = link.full_slug
-          mappingStoreCodeConfig.forEach((mapStoreConfig) => {
-            if (link.full_slug.includes(mapStoreConfig.storyblok_code)) {
-              fullSlug = link.full_slug.replace(mapStoreConfig.storyblok_code, mapStoreConfig.m2_store_code)
-            }
-          })
+          if (mappingStoreCodeConfig) {
+            mappingStoreCodeConfig.forEach((mapStoreConfig) => {
+              if (link.full_slug.includes(mapStoreConfig.storyblok_code)) {
+                fullSlug = link.full_slug.replace(mapStoreConfig.storyblok_code, mapStoreConfig.m2_store_code)
+              }
+            })
+          }
           const storeCode = storeCodeFromRoute(fullSlug)
           const locale = get(config.storeViews, [storeCode, 'i18n/defaultLocale'], storeCode)
           return {
