@@ -2,11 +2,22 @@ import { json, Router } from 'express'
 import request from 'request'
 import { promisify } from 'util'
 import { apiStatus } from '../../../lib/util'
+import { fullSync } from './fullSync'
 
 const rp = promisify(request)
 
 const log = (string) => {
   console.log('📖 : ' + string) // eslint-disable-line no-console
+}
+
+const cacheInvalidate = async (config) => {
+  if (config.invalidate) {
+    log(`Invalidating cache... (${config.invalidate})`)
+    await rp({
+      uri: config.invalidate
+    })
+    log('Invalidated cache ✅')
+  }
 }
 
 const transformStory = (index) => ({ id, ...story } = {}) => {
@@ -20,51 +31,58 @@ const transformStory = (index) => ({ id, ...story } = {}) => {
   }
 }
 
+const protectRoute = (config) => (req, res, next) => {
+  if (process.env.VS_ENV !== 'dev') {
+    if (!req.query.secret) {
+      return apiStatus(res, {
+        error: 'Missing query param: secret'
+      }, 403)
+    }
+    if (req.query.secret !== config.storyblok.hookSecret) {
+      return apiStatus(res, {
+        error: 'Invalid secret'
+      }, 403)
+    }
+  }
+  next()
+}
+
 function hook ({ config, db, index, storyblokClient }) {
   if (!config.storyblok || !config.storyblok.hookSecret) {
     throw new Error('🧱 : config.storyblok.hookSecret not found')
   }
 
   async function syncStory (req, res) {
-    if (process.env.VS_ENV !== 'dev') {
-      if (!req.query.secret) {
-        return apiStatus(res, {
-          error: 'Missing query param: "secret"'
-        }, 403)
-      }
-
-      if (req.query.secret !== config.storyblok.hookSecret) {
-        return apiStatus(res, {
-          error: 'Invalid secret'
-        }, 403)
-      }
-    }
-
     const cv = Date.now() // bust cache
     const { story_id: id, action } = req.body
 
     try {
-      if (action === 'published') {
-        const { data: { story } } = await storyblokClient.get(`cdn/stories/${id}`, {
-          cv,
-          resolve_links: 'url'
-        })
-        const transformedStory = transformStory(index)(story)
+      switch (action) {
+        case 'published':
+          const { data: { story } } = await storyblokClient.get(`cdn/stories/${id}`, {
+            cv,
+            resolve_links: 'url'
+          })
+          const publishedStory = transformStory(index)(story)
 
-        await db.index(transformedStory)
-        log(`Published ${story.full_slug}`)
-      } else if (action === 'unpublished') {
-        const transformedStory = transformStory(index)({ id })
-        await db.delete(transformedStory)
-        log(`Unpublished ${id}`)
+          await db.index(publishedStory)
+          log(`Published ${story.full_slug}`)
+          break
+
+        case 'unpublished':
+          const unpublishedStory = transformStory(index)({ id })
+          await db.delete(unpublishedStory)
+          log(`Unpublished ${id}`)
+          break
+
+        case 'release_merged':
+        case 'branch_deployed':
+          await fullSync(db, config, storyblokClient, index)
+          break
+        default:
+          break
       }
-      if (config.storyblok.invalidate) {
-        log(`Invalidating cache... (${config.storyblok.invalidate})`)
-        await rp({
-          uri: config.storyblok.invalidate
-        })
-        log('Invalidated cache ✅')
-      }
+      await cacheInvalidate(config.storyblok)
       return apiStatus(res)
     } catch (error) {
       console.log('Failed fetching story', error)
@@ -72,6 +90,12 @@ function hook ({ config, db, index, storyblokClient }) {
         error: 'Fetching story failed'
       })
     }
+  }
+
+  async function fullSyncRoute (req, res) {
+    await fullSync(db, config, storyblokClient, index)
+    await cacheInvalidate(config.storyblok)
+    return apiStatus(res)
   }
 
   const api = new Router()
@@ -82,6 +106,8 @@ function hook ({ config, db, index, storyblokClient }) {
     res.send('You should POST to this endpoint')
   })
   api.post('/hook', syncStory)
+  api.post('/hook', protectRoute(config), syncStory)
+  api.get('/full', protectRoute(config), fullSyncRoute)
 
   return api
 }
