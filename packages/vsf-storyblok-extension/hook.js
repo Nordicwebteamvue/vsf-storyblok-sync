@@ -32,7 +32,7 @@ const transformStory = (index) => ({ id, ...story } = {}) => {
 }
 
 const protectRoute = (config) => (req, res, next) => {
-  if (process.env.VS_ENV === 'dev') {
+  if (process.env.VS_ENV !== 'dev') {
     if (!req.query.secret) {
       return apiStatus(res, {
         error: 'Missing query param: secret'
