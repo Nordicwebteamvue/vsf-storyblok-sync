@@ -116,6 +116,10 @@ On the backend we use it to fetch posts when the webhook is polled. In the UI it
 
 The URL the UI tries to fetch stories from
 
+### `settings.appendStoreCodeFromHeader`
+
+If set to true it will append the `x-vs-store-code` to the storyblok url. E.g. www.mysite.dk/foo with `x-vs-store-code=dk` would request the story `/dk/foo`.
+
 ### `hookSecret`
 
 If this field is defined you have to provide this secret as a query param for your webhook. For example:

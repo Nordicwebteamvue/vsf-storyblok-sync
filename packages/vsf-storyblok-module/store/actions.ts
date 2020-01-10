@@ -6,6 +6,9 @@ import { TaskQueue } from '@vue-storefront/core/lib/sync'
 import qs from 'qs'
 
 export const actions: ActionTree<StoryblokState, RootState> = {
+  async setStoreCode ({ commit, state }, storeCode) {
+    commit('setStoreCode', storeCode)
+  },
   async getPreviewToken ({ commit, state }, query) {
     if (state.previewToken) {
       return state.previewToken

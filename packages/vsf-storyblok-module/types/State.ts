@@ -7,5 +7,6 @@ export interface StoryblokStories {
 
 export interface StoryblokState {
   previewToken?: string;
+  storeCode: string;
   stories: StoryblokStories;
 }

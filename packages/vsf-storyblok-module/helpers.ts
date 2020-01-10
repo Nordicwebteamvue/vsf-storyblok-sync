@@ -50,6 +50,7 @@ export function getStoryblokQueryParams (route) {
 const defaultSettings = {
   addRoutes: true,
   hreflangPrefix: '',
+  appendStoreCodeFromHeader: false,
 }
 
 export const getSettings = (settings = {}) => ({

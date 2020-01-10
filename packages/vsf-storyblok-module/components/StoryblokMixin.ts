@@ -5,6 +5,7 @@ import { KEY } from '..'
 import { StoryblokState } from '../types/State'
 import { loadScript, getStoryblokQueryParams } from '../helpers'
 import has from 'lodash-es/has'
+import get from 'lodash-es/get'
 
 export default {
   name: 'Storyblok',
@@ -22,14 +23,15 @@ export default {
       loadingStory(state: StoryblokState) {
         const { id, fullSlug } = getStoryblokQueryParams(this.$route)
 
-        const key = this.storyblokPath || id || fullSlug
+        const key = this.storyblokPath || id || this.formatFullSlug(fullSlug)
         return state.stories[key] && state.stories[key].loading || false
       },
       previewToken: (state: StoryblokState) => state.previewToken,
+      storeCodeFromHeader: (state: StoryblokState) => state.storeCode,
       story(state: StoryblokState) {
         const { id, fullSlug } = getStoryblokQueryParams(this.$route)
 
-        const key = this.storyblokPath || id || fullSlug
+        const key = this.storyblokPath || id || this.formatFullSlug(fullSlug)
         return state.stories[key] && state.stories[key].story
       },
       isStatic() {
@@ -54,6 +56,14 @@ export default {
     }
   },
   methods: {
+    formatFullSlug (fullSlug: string) {
+      const addStoreCode = get(config, 'storyblok.settings.appendStoreCodeFromHeader')
+      const storeCodeToAdd = this.storeCodeFromHeader
+      if (addStoreCode && storeCodeToAdd) {
+        return `${storeCodeToAdd}/${fullSlug}`
+      }
+      return fullSlug
+    },
     async fetchStory () {
       const { id, fullSlug, spaceId, timestamp, token } = getStoryblokQueryParams(this.$route)
 
@@ -73,7 +83,7 @@ export default {
       }
 
       return this.$store.dispatch(`${KEY}/loadStory`, {
-        fullSlug: this.storyblokPath || fullSlug
+        fullSlug: this.storyblokPath || this.formatFullSlug(fullSlug)
       })
     }
   },
