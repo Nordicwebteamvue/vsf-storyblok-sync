@@ -24,7 +24,7 @@ export default {
           const storeCode = this.storeCodeFromSlug(link.full_slug)
           const locale = get(config.storeViews, [storeCode, 'i18n/defaultLocale'], storeCode)
           const tldPrefix = get(config.storeViews, [storeCode, 'tld'], undefined)
-          const href = tldPrefix ? tldPrefix + '/' + removeStoreCodeFromSlug(link.full_slug) : hreflangPrefix + link.full_slug
+          const href = tldPrefix ? tldPrefix + '/' + this.removeStoreCodeFromSlug(link.full_slug) : hreflangPrefix + link.full_slug
           return {
             rel: 'alternate',
             hreflang: locale,
