@@ -25,10 +25,7 @@ export default {
       storeCodeFromHeader: (state) => state.storeCode
     }),
     isExternal () {
-      if (this.link && this.link.linktype === 'story') {
-        return true
-      }
-      return /^((http|https|ftp):\/\/)/.test(this.url)
+      return /^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(this.url)
     },
     url () {
       let url = this.link.cached_url || this.link.url
