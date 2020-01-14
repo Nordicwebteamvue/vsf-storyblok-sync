@@ -6,7 +6,6 @@
 import config from 'config'
 import get from 'lodash.get'
 import { getSettings } from '../helpers'
-import storeCodeFromRoute from '@vue-storefront/core/lib/storeCodeFromRoute'
 import StoryblokMixin from '../components/StoryblokMixin'
 import { localizedRoute } from '@vue-storefront/core/lib/multistore'
 
