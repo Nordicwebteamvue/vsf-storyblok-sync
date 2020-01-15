@@ -25,16 +25,13 @@ export default {
       storeCodeFromHeader: (state) => state.storeCode
     }),
     isExternal () {
-      if (this.link && this.link.linktype === 'story') {
-        return true
-      }
-      return /^((http|https|ftp):\/\/)/.test(this.url)
+      return /^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(this.url)
     },
     url () {
       let url = this.link.cached_url || this.link.url
       const addStoreCode = get(config, 'storyblok.settings.appendStoreCodeFromHeader')
-      if (addStoreCode && this.storeCodeFromHeader && url.startsWith(`/${this.storeCodeFromHeader}`)) {
-        return url.replace(`/${this.storeCodeFromHeader}`, '')
+      if (addStoreCode && this.storeCodeFromHeader && url.replace(/^\/+/).startsWith(`${this.storeCodeFromHeader}`)) {
+        return url.replace(/^\/+/).replace(`${this.storeCodeFromHeader}`, '')
       }
       return url
     }
