@@ -5,6 +5,18 @@ import RootState from '@vue-storefront/core/types/RootState'
 import { TaskQueue } from '@vue-storefront/core/lib/sync'
 import qs from 'qs'
 
+const fetchStory = async url => {
+  const { result: { story }}: any = await TaskQueue.execute({
+    url,
+    payload: {
+      headers: { 'Content-Type': 'application/json' },
+      mode: 'cors'
+    },
+    silent: true
+  })
+  return story
+}
+
 export const actions: ActionTree<StoryblokState, RootState> = {
   async ssrContext ({ commit, dispatch }, ssrContext) {
     const { request } = ssrContext.server
@@ -55,16 +67,10 @@ export const actions: ActionTree<StoryblokState, RootState> = {
     }
 
     const url = `${config.storyblok.endpoint}/story/${key}`
-    const { result: { story } }: any = await TaskQueue.execute({
-      url,
-      payload: {
-        headers: { 'Content-Type': 'application/json' },
-        mode: 'cors'
-      },
-      silent: true
-    })
-
+    const story = await fetchStory(url)
+    
     commit('setStory', { key, story })
+
     return story
   }
 }
