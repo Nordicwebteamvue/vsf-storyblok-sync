@@ -28,7 +28,7 @@ export default {
           return {
             rel: 'alternate',
             hreflang: locale,
-            href: href
+            href
           }
         })
       }
