@@ -10,25 +10,18 @@
 </template>
 
 <script>
-import { isServer } from '@vue-storefront/core/helpers'
 import get from 'lodash-es/get'
 import config from 'config'
-
-function canUseWebP () {
-  if (!isServer) {
-    const elem = document.createElement('canvas')
-    if ((elem.getContext && elem.getContext('2d'))) {
-      return elem.toDataURL('image/webp').indexOf('data:image/webp') === 0
-    }
-  }
-  return false
-}
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'StoryblokImage',
   computed: {
+    ...mapGetters({
+      supportsWebp: 'storyblok/supportsWebp'
+    }),
     computedFilters () {
-      if (this.detectWebp && canUseWebP()) {
+      if (this.supportsWebp) {
         return [...this.filters, 'format(webp)']
       }
       return this.filters
