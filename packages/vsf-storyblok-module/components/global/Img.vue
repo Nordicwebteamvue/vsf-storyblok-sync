@@ -21,7 +21,7 @@ export default {
       supportsWebp: 'storyblok/supportsWebp'
     }),
     computedFilters () {
-      if (this.supportsWebp) {
+      if (this.detectWebp && this.supportsWebp) {
         return [...this.filters, 'format(webp)']
       }
       return this.filters
