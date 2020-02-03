@@ -54,12 +54,20 @@ function hook ({ config, db, index, storyblokClient }) {
 
   async function syncStory (req, res) {
     const cv = Date.now() // bust cache
-    const { story_id: id, action } = req.body
+    const {
+      story_id,
+      space_id,
+      release_id,
+      branch_id,
+      workflow_stage_name,
+      action,
+      text
+    } = req.body
 
     try {
       switch (action) {
         case 'published':
-          const { data: { story } } = await storyblokClient.get(`cdn/stories/${id}`, {
+          const { data: { story } } = await storyblokClient.get(`cdn/stories/${story_id}`, {
             cv,
             resolve_links: 'url'
           })
@@ -70,16 +78,23 @@ function hook ({ config, db, index, storyblokClient }) {
           break
 
         case 'unpublished':
-          const unpublishedStory = transformStory(index)({ id })
+          const unpublishedStory = transformStory(index)({ story_id })
           await db.delete(unpublishedStory)
-          log(`Unpublished ${id}`)
+          log(req.body)
           break
 
         case 'release_merged':
         case 'branch_deployed':
           await fullSync(db, config, storyblokClient, index)
+          log(req.body)
           break
+
+        case 'workflow_stage_changed':
+          log(req.body)
+          break
+
         default:
+          log(req.body)
           break
       }
       await cacheInvalidate(config.storyblok)
