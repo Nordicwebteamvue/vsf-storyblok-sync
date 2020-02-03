@@ -74,7 +74,7 @@ function hook ({ config, db, index, storyblokClient }) {
           const publishedStory = transformStory(index)(story)
 
           await db.index(publishedStory)
-          log(`Published ${story.full_slug}`)
+          log(req.body)
           break
 
         case 'unpublished':
