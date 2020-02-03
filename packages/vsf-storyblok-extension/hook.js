@@ -74,27 +74,27 @@ function hook ({ config, db, index, storyblokClient }) {
           const publishedStory = transformStory(index)(story)
 
           await db.index(publishedStory)
-          log(req.body)
+          console.log(req.body)
           break
 
         case 'unpublished':
           const unpublishedStory = transformStory(index)({ story_id })
           await db.delete(unpublishedStory)
-          log(req.body)
+          console.log(req.body)
           break
 
         case 'release_merged':
         case 'branch_deployed':
           await fullSync(db, config, storyblokClient, index)
-          log(req.body)
+          console.log(req.body)
           break
 
         case 'workflow_stage_changed':
-          log(req.body)
+          console.log(req.body)
           break
 
         default:
-          log(req.body)
+          console.log(req.body)
           break
       }
       await cacheInvalidate(config.storyblok)
