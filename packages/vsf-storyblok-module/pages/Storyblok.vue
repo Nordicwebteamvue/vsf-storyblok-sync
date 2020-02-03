@@ -1,5 +1,5 @@
 <template>
-  <sb-render v-if="story && story.content" :item="story.content"/>
+  <sb-render v-if="story && story.content" :item="story.content" />
 </template>
 
 <script>
@@ -20,17 +20,17 @@ export default {
           const storeCode = this.storeCodeFromSlug(link.full_slug)
           return get(config.storeViews, [storeCode, 'disabled'], true) === false
         })
-        .map(link => {
-          const storeCode = this.storeCodeFromSlug(link.full_slug)
-          const locale = get(config.storeViews, [storeCode, 'i18n/defaultLocale'], storeCode)
-          const storeViewUrl = get(config.storeViews, [storeCode, 'url'], '')
-          const href = this.isAbsoluteUrl(storeViewUrl) ? storeViewUrl + '/' + this.removeStoreCodeFromSlug(link.full_slug) : localizedRoute(link.full_slug)
-          return {
-            rel: 'alternate',
-            hreflang: locale,
-            href
-          }
-        })
+          .map(link => {
+            const storeCode = this.storeCodeFromSlug(link.full_slug)
+            const locale = get(config.storeViews, [storeCode, 'i18n/defaultLocale'], storeCode)
+            const storeViewUrl = get(config.storeViews, [storeCode, 'url'], '')
+            const href = this.isAbsoluteUrl(storeViewUrl) ? storeViewUrl + '/' + this.removeStoreCodeFromSlug(link.full_slug) : localizedRoute(link.full_slug)
+            return {
+              rel: 'alternate',
+              hreflang: locale,
+              href
+            }
+          })
       }
       return metaInfo
     }
@@ -40,7 +40,7 @@ export default {
     storeCodeFromSlug (slug) {
       return slug.split(/\/(.+)/)[0]
     },
-    removeStoreCodeFromSlug(slug) {
+    removeStoreCodeFromSlug (slug) {
       return slug.split(/\/(.+)/)[1]
     },
     isAbsoluteUrl (url) {
