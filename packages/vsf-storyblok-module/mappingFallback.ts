@@ -15,7 +15,7 @@ export const forStoryblok = async ({ dispatch, rootState }, { url, params }) => 
   if (params && params._storyblok_c && params._storyblok_c === 'page') {
     return route
   }
-  url = url.replace(/\/$/, "") // remove trailing slash
+  url = url.replace(/\/?(\?.*)?$/, "") // remove trailing slash and/or qs variables if present
   const storeCode = storeCodeFromRoute(url)
   const addStoreCode = get(config, 'storyblok.settings.appendStoreCodeFromHeader')
   const storeCodeToAdd = rootState.storyblok.storeCode
