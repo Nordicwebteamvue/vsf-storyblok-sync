@@ -14,7 +14,7 @@ export default {
   name: 'StoryblokPage',
   mixins: [StoryblokMixin],
   metaInfo () {
-    if (!this.isStatic && this.story) {
+    if (this.story) {
       return {
         title: get(this.story, 'content.seo.title', this.story.name),
         meta: [
