@@ -34,17 +34,17 @@ export default {
     metaHreflangLinks () {
       const {hreflangPrefix} = getSettings(config.storyblok.settings)
       if (hreflangPrefix && this.story && this.story.alternates.length > 0) {
-          const alternateHreflangLinks = this.story.alternates.filter(link => {
-            const storeCode = this.storeCodeFromSlug(link.full_slug)
+          const alternateHreflangLinks = this.story.alternates.filter(altStory => {
+            const storeCode = this.storeCodeFromSlug(altStory.full_slug)
             return get(config.storeViews, [storeCode, 'disabled'], true) === false
           })
-          .map(link => {
-            const storeCode = this.storeCodeFromSlug(link.full_slug)
+          .map(altStory => {
+            const storeCode = this.storeCodeFromSlug(altStory.full_slug)
             const storeView = get(config.storeViews, storeCode)
             return {
               rel: 'alternate',
               hreflang: get(storeView, 'seo.hreflang') || get(storeView, 'i18n.defaultLocale') || storeCode,
-              href: this.getCanonical(get(config.storeViews, storeCode), link)
+              href: this.getCanonical(get(config.storeViews, storeCode), altStory)
             }
           })
 
@@ -61,7 +61,7 @@ export default {
     getCanonical (storeView = currentStoreView(), story = this.story) {
       const storeViewUrl = get(storeView, 'url', '')
       const {hreflangPrefix} = getSettings(config.storyblok.settings)
-      const url = this.isAbsoluteUrl(storeViewUrl) ? storeViewUrl + '/' + this.removeStoreCodeFromSlug(story.full_slug) : hreflangPrefix + localizedRoute(story.full_slug)
+      const url = this.isAbsoluteUrl(storeViewUrl) ? storeViewUrl + '/' + this.removeStoreCodeFromSlug(story.full_slug) : hreflangPrefix + story.full_slug
       return url.replace(/\/home$/, '')
     },
     storeCodeFromSlug (slug) {
