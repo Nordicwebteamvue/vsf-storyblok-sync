@@ -4,39 +4,66 @@
 
 <script>
 import config from 'config'
-import get from 'lodash.get'
+import get from 'lodash-es/get'
 import { getSettings } from '../helpers'
 import StoryblokMixin from '../components/StoryblokMixin'
 import { localizedRoute } from '@vue-storefront/core/lib/multistore'
+import { currentStoreView } from '@vue-storefront/core/lib/multistore'
 
 export default {
   name: 'StoryblokPage',
   mixins: [StoryblokMixin],
   metaInfo () {
-    const {hreflangPrefix} = getSettings(config.storyblok.settings)
-    if (hreflangPrefix && this.story && this.story.alternates.length > 0) {
-      const metaInfo = {
-        link: this.story.alternates.filter(link => {
-          const storeCode = this.storeCodeFromSlug(link.full_slug)
-          return get(config.storeViews, [storeCode, 'disabled'], true) === false
-        })
-        .map(link => {
-          const storeCode = this.storeCodeFromSlug(link.full_slug)
-          const locale = get(config.storeViews, [storeCode, 'i18n/defaultLocale'], storeCode)
-          const storeViewUrl = get(config.storeViews, [storeCode, 'url'], '')
-          const href = this.isAbsoluteUrl(storeViewUrl) ? storeViewUrl + '/' + this.removeStoreCodeFromSlug(link.full_slug) : localizedRoute(link.full_slug)
-          return {
-            rel: 'alternate',
-            hreflang: locale,
-            href
-          }
-        })
+    if (!this.isStatic && this.story) {
+      return {
+        title: get(this.story, 'content.seo.title', this.story.name),
+        meta: [
+          { description: get(this.story, 'content.seo.description') ? { vmid: 'description', name: 'description', content: this.story.content.seo.description } : {} }
+        ],
+        link: [
+          {
+            rel: 'canonical',
+            href: this.getCanonical()
+          },
+          ...this.metaHreflangLinks()
+        ]
       }
-      return metaInfo
     }
-    return {}
   },
   methods: {
+    metaHreflangLinks () {
+      const {hreflangPrefix} = getSettings(config.storyblok.settings)
+      if (hreflangPrefix && this.story && this.story.alternates.length > 0) {
+          const alternateHreflangLinks = this.story.alternates.filter(link => {
+            const storeCode = this.storeCodeFromSlug(link.full_slug)
+            return get(config.storeViews, [storeCode, 'disabled'], true) === false
+          })
+          .map(link => {
+            const storeCode = this.storeCodeFromSlug(link.full_slug)
+            const storeView = get(config.storeViews, storeCode)
+            return {
+              rel: 'alternate',
+              hreflang: get(storeView, 'seo.hreflang') || get(storeView, 'i18n.defaultLocale') || storeCode,
+              href: this.getCanonical(get(config.storeViews, storeCode), link)
+            }
+          })
+
+          return  [
+            {
+              rel: 'alternate',
+              hreflang: get(currentStoreView(), 'seo.hreflang') || get(currentStoreView(), 'i18n.defaultLocale') || currentStoreView().storeCode,
+              href: this.getCanonical()
+            },
+            ...alternateHreflangLinks
+          ]
+      }
+    },
+    getCanonical (storeView = currentStoreView(), story = this.story) {
+      const storeViewUrl = get(storeView, 'url', '')
+      const {hreflangPrefix} = getSettings(config.storyblok.settings)
+      const url = this.isAbsoluteUrl(storeViewUrl) ? storeViewUrl + '/' + this.removeStoreCodeFromSlug(story.full_slug) : hreflangPrefix + localizedRoute(story.full_slug)
+      return url.replace(/\/home$/, '')
+    },
     storeCodeFromSlug (slug) {
       return slug.split(/\/(.+)/)[0]
     },
