@@ -4,20 +4,10 @@ import { currentStoreView } from '@vue-storefront/core/lib/multistore'
 import { KEY } from '..'
 import { StoryblokState } from '../types/State'
 import { loadScript, getStoryblokQueryParams } from '../helpers'
-import has from 'lodash-es/has'
 import get from 'lodash-es/get'
 
 export default {
   name: 'Storyblok',
-  metaInfo () {
-    if (!this.isStatic && this.story) {
-      return {
-        title: has(this.story.content, 'seo.title') && this.story.content.seo.title ? this.story.content.seo.title : this.story.name,
-        meta: has(this.story.content, 'seo.description') && this.story.content.seo.description ? [{ vmid: 'description', name: 'description', content: this.story.content.seo.description }] : []
-      }
-    }
-    return {}
-  },
   computed: {
     ...mapState(KEY, {
       loadingStory(state: StoryblokState) {
