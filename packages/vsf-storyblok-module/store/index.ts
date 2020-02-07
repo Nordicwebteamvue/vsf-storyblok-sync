@@ -9,5 +9,10 @@ export const module: Module<StoryblokState, RootState> = {
   namespaced: true,
   state,
   mutations,
-  actions
+  actions,
+  getters: {
+    supportsWebp (state: StoryblokState) {
+      return state.supportsWebp
+    }
+  }
 }

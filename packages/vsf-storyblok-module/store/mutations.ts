@@ -35,5 +35,8 @@ export const mutations: MutationTree<StoryblokState> = {
         story
       }
     }
+  },
+  supportsWebp (state: StoryblokState, supportsWebp) {
+    state.supportsWebp = supportsWebp
   }
 }

@@ -9,4 +9,5 @@ export interface StoryblokState {
   previewToken?: string;
   storeCode: string;
   stories: StoryblokStories;
+  supportsWebp: boolean;
 }

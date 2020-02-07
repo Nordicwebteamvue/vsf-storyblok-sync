@@ -11,7 +11,7 @@ import { once } from '@vue-storefront/core/helpers'
 import { StoryblokRoutes } from '../pages/routes'
 import { getSettings } from '../helpers'
 
-function beforeRegistration ({ Vue, config, store }) {
+function beforeRegistration ({ Vue, config, store, isServer }) {
   const settings = getSettings(config.storyblok.settings)
   if (settings.addRoutes) {
     RouterManager.addRoutes(StoryblokRoutes, router)
