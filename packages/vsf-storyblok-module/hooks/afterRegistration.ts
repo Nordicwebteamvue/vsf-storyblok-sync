@@ -6,5 +6,6 @@ function afterRegistration ({ isServer, Vue, store }) {
     }
     const supportsWebp = req.headers.accept.includes('image/webp')
     store.commit('storyblok/supportsWebp', supportsWebp)
-
+  }
+}
 export { afterRegistration }
