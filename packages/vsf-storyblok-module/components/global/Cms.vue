@@ -1,19 +1,22 @@
 <template>
   <div>
     <slot v-if="loading" name="loading"></slot>
+    <slot v-else-if="error" name="error"></slot>
     <slot v-else></slot>
   </div>
 </template>
 
 <script>
 import config from 'config'
-import { TaskQueue } from '@vue-storefront/core/lib/sync'
+import fetch from 'isomorphic-fetch'
 
 export default {
   name: 'StoryblokCms',
   data () {
     return {
       loading: true,
+      error: false,
+      story: null,
     }
   },
   props: {
@@ -25,19 +28,19 @@ export default {
   },
   methods: {
     updateValue: function (value) {
-      this.$emit('input', value);
+      this.$emit('input', value.content ? value.content : value);
     },
     async fetchStory () {
       const url = `${config.storyblok.endpoint}/get-by-uuid?uuid=${this.uuid}`
-      const { result: { story }} = await TaskQueue.execute({
-        url,
-        payload: {
-          headers: { 'Content-Type': 'application/json' },
-          mode: 'cors'
-        },
-        silent: true
-      })
-      this.updateValue(story)
+      const response = await fetch(url)
+      const json = await response.json()
+      this.loading = false
+      if (json.stories && json.stories[0]) {
+        this.updateValue(json.stories[0])
+        return json.stories[0]
+      } else {
+        this.error = true
+      }
     }
   },
   async serverPrefetch () {
