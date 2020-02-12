@@ -13,7 +13,6 @@
 import get from 'lodash-es/get'
 import config from 'config'
 import { mapGetters } from 'vuex'
-import { isServer } from '@vue-storefront/core/helpers'
 import debounce from 'lodash-es/debounce'
 
 const baseUrl = 'https://img2.storyblok.com'
@@ -28,17 +27,11 @@ export default {
   mounted () {
     if (this.div && this.useElementWidth) {
       this.elementWidth = this.$refs.element.offsetWidth
-    }
-  },
-  created () {
-    if (!isServer && this.div && this.useElementWidth) {
       window.addEventListener('resize', debounce(this.onResize, 250))
     }
   },
   beforeDestroy () {
-    if (!isServer) {
-      window.removeEventListener('resize', debounce(this.onResize, 250))
-    }
+    window.removeEventListener('resize', debounce(this.onResize, 250))
   },
   methods: {
     onResize () {
