@@ -13,7 +13,7 @@ module.exports = ({ config, db }) => {
   const storyblokClientConfig = {
     accessToken: config.storyblok.previewToken,
     cache: {
-      type: 'memory'
+      type: 'none'
     }
   }
 
