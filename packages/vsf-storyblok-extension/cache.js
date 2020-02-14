@@ -1,5 +1,6 @@
 import apicache from 'apicache'
+import redis from 'redis'
 
-let cache = apicache.middleware
+let cacheFactory = config => apicache.options({ redisClient: redis.createClient(config.redis) }).middleware
 
-export default cache
+export default cacheFactory

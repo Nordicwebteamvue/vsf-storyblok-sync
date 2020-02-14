@@ -4,7 +4,7 @@ import StoryblokClient from 'storyblok-js-client'
 import { apiStatus } from '../../../lib/util'
 import { hook } from './hook'
 import { fullSync, log } from './fullSync'
-import cache from './cache'
+import cacheFactory from './cache'
 
 const fetchStory = async (res, storyblokClient, path) => {
   const cv = Date.now() // bust cache
@@ -33,6 +33,7 @@ module.exports = ({ config, db }) => {
       type: 'memory'
     }
   }
+  const cache = cacheFactory(config)
 
   const storyblokClient = new StoryblokClient(storyblokClientConfig)
   const index = 'storyblok_stories'
