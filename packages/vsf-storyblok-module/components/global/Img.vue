@@ -30,6 +30,7 @@ export default {
       if (!this.src.includes('//a.storyblok.com')) {
         return this.src
       }
+      const prefix = config.storyblok.imageProxy ? config.storyblok.imageProxy : 'https://img2.storyblok.com'
       const [, resource] = this.src.split('//a.storyblok.com')
       let mod = ''
       if (this.height > 0 || this.width > 0) {
@@ -44,7 +45,7 @@ export default {
       if (this.computedFilters.length) {
         mod += '/filters:' + this.computedFilters.join(':')
       }
-      return 'https://img2.storyblok.com' + mod + resource
+      return prefix + mod + resource
     }
   },
   props: {

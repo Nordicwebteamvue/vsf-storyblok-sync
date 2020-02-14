@@ -4,6 +4,7 @@ import StoryblokClient from 'storyblok-js-client'
 import { apiStatus } from '../../../lib/util'
 import { hook } from './hook'
 import { fullSync, log } from './fullSync'
+import request from 'request'
 
 module.exports = ({ config, db }) => {
   if (!config.storyblok || !config.storyblok.previewToken) {
@@ -69,6 +70,11 @@ module.exports = ({ config, db }) => {
     }
   }).catch(() => {
     log('Stories not synced!')
+  })
+
+  api.get('/img/:imageUrl*', (req, res) => {
+    let imageUrl = 'https://img2.storyblok.com/' + req.params.imageUrl + req.params[0]
+    request(imageUrl).pipe(res)
   })
 
   api.get('/story/', (req, res) => {
