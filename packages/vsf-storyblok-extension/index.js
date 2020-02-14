@@ -4,6 +4,22 @@ import StoryblokClient from 'storyblok-js-client'
 import { apiStatus } from '../../../lib/util'
 import { hook } from './hook'
 import { fullSync, log } from './fullSync'
+import cache from './cache'
+
+const fetchStory = async (res, storyblokClient, path) => {
+  const cv = Date.now() // bust cache
+  try {
+    const { data } = await storyblokClient.get(`cdn/stories/${path}`, {
+      cv,
+      resolve_links: 'url'
+    })
+    data.skippedElasticSearch = true
+    apiStatus(res, data)
+  } catch (error) {
+    console.log('error', error)
+    apiStatus(res, {story: false, skippedElasticSearch: true}, 404)
+  }
+}
 
 module.exports = ({ config, db }) => {
   if (!config.storyblok || !config.storyblok.previewToken) {
@@ -58,27 +74,34 @@ module.exports = ({ config, db }) => {
     }, 500)
   })
 
-  db.ping({
-    requestTimeout: 30000
-  }).then(async (response) => {
-    try {
-      await fullSync(db, config, storyblokClient, index)
-      log('Stories synced!')
-    } catch (error) {
+  if (!config.storyblok.skipElasticsearch) {
+    db.ping({
+      requestTimeout: 30000
+    }).then(async (response) => {
+      try {
+        await fullSync(db, config, storyblokClient, index)
+        log('Stories synced!')
+      } catch (error) {
+        log('Stories not synced!')
+      }
+    }).catch(() => {
       log('Stories not synced!')
-    }
-  }).catch(() => {
-    log('Stories not synced!')
-  })
+    })
+  } else {
+    log('ElasticSearch layer disabled')
+  }
 
   api.get('/story/', (req, res) => {
     getStory(res, 'home')
   })
 
-  api.get('/story/:story*', (req, res) => {
+  api.get('/story/:story*', cache('14 days'), (req, res) => {
     let path = req.params.story + req.params[0]
     if (config.storeViews[path]) {
       path += '/home'
+    }
+    if (config.storyblok.skipElasticsearch) {
+      return fetchStory(res, storyblokClient, path)
     }
     getStory(res, path)
   })

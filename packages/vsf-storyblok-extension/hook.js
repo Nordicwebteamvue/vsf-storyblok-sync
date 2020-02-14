@@ -3,6 +3,7 @@ import request from 'request'
 import { promisify } from 'util'
 import { apiStatus } from '../../../lib/util'
 import { fullSync } from './fullSync'
+import apicache from 'apicache'
 
 const rp = promisify(request)
 
@@ -82,6 +83,7 @@ function hook ({ config, db, index, storyblokClient }) {
         default:
           break
       }
+      apicache.clear()
       await cacheInvalidate(config.storyblok)
       return apiStatus(res)
     } catch (error) {
@@ -108,6 +110,10 @@ function hook ({ config, db, index, storyblokClient }) {
   api.post('/hook', syncStory)
   api.post('/hook', protectRoute(config), syncStory)
   api.get('/full', protectRoute(config), fullSyncRoute)
+  api.get('/invalidate', (req, res) => {
+    apicache.clear()
+    res.send('Invalidate me')
+  })
 
   return api
 }

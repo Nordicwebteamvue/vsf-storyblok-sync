@@ -7,11 +7,15 @@
   "author": "Max Malm",
   "license": "MIT",
   "dependencies": {
+    "apicache": "^1.5.3",
+    "redis": "^3.0.2",
     "storyblok-js-client": "2.0.10"
   },
   "files": [
     "hook.js",
     "index.js",
     "sync-stories.js"
-  ]
+  ],
+  "main": "index.js",
+  "private": true
 }
