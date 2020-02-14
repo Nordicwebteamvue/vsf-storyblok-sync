@@ -7,7 +7,6 @@ import config from 'config'
 import get from 'lodash-es/get'
 import { getSettings } from '../helpers'
 import StoryblokMixin from '../components/StoryblokMixin'
-import { localizedRoute } from '@vue-storefront/core/lib/multistore'
 import { currentStoreView } from '@vue-storefront/core/lib/multistore'
 
 export default {
@@ -47,8 +46,6 @@ export default {
               href: this.getCanonical(get(config.storeViews, storeCode), altStory)
             }
           })
-
-        console.log('alternateHreflangLinks', alternateHreflangLinks)
         return [
           {
             rel: 'alternate',
