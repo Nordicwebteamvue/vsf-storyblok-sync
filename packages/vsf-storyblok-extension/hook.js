@@ -12,6 +12,7 @@ const log = (string) => {
 }
 
 const cacheInvalidate = async (config) => {
+  apicache.clear()
   if (config.invalidate) {
     log(`Invalidating cache... (${config.invalidate})`)
     await rp({
@@ -49,13 +50,14 @@ const protectRoute = (config) => (req, res, next) => {
 }
 
 function hook ({ config, db, index, storyblokClient }) {
-  if (!config.storyblok || !config.storyblok.hookSecret) {
-    throw new Error('🧱 : config.storyblok.hookSecret not found')
-  }
-
   async function syncStory (req, res) {
-    const cv = Date.now() // bust cache
     const { story_id: id, action } = req.body
+    log(`Webhook action: ${action}`)
+    if (config.storyblok.skipElasticsearch) {
+      await cacheInvalidate(config.storyblok)
+      return apiStatus(res)
+    }
+    const cv = Date.now() // bust cache
 
     try {
       switch (action) {
@@ -76,14 +78,12 @@ function hook ({ config, db, index, storyblokClient }) {
           log(`Unpublished ${id}`)
           break
 
-        case 'release_merged':
         case 'branch_deployed':
           await fullSync(db, config, storyblokClient, index)
           break
         default:
           break
       }
-      apicache.clear()
       await cacheInvalidate(config.storyblok)
       return apiStatus(res)
     } catch (error) {
@@ -107,7 +107,6 @@ function hook ({ config, db, index, storyblokClient }) {
   api.get('/hook', (req, res) => {
     res.send('You should POST to this endpoint')
   })
-  api.post('/hook', syncStory)
   api.post('/hook', protectRoute(config), syncStory)
   api.get('/full', protectRoute(config), fullSyncRoute)
   api.get('/invalidate', (req, res) => {

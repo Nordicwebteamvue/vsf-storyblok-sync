@@ -14,6 +14,7 @@ const fetchStory = async (res, storyblokClient, path) => {
       resolve_links: 'url'
     })
     data.skippedElasticSearch = true
+    data.cv = cv
     apiStatus(res, data)
   } catch (error) {
     console.log('error', error)
