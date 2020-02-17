@@ -1,11 +1,14 @@
 {
+  "api": {
+    "url": "http://storefront-api:8080/"
+  },
   "server": {
     "dynamicConfigReload": true,
     "dynamicConfigContinueOnError": true
   },
   "elasticsearch": {
     "httpAuth": "",
-    "host": "storefront-api:8080/api/catalog",
+    "host": "/api/catalog",
     "index": "vue_storefront_catalog"
   },
   "theme": "@vue-storefront/theme-default",

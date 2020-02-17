@@ -3,6 +3,11 @@ node_js:
   - 10
 
 addons:
+  hosts:
+    - storefront-api
+    - api
+
+addons:
   apt:
     packages:
       - libgconf-2-4
