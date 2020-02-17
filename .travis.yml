@@ -33,4 +33,7 @@ before_script:
   - make start
 
 script:
+  - sleep 10
+  - pm2 ls
+  - pm2 logs server --err --nostream
   - yarn e2e
