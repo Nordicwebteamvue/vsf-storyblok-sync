@@ -2,7 +2,7 @@
   <div v-if="div && lazy" v-lazy:background-image="image" :style="{ backgroundImage: `url('${placeholder}')` }">
     <slot />
   </div>
-  <div v-else-if="div" :style="{ backgroundImage: 'url(\'' + image + '\')' }">
+  <div v-else-if="div" :style="{ backgroundImage: `url('${image}')` }">
     <slot />
   </div>
   <img v-else-if="lazy" v-lazy="image" :src="placeholder">
