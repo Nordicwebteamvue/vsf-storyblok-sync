@@ -1,6 +1,6 @@
 {
   "api": {
-    "url": "http://storefront-api:8080/"
+    "url": "http://storefront-api:8080"
   },
   "server": {
     "dynamicConfigReload": true,
