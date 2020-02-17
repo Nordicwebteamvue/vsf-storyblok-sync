@@ -5,6 +5,11 @@ services:
     depends_on: 
       - elasticsearch
       - redis
+    labels:
+      bundle: "vue-storefront-api"
+  storefront-ui:
+    labels:
+      bundle: "vue-storefront"
 
 volumes:
   esdat1: null

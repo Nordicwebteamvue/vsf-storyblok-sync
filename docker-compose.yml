@@ -77,6 +77,7 @@ services:
       # Development
       - './.docker/frontend/config.json:/var/www/config/local.json'
       - './.docker/frontend/modules.ts:/var/www/src/modules/index.ts'
+      - './docker/frontend/tsconfig.json:/var/www/tsconfig.json'
       - './theme:/var/www/src/themes/default'
       # Module
       - './packages/vsf-storyblok-module:/var/www/src/modules/vsf-storyblok-module:delegated'
