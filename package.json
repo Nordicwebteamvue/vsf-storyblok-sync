@@ -16,6 +16,7 @@
     "postinstall": "test -n \"$NO_POSTINSTALL\" || yarn bootstrap"
   },
   "devDependencies": {
+    "@kodbruket/docker-compose-bundler": "^0.1.0",
     "babel-eslint": "^8.2.6",
     "cypress": "^3.2.0",
     "eslint": "^4.16.0",
