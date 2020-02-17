@@ -36,5 +36,5 @@ before_script:
 script:
   - sleep 10
   - pm2 ls
-  - pm2 logs server --err --nostream
+  - pm2 logs server --nostream --lines 100
   - yarn e2e
