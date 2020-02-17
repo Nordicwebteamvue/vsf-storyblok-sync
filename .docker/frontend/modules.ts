@@ -20,9 +20,14 @@ import { RawOutputExample } from './raw-output-example'
 import { Magento2CMS } from './magento-2-cms'
 import { Url } from '@vue-storefront/core/modules/url'
 import { InstantCheckout } from './instant-checkout'
-import { Storyblok, urlExtend } from './vsf-storyblok-module'
+import { Storyblok } from './vsf-storyblok-module'
+import { forStoryblok } from './vsf-storyblok-module/mappingFallback'
+import { extendMappingFallback } from './vsf-mapping-fallback'
+import { forCategory, forProduct, tap } from './vsf-mapping-fallback/builtin'
 
-extendModule(urlExtend)
+extendMappingFallback(
+  forProduct, forCategory, forStoryblok, tap
+)
 
 export const registerModules: VueStorefrontModule[] = [
   Checkout,

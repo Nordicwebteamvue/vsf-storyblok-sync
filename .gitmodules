@@ -4,3 +4,6 @@
 [submodule "vue-storefront-api"]
 	path = .docker/vue-storefront-api
 	url = https://github.com/DivanteLtd/vue-storefront-api.git
+[submodule ".docker/vsf-mapping-fallback"]
+	path = .docker/vsf-mapping-fallback
+	url = https://github.com/kodbruket/vsf-mapping-fallback.git
