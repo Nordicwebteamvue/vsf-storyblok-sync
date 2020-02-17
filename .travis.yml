@@ -32,4 +32,4 @@ before_script:
   - make start
 
 script:
-  - yarn cypress
+  - yarn ci

@@ -13,7 +13,7 @@
     "test:ci:start": "docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.test.yml up -d",
     "test:ci:test": "docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.test.yml up --abort-on-container-exit --exit-code-from cypress",
     "test": "cypress open",
-    "cypress": "cypress open -p 6129",
+    "ci": "cypress run",
     "lint": "eslint --ext .js,.vue,.ts .",
     "dev": "docker-compose up",
     "postinstall": "test -n \"$NO_POSTINSTALL\" || yarn bootstrap"

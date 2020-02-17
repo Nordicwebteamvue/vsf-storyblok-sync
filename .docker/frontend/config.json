@@ -2,16 +2,6 @@
   "api": {
     "url": "http://demo.vuestorefront.io"
   },
-  "server": {
-    "dynamicConfigReload": true,
-    "dynamicConfigContinueOnError": true
-  },
-  "elasticsearch": {
-    "httpAuth": "",
-    "host": "/api/catalog",
-    "index": "vue_storefront_catalog"
-  },
-  "theme": "@vue-storefront/theme-default",
   "storyblok": {
     "endpoint": "http://storefront-api:8080/api/ext/vsf-storyblok-extension",
     "settings": {
@@ -19,8 +9,6 @@
     }
   },
   "install": {
-    "is_local_backend": false,
-    "backend_dir": "../vue-storefront-api"
-  },
-  "demomode": false
+    "is_local_backend": false
+  }
 }
