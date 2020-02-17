@@ -3,7 +3,7 @@
     <div class="bg-cl-secondary py35 pl20">
       <div class="container">
         <breadcrumbs
-          :routes="[{name: 'Homepage', route_link: '/'}]"
+          :with-homepage="true"
           active-route="My Account"
         />
         <h1>
@@ -18,7 +18,9 @@
           <nav class="static-menu serif h4 mb35">
             <ul class="m0 p0">
               <li class="mb20" v-for="(page, index) in navigation" :key="index" @click="notify(page.title)">
-                <router-link :to="localizedRoute(page.link)" class="cl-accent">{{ page.title }}</router-link>
+                <router-link :to="localizedRoute(page.link)" class="cl-accent">
+                  {{ page.title }}
+                </router-link>
               </li>
             </ul>
           </nav>
@@ -38,6 +40,7 @@ import MyAccount from '@vue-storefront/core/pages/MyAccount'
 import Breadcrumbs from '../components/core/Breadcrumbs'
 import MyProfile from '../components/core/blocks/MyAccount/MyProfile'
 import MyShippingDetails from '../components/core/blocks/MyAccount/MyShippingDetails'
+import MyNewsletter from '../components/core/blocks/MyAccount/MyNewsletter'
 import MyOrders from '../components/core/blocks/MyAccount/MyOrders'
 import MyOrder from '../components/core/blocks/MyAccount/MyOrder'
 import MyRecentlyViewed from '../components/core/blocks/MyAccount/MyRecentlyViewed'
@@ -49,6 +52,7 @@ export default {
       navigation: [
         { title: this.$t('My profile'), link: '/my-account' },
         { title: this.$t('My shipping details'), link: '/my-account/shipping-details' },
+        { title: this.$t('My newsletter'), link: '/my-account/newsletter' },
         { title: this.$t('My orders'), link: '/my-account/orders' },
         { title: this.$t('My loyalty card'), link: '#' },
         { title: this.$t('My product reviews'), link: '#' },
@@ -60,6 +64,7 @@ export default {
     Breadcrumbs,
     MyProfile,
     MyShippingDetails,
+    MyNewsletter,
     MyOrders,
     MyOrder,
     MyRecentlyViewed,

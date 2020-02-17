@@ -25,7 +25,7 @@
     >
       <template slot-scope="{ result: { loading, error, data } }">
         <div v-if="data" class="col-md-12 product-listing pl35 pt20 row">
-          <product-tile @click.native="closeSearchpanel" :key="Product.id" v-for="Product in data.ProductList" :product="Product"/>
+          <product-tile @click.native="closeSearchpanel" :key="Product.id" v-for="Product in data.ProductList" :product="Product" />
           <transition name="fade">
             <div v-if="error" class="no-results relative center-xs h4">
               {{ $t('No results were found.') }}
@@ -67,6 +67,7 @@ export default {
   transition: transform 300ms $motion-main;
   overflow-y: auto;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 
   &.active {
     transform: translateX(0);
