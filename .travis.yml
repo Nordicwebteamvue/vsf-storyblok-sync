@@ -1,12 +1,19 @@
 language: node_js
-
 node_js:
-  - "8"
+  - 10
+
+addons:
+  apt:
+    packages:
+      - libgconf-2-4
 
 services:
   - docker
 
-cache: yarn
+cache:
+  yarn: true
+  directories:
+    - ~/.cache
 
 git:
   submodules: false
@@ -24,9 +31,9 @@ before_install:
   - sed -i.bak 's/package.json/package.json yarn.lock/' .docker/vue-storefront/docker/vue-storefront/Dockerfile
 
 before_script:
-  - docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.test.yml build
-
-script:
+  - docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.test.yml up -d
   - yarn bundle
   - make build
+
+script:
   - yarn cypress
