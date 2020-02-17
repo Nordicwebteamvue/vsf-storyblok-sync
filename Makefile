@@ -4,6 +4,16 @@ submodules:
 bundle:
 	yarn docker-compose-bundler
 
-start:
-	cd .output/vue-storefront-api && yarn && yarn build && yarn start
-	cd .output/vue-storefront && yarn && yarn build && yarn start
+build-api:
+	cd .output/vue-storefront-api && yarn && yarn build
+
+start-api:
+	cd .output/vue-storefront-api && yarn start
+
+build-ui:
+	cd .output/vue-storefront && yarn && yarn build
+
+start-ui:
+	cd .output/vue-storefront && yarn start
+
+start: build-api start-api build-ui start-ui

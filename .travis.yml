@@ -6,6 +6,7 @@ addons:
   hosts:
     - storefront-api
     - api
+    - elasticsearch
 
 addons:
   apt:

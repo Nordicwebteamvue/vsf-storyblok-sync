@@ -2,6 +2,10 @@
   "api": {
     "url": "http://demo.vuestorefront.io"
   },
+  "graphql":{
+    "host": "storefront-api",
+    "port": 8080
+  },
   "storyblok": {
     "endpoint": "http://storefront-api:8080/api/ext/vsf-storyblok-extension",
     "settings": {
