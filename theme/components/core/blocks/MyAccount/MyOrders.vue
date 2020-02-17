@@ -33,7 +33,7 @@
                 {{ $t('Status') }}
               </th>
               <th class="p20 serif lh20">
-&nbsp;
+                &nbsp;
               </th>
             </tr>
           </thead>

@@ -24,7 +24,7 @@
       <div class="col-xs-12 col-sm-9 col-md-11">
         <div id="checkout-order-review-additional-container">
           <div id="checkout-order-review-additional">
-&nbsp;
+            &nbsp;
           </div>
         </div>
         <div class="row mb15 mt20">
