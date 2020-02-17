@@ -10,24 +10,24 @@ export default {
   name: 'Storyblok',
   computed: {
     ...mapState(KEY, {
-      loadingStory(state: StoryblokState) {
+      loadingStory (state: StoryblokState) {
         const { id, fullSlug } = getStoryblokQueryParams(this.$route)
 
         const key = this.storyblokPath || id || this.formatFullSlug(fullSlug)
-        return state.stories[key] && state.stories[key].loading || false
+        return (state.stories[key] && state.stories[key].loading) || false
       },
       previewToken: (state: StoryblokState) => state.previewToken,
       storeCodeFromHeader: (state: StoryblokState) => state.storeCode,
-      story(state: StoryblokState) {
+      story (state: StoryblokState) {
         const { id, fullSlug } = getStoryblokQueryParams(this.$route)
 
         const key = this.storyblokPath || id || this.formatFullSlug(fullSlug)
         return state.stories[key] && state.stories[key].story
       },
-      isStatic() {
+      isStatic () {
         return !!this.storyblok.path
       },
-      storyblokPath() {
+      storyblokPath () {
         const {storeCode} = currentStoreView()
         const path = this.storyblok.path
         if (this.storyblok.prependStorecode && config.storeViews.multistore && storeCode) {
@@ -35,13 +35,13 @@ export default {
         }
         return path
       }
-    }),
+    })
   },
   data () {
     return {
       storyblok: {
         prependStorecode: false,
-        path: '',
+        path: ''
       }
     }
   },

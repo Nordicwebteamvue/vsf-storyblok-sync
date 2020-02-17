@@ -1,5 +1,5 @@
 import { StoryblokState } from '../types/State'
-import { ActionTree, ActionContext, Store } from 'vuex'
+import { ActionTree, ActionContext } from 'vuex'
 import config from 'config'
 import RootState from '@vue-storefront/core/types/RootState'
 import { TaskQueue } from '@vue-storefront/core/lib/sync'
@@ -23,10 +23,10 @@ export const actions: ActionTree<StoryblokState, RootState> = {
     commit('setPreviewToken', { previewToken })
     return previewToken
   },
-  async loadDraftStory (this: Store<any> & { $storyblokClient: any }, { commit }: ActionContext<StoryblokState, RootState>, { id, previewToken }) {
+  async loadDraftStory ({ commit }: ActionContext<StoryblokState, RootState>, { id, previewToken }) {
     commit('loadingStory', { key: id })
 
-    const { data: { story } } = await this.$storyblokClient.get(`cdn/stories/${id}`, {
+    const { data: { story } } = await this['$storyblokClient'].get(`cdn/stories/${id}`, {
       token: previewToken,
       version: 'draft'
     })
@@ -47,7 +47,7 @@ export const actions: ActionTree<StoryblokState, RootState> = {
     }
 
     const url = `${config.storyblok.endpoint}/story/${key}`
-    const { result: { story }}: any = await TaskQueue.execute({
+    const { result: { story } }: any = await TaskQueue.execute({
       url,
       payload: {
         headers: { 'Content-Type': 'application/json' },
