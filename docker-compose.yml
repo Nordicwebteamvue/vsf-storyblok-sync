@@ -68,7 +68,6 @@ services:
       - './.docker/vue-storefront/.eslintignore:/var/www/.eslintignore'
       - './.docker/vue-storefront/.eslintrc.js:/var/www/.eslintrc.js'
       - './.docker/vue-storefront/lerna.json:/var/www/lerna.json'
-      - './.docker/vue-storefront/tsconfig.json:/var/www/tsconfig.json'
       - './.docker/vue-storefront/tsconfig-build.json:/var/www/tsconfig-build.json'
       - './.docker/vue-storefront/shims.d.ts:/var/www/shims.d.ts'
       - './.docker/vue-storefront/package.json:/var/www/package.json'
@@ -77,7 +76,7 @@ services:
       # Development
       - './.docker/frontend/config.json:/var/www/config/local.json'
       - './.docker/frontend/modules.ts:/var/www/src/modules/index.ts'
-      - './docker/frontend/tsconfig.json:/var/www/tsconfig.json'
+      - './.docker/frontend/tsconfig.json:/var/www/tsconfig.json'
       - './theme:/var/www/src/themes/default'
       # Module
       - './packages/vsf-storyblok-module:/var/www/src/modules/vsf-storyblok-module:delegated'

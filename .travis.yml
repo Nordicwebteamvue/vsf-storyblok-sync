@@ -8,7 +8,6 @@ addons:
       - libgconf-2-4
 
 services:
-  - docker
   - elasticsearch
   - redis
 
@@ -20,16 +19,12 @@ cache:
 git:
   submodules: false
 
-env:
-  global:
-    - DOCKER_COMPOSE_VERSION=1.24.0
-
 before_install:
   - git submodule update --init
 
 before_script:
   - yarn bundle
-  - make build
+  - make start
 
 script:
   - yarn cypress
