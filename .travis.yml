@@ -31,6 +31,7 @@ before_install:
 before_script:
   - yarn bundle
   - make start
+  - npm install -g pm2
 
 script:
   - sleep 10
