@@ -1,11 +1,11 @@
 <template>
-  <div v-if="div && lazy" v-lazy:background-image="image">
+  <div v-if="div && lazy" v-lazy:background-image="image" :style="{ backgroundImage: 'url(\'' + placeholder + '\')' }">
     <slot />
   </div>
   <div v-else-if="div" :style="{ backgroundImage: 'url(\'' + image + '\')' }">
     <slot />
   </div>
-  <img v-else-if="lazy" v-lazy="image">
+  <img v-else-if="lazy" v-lazy="image" :src="placeholder">
   <img v-else :src="image">
 </template>
 
@@ -48,6 +48,10 @@ export default {
     }
   },
   props: {
+    placeholder: {
+      type: String,
+      default: 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='
+    },
     detectWebp: {
       type: Boolean,
       default: get(config, 'storyblok.imageService.defaultWebp', true)
