@@ -1,5 +1,5 @@
 <template>
-  <div v-if="div && lazy" v-lazy:background-image="image" :style="{ backgroundImage: 'url(\'' + placeholder + '\')' }">
+  <div v-if="div && lazy" v-lazy:background-image="image" :style="{ backgroundImage: `url('${placeholder}')` }">
     <slot />
   </div>
   <div v-else-if="div" :style="{ backgroundImage: 'url(\'' + image + '\')' }">
