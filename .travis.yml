@@ -28,8 +28,8 @@ before_install:
   - git submodule update --init
 
 before_script:
-  - yarn bundle import-ci
+  - yarn bundle
   - make start
 
 script:
-  - yarn ci
+  - yarn e2e
