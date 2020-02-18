@@ -7,8 +7,6 @@ addons:
     - storefront-api
     - api
     - elasticsearch
-
-addons:
   apt:
     packages:
       - libgconf-2-4
@@ -31,11 +29,10 @@ before_install:
 before_script:
   - yarn bundle
   - make start
-  - npm install -g pm2
 
 script:
   - sleep 10
-  - pm2 ls
-  - pm2 logs server --nostream --lines 100
+  - yarn pm2 ls
+  - yarn pm2 logs server --nostream --lines 100
   - yarn e2e
-  - pm2 logs server --nostream --lines 100
+  - yarn pm2 logs server --nostream --lines 100
