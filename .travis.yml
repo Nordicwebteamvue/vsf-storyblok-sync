@@ -3,10 +3,6 @@ node_js:
   - 10
 
 addons:
-  hosts:
-    - storefront-api
-    - api
-    - elasticsearch
   apt:
     packages:
       - libgconf-2-4
@@ -31,8 +27,4 @@ before_script:
   - make start
 
 script:
-  - sleep 10
-  - yarn pm2 ls
-  - yarn pm2 logs server --nostream --lines 100
   - yarn e2e
-  - yarn pm2 logs server --nostream --lines 100
