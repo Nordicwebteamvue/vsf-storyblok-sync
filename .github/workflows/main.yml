@@ -18,7 +18,7 @@ jobs:
           eslint: true
           eslint_extensions: js,vue,ts
       - uses: zhulik/redis-action@1.1.0
-      - uses: nyaruka/elasticsearch@v1
+      - uses: nyaruka/elasticsearch-action@v1
         with:
           elastic version: '5.6.11'
       - name: Start server
