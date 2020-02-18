@@ -39,13 +39,13 @@ services:
       - './.docker/vue-storefront-api/package.json:/var/www/package.json'
       - './.docker/vue-storefront-api/babel.config.js:/var/www/babel.config.js'
       - './.docker/vue-storefront-api/scripts:/var/www/scripts:delegated'
-      - './.docker/vue-storefront-api/tsconfig.json:/var/www/tsconfig.json'
       - './.docker/vue-storefront-api/nodemon.json:/var/www/nodemon.json'
       - './.docker/vue-storefront-api/src:/var/www/src:delegated'
       - './.docker/vue-storefront-api/var:/var/www/var:delegated'
       # Development
       - './.docker/api/config.json:/var/www/config/local.json'
       - './.docker/api/db.js:/var/www/src/db.js'
+      - './.docker/api/tsconfig.json:/var/www/tsconfig.json'
       # Module
       - './packages/vsf-storyblok-extension:/var/www/src/api/extensions/vsf-storyblok-extension:delegated'
     healthcheck:
