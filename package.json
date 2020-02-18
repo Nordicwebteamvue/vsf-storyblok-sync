@@ -20,7 +20,7 @@
   "devDependencies": {
     "@kodbruket/docker-compose-bundler": "^0.1.0",
     "babel-eslint": "^8.2.6",
-    "cypress": "^3.2.0",
+    "cypress": "^4.0.2",
     "eslint": "^4.16.0",
     "eslint-config-standard": "^11.0.0",
     "eslint-friendly-formatter": "^4.0.1",
