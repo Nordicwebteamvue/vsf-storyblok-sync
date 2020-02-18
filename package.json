@@ -11,13 +11,16 @@
     "test:ci:start": "docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.test.yml up -d",
     "test:ci:test": "docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.test.yml up --abort-on-container-exit --exit-code-from cypress",
     "test": "cypress open",
-    "lint": "eslint .",
+    "pree2e": "wait-on http://localhost:3000/ci",
+    "e2e": " cypress run",
+    "lint": "eslint --ext .js,.vue,.ts .",
     "dev": "docker-compose up",
     "postinstall": "test -n \"$NO_POSTINSTALL\" || yarn bootstrap"
   },
   "devDependencies": {
+    "@kodbruket/docker-compose-bundler": "^0.1.0",
     "babel-eslint": "^8.2.6",
-    "cypress": "^3.2.0",
+    "cypress": "^4.0.2",
     "eslint": "^4.16.0",
     "eslint-config-standard": "^11.0.0",
     "eslint-friendly-formatter": "^4.0.1",
@@ -29,7 +32,8 @@
     "eslint-plugin-vue-storefront": "^0.0.1",
     "husky": ">=1",
     "lerna": "^3.13.1",
-    "lint-staged": ">=8"
+    "lint-staged": ">=8",
+    "wait-on": "^4.0.0"
   },
   "husky": {
     "hooks": {

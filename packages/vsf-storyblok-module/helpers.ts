@@ -27,10 +27,10 @@ export function getStoryblokQueryParams (route) {
   const { _storyblok: id, _storyblok_c: c, _storyblok_tk: storyblok = {} } = qs.parse(queryString, { ignoreQueryPrefix: true })
   const { space_id: spaceId, timestamp, token } = storyblok
 
-  let [_, ...fullSlug] = route.path
+  let [, ...fullSlug] = route.path
 
   if (!fullSlug) {
-    fullSlug = "home"
+    fullSlug = 'home'
   }
   const storeCode = storeCodeFromRoute(fullSlug)
   if (storeCode && fullSlug === removeStoreCodeFromRoute(fullSlug)) {
@@ -50,7 +50,7 @@ export function getStoryblokQueryParams (route) {
 const defaultSettings = {
   addRoutes: true,
   hreflangPrefix: '',
-  appendStoreCodeFromHeader: false,
+  appendStoreCodeFromHeader: false
 }
 
 export const getSettings = (settings = {}) => ({

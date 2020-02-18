@@ -1,7 +1,7 @@
 export interface StoryblokStories {
   [key: string]: {
     loading: boolean;
-    story: object;
+    story: Object;
   }
 }
 

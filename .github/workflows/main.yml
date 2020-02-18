@@ -1,0 +1,27 @@
+name: Tests
+on: [push]
+jobs:
+  tests:
+    name: 'Main'
+    runs-on: ubuntu-16.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10
+      - run: yarn install
+      - name: Run linters
+        uses: samuelmeuli/lint-action@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          # Enable linters
+          eslint: true
+          eslint_extensions: js,vue,ts
+      - uses: zhulik/redis-action@1.1.0
+      - uses: nyaruka/elasticsearch-action@v1
+        with:
+          elastic version: '5.6.11'
+      - name: Start server
+        run: make submodules bundle start
+      - name: Run e2e tests
+        uses: cypress-io/github-action@v1

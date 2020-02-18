@@ -1,8 +1,8 @@
-let config = require('config')
-let es = require('elasticsearch')
+const config = require('config')
+const es = require('elasticsearch')
 const esConfig = {
   host: config.elasticsearch.host + ':' + config.elasticsearch.port,
-  log: 'debug',
+  // log: 'debug',
   apiVersion: config.elasticsearch.apiVersion,
   requestTimeout: 1000 * 60 * 60,
   keepAlive: false
