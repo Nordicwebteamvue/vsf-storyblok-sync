@@ -25,4 +25,3 @@ jobs:
         run: make submodules bundle start
       - name: Run e2e tests
         uses: cypress-io/github-action@v1
-      - run: yarn pm2 logs server --nostream --lines 100
