@@ -2,6 +2,7 @@ submodules:
 	git submodule update --init
 
 bundle:
+	mkdir -p .docker/vue-storefront/var
 	yarn docker-compose-bundler
 	sed -i.bak 's/storefront-api/localhost/' .output/vue-storefront/config/local.json
 
