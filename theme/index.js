@@ -6,6 +6,7 @@ import VueProgressBar from 'vue-progressbar'
 import '@vue-storefront/core/lib/passive-listeners'
 import { RouterManager } from '@vue-storefront/core/lib/router-manager'
 import { once } from '@vue-storefront/core/helpers'
+// STORYBLOK: Import the components
 import './components/storyblok'
 
 once('__VUE_EXTEND_DROPPOINT_VPB__', () => {
@@ -20,6 +21,8 @@ function initTheme (app, router, store, config, ssrContext) {
   // { name: 'de-checkout', path: '/checkout', component: CheckoutCustomized },
   setupMultistoreRoutes(config, router, routes)
   RouterManager.addRoutes(routes, router)
+  // STORYBLOK: Init ssrContext
+  store.dispatch('storyblok/ssrContext', ssrContext)
 }
 
 export {

@@ -6,6 +6,14 @@ import { TaskQueue } from '@vue-storefront/core/lib/sync'
 import qs from 'qs'
 
 export const actions: ActionTree<StoryblokState, RootState> = {
+  async ssrContext ({ commit, dispatch }, ssrContext) {
+    const { request } = ssrContext.server
+    if (request.headers['x-vs-store-code']) {
+      dispatch('setStoreCode', request.headers['x-vs-store-code'])
+    }
+    const supportsWebp = request.headers.accept.includes('image/webp')
+    commit('supportsWebp', supportsWebp)
+  },
   async setStoreCode ({ commit, state }, storeCode) {
     commit('setStoreCode', storeCode)
   },
