@@ -2,6 +2,7 @@ name: Tests
 on: [push]
 jobs:
   tests:
+    name: 'Main'
     runs-on: ubuntu-16.04
     steps:
       - uses: actions/checkout@v2
@@ -16,6 +17,10 @@ jobs:
           # Enable linters
           eslint: true
           eslint_extensions: js,vue,ts
+      - uses: zhulik/redis-action@1.1.0
+      - uses: nyaruka/elasticsearch@v1
+        with:
+          elastic version: '5.6.11'
       - name: Start server
         run: make submodules bundle start
       - name: Run e2e tests
