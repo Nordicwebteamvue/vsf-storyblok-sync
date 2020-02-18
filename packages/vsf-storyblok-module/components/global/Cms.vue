@@ -9,6 +9,7 @@
 <script>
 import config from 'config'
 import fetch from 'isomorphic-fetch'
+import { loadScript } from '../../helpers'
 
 export default {
   name: 'StoryblokCms',
@@ -22,13 +23,12 @@ export default {
   props: {
     uuid: {
       type: String,
-      required: true,
-    },
-    value: true
+      required: true
+    }
   },
   methods: {
     updateValue: function (value) {
-      this.$emit('input', value.content ? value.content : value);
+      this.$emit('input', value.content ? value.content : value)
     },
     async fetchStory () {
       const url = `${config.storyblok.endpoint}/get-by-uuid?uuid=${this.uuid}`
@@ -63,6 +63,6 @@ export default {
         }
       })
     }
-  },
+  }
 }
 </script>
