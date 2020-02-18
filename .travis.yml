@@ -27,7 +27,7 @@ before_install:
   - git submodule update --init
 
 before_script:
-  - yarn bundle
+  - make bundle
   - make start
 
 script:

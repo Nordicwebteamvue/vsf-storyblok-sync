@@ -3,6 +3,7 @@ submodules:
 
 bundle:
 	yarn docker-compose-bundler
+	sed -i.bak 's/storefront-api/localhost/' .output/vue-storefront/config/local.json
 
 build-api:
 	cd .output/vue-storefront-api && yarn && yarn build
