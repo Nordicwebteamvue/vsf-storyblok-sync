@@ -58,7 +58,7 @@ function hook ({ config, db, index, storyblokClient }) {
 
     try {
       switch (action) {
-        case 'published':
+        case 'published': {
           const { data: { story } } = await storyblokClient.get(`cdn/stories/${id}`, {
             cv,
             resolve_links: 'url'
@@ -68,12 +68,13 @@ function hook ({ config, db, index, storyblokClient }) {
           await db.index(publishedStory)
           log(`Published ${story.full_slug}`)
           break
-
-        case 'unpublished':
+        }
+        case 'unpublished': {
           const unpublishedStory = transformStory(index)({ id })
           await db.delete(unpublishedStory)
           log(`Unpublished ${id}`)
           break
+        }
 
         case 'release_merged':
         case 'branch_deployed':

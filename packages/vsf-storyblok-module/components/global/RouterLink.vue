@@ -29,7 +29,7 @@ export default {
     },
     url () {
       const formatUrl = url => this.isExternal ? url : (`/${url}`).replace(/^\/+/, '/')
-      let url = formatUrl(this.link.cached_url || this.link.url)
+      const url = formatUrl(this.link.cached_url || this.link.url)
       const addStoreCode = get(config, 'storyblok.settings.appendStoreCodeFromHeader')
       if (addStoreCode && this.storeCodeFromHeader && url.startsWith(`/${this.storeCodeFromHeader}/`)) {
         return url.replace(`/${this.storeCodeFromHeader}/`, '/')

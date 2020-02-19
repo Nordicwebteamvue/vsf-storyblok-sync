@@ -25,7 +25,7 @@ export const forStoryblok = async ({ dispatch, rootState }, { url, params }) => 
   if (config.storeViews.multistore && storeCode && url.replace(/\/$/, '') === removeStoreCodeFromRoute(url)) {
     url = `${url}/home`
   }
-  const story = await dispatch(`storyblok/loadStory`, { fullSlug: url }, { root: true })
+  const story = await dispatch('storyblok/loadStory', { fullSlug: url }, { root: true })
   if (story) {
     return route
   }

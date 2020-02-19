@@ -34,6 +34,7 @@ export const actions: ActionTree<StoryblokState, RootState> = {
   async loadDraftStory ({ commit }: ActionContext<StoryblokState, RootState>, { id, previewToken }) {
     commit('loadingStory', { key: id })
 
+    // eslint-disable-next-line dot-notation
     const { data: { story } } = await this['$storyblokClient'].get(`cdn/stories/${id}`, {
       token: previewToken,
       version: 'draft'

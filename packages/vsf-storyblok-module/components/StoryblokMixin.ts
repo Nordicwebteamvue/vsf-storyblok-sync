@@ -28,7 +28,7 @@ export default {
         return !!this.storyblok.path
       },
       storyblokPath () {
-        const {storeCode} = currentStoreView()
+        const { storeCode } = currentStoreView()
         const path = this.storyblok.path
         if (this.storyblok.prependStorecode && config.storeViews.multistore && storeCode) {
           return `${storeCode}/${path}`
@@ -100,6 +100,7 @@ export default {
 
       await loadScript(url, 'storyblok-javascript-bridge')
 
+      // eslint-disable-next-line dot-notation
       window['storyblok'].on(['input', 'published', 'change'], (event: any) => {
         if (event.action === 'input') {
           this.$store.commit(`${KEY}/updateStory`, { key: event.story.id, story: event.story })

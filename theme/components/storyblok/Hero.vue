@@ -2,8 +2,12 @@
   <section :style="{ backgroundColor: item.background_color }">
     <img v-if="item.background" :src="item.background" alt="">
     <div class="text">
-      <h2 class="heading">{{ item.title }}</h2>
-      <h3 class="subtitle">{{ item.subtitle }}</h3>
+      <h2 class="heading">
+        {{ item.title }}
+      </h2>
+      <h3 class="subtitle">
+        {{ item.subtitle }}
+      </h3>
       <div class="cta">
         <a v-if="item.url" :href="item.url">
           <button>{{ item.cta }}</button>
