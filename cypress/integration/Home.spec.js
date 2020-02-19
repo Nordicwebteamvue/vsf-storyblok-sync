@@ -4,6 +4,7 @@ context('CI', () => {
   it('can render blok', () => {
     cy.visit('ci')
     cy.contains('ci=working')
+    cy.contains('I am testing this')
   })
 })
 

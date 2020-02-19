@@ -1,11 +1,13 @@
 <template>
-  <sb-img :src="item.image" :width="1200" :lazy="true" />
+  <div>
+    <sb-rich-text v-if="item.text" :text="item.text" />
+  </div>
 </template>
 
 <script>
 import { Blok } from 'src/modules/vsf-storyblok-module/components'
 export default {
-  name: 'ImageBlok',
+  name: 'RichTextBlok',
   extends: Blok
 }
 </script>
