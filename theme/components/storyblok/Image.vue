@@ -1,5 +1,5 @@
 <template>
-  <div class="image" :style="{ backgroundImage: `url(${item.url})` }" />
+  <sb-img :src="item.image" :width="1200" :lazy="true" />
 </template>
 
 <script>
@@ -9,12 +9,3 @@ export default {
   extends: Blok
 }
 </script>
-
-<style lang="scss" scoped>
-.image {
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 500px;
-}
-</style>
