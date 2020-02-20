@@ -3,13 +3,9 @@ import request from 'request'
 import { promisify } from 'util'
 import { apiStatus } from '../../../lib/util'
 import { fullSync } from './fullSync'
+import { log } from './helpers'
 
 const rp = promisify(request)
-
-const log = (string) => {
-  console.log('📖 : ' + string) // eslint-disable-line no-console
-}
-
 const cacheInvalidate = async (config) => {
   if (config.invalidate) {
     log(`Invalidating cache... (${config.invalidate})`)
@@ -75,7 +71,6 @@ function hook ({ config, db, index, storyblokClient }) {
           log(`Unpublished ${id}`)
           break
 
-        case 'release_merged':
         case 'branch_deployed':
           await fullSync(db, config, storyblokClient, index)
           break
