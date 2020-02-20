@@ -1,4 +1,4 @@
-# vsf-storyblok-sync [![Build Status](https://travis-ci.org/kodbruket/vsf-storyblok-sync.svg?branch=master)](https://travis-ci.org/kodbruket/vsf-storyblok-sync)
+# vsf-storyblok-sync ![VSF 1.11.1][vsf badge] ![Build Status][build badge]
 
 ![Demo gif](demo.gif)
 
@@ -156,3 +156,6 @@ Visit http://localhost:3000/ci to see it in action
 ### Run full e2e suite
 
 `make start-db submodules bundle start e2e`
+
+[build badge]: https://github.com/kodbruket/vsf-storyblok-sync/workflows/Tests/badge.svg
+[vsf badge]: https://img.shields.io/badge/VSF-1.11.1-brightgreen
