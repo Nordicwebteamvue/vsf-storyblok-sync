@@ -6,6 +6,17 @@ export function getHits (result) {
   }
 }
 
+export function getHitsAsStory (hits) {
+  if (hits.total === 0) {
+    throw new Error('Missing story')
+  }
+  const story = hits.hits[0]._source
+  if (typeof story.content === 'string') {
+    story.content = JSON.parse(story.content)
+  }
+  return story
+}
+
 export function queryByPath (path) {
   return {
     index: 'storyblok_stories',

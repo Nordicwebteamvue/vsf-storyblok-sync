@@ -5,7 +5,7 @@ import { apiStatus } from '../../../lib/util'
 import { getClient } from '../../../lib/elastic'
 import { hook } from './hook'
 import { fullSync } from './fullSync'
-import { getHits, queryByPath, log } from './helpers'
+import { getHits, getHitsAsStory, queryByPath, log } from './helpers'
 
 module.exports = ({ config }) => {
   if (!config.storyblok || !config.storyblok.previewToken) {
@@ -28,13 +28,7 @@ module.exports = ({ config }) => {
     try {
       const response = await db.search(queryByPath(path))
       const hits = getHits(response)
-      if (hits.total === 0) {
-        throw new Error('Missing story')
-      }
-      const story = hits.hits[0]._source
-      if (typeof story.content === 'string') {
-        story.content = JSON.parse(story.content)
-      }
+      const story = getHitsAsStory(hits)
       apiStatus(res, { story })
     } catch (error) {
       apiStatus(res, { story: false }, 404)
