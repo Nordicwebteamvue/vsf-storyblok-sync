@@ -17,6 +17,21 @@ export function getHitsAsStory (hits) {
   return story
 }
 
+export function createIndex (config) {
+  return {
+    index: 'storyblok_stories',
+    body: {
+      index: {
+        mapping: {
+          total_fields: {
+            limit: config.storyblok.fieldLimit || 1000
+          }
+        }
+      }
+    }
+  }
+}
+
 export function queryByPath (path) {
   return {
     index: 'storyblok_stories',
