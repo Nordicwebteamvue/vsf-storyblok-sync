@@ -30,7 +30,7 @@ module.exports = ({ config, db }) => {
       if (hits.total === 0) {
         throw new Error('Missing story')
       }
-      let story = hits.hits[0]._source
+      const story = hits.hits[0]._source
       if (typeof story.content === 'string') {
         story.content = JSON.parse(story.content)
       }
@@ -40,13 +40,15 @@ module.exports = ({ config, db }) => {
     }
   }
 
-  db.ping().then(async () => {
-    await fullSync(db, config, storyblokClient)
-    log('Stories synced!')
-  }).catch((error) => {
-    console.log('error', error)
-    log('Stories not synced!')
-  })
+  (async () => {
+    try {
+      await db.ping()
+      await fullSync(db, config, storyblokClient)
+      log('Stories synced!')
+    } catch (error) {
+      log('Stories not synced!')
+    }
+  })()
 
   api.get('/story/', (req, res) => {
     getStory(res, 'home')
