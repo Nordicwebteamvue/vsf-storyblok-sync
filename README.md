@@ -144,17 +144,15 @@ Follow the Storyblok documentation to enable it: https://www.storyblok.com/docs/
 
 ## Development
 
-```
-git clone --recurse-submodules http://github.com/kodbruket/vsf-storyblok-sync.git
+```sh
+git clone http://github.com/kodbruket/vsf-storyblok-sync.git
+cd vsf-storyblok-sync
+make submodules
 docker-compose up
 ```
 
 Visit http://localhost:3000/ci to see it in action
 
-### Seed products
+### Run full e2e suite
 
-```
-docker-compose exec storefront-api yarn mage2vs import
-docker-compose exec storefront-api yarn restore
-docker-compose exec storefront-api yarn migrate
-```
+`make start-db submodules bundle start e2e`
