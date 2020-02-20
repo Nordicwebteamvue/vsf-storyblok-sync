@@ -44,7 +44,6 @@ services:
       - './.docker/vue-storefront-api/var:/var/www/var:delegated'
       # Development
       - './.docker/api/config.json:/var/www/config/local.json'
-      - './.docker/api/db.js:/var/www/src/db.js'
       - './.docker/api/tsconfig.json:/var/www/tsconfig.json'
       # Module
       - './packages/vsf-storyblok-extension:/var/www/src/api/extensions/vsf-storyblok-extension:delegated'
