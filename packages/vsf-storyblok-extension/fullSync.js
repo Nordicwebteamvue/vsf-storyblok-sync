@@ -1,11 +1,11 @@
 import { syncStories } from './sync-stories'
 import { log } from './helpers'
 
-export const fullSync = async (db, config, storyblokClient, index) => {
+export const fullSync = async (db, config, storyblokClient) => {
   log('Syncing published stories!')
-  await db.indices.delete({ ignore_unavailable: true, index })
+  await db.indices.delete({ ignore_unavailable: true, index: 'storyblok_stories' })
   await db.indices.create({
-    index,
+    index: 'storyblok_stories',
     body: {
       index: {
         mapping: {
@@ -16,5 +16,5 @@ export const fullSync = async (db, config, storyblokClient, index) => {
       }
     }
   })
-  await syncStories({ db, index, perPage: config.storyblok.perPage, storyblokClient })
+  await syncStories({ db, perPage: config.storyblok.perPage, storyblokClient })
 }

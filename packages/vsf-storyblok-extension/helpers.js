@@ -1,5 +1,3 @@
-export const index = 'storyblok_stories'
-
 export function getHits (result) {
   if (result.body) { // differences between ES5 andd ES7
     return result.body.hits
@@ -10,7 +8,7 @@ export function getHits (result) {
 
 export function queryByPath (path) {
   return {
-    index,
+    index: 'storyblok_stories',
     type: 'story',
     body: {
       query: {

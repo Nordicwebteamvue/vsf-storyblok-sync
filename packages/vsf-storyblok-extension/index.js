@@ -4,7 +4,7 @@ import StoryblokClient from 'storyblok-js-client'
 import { apiStatus } from '../../../lib/util'
 import { hook } from './hook'
 import { fullSync } from './fullSync'
-import { getHits, queryByPath, log, index } from './helpers'
+import { getHits, queryByPath, log } from './helpers'
 
 module.exports = ({ config, db }) => {
   if (!config.storyblok || !config.storyblok.previewToken) {
@@ -21,7 +21,7 @@ module.exports = ({ config, db }) => {
   const storyblokClient = new StoryblokClient(storyblokClientConfig)
   const api = Router()
 
-  api.use(hook({ config, db, index, storyblokClient }))
+  api.use(hook({ config, db, storyblokClient }))
 
   const getStory = async (res, path) => {
     try {
@@ -41,7 +41,7 @@ module.exports = ({ config, db }) => {
   }
 
   db.ping().then(async () => {
-    await fullSync(db, config, storyblokClient, index)
+    await fullSync(db, config, storyblokClient)
     log('Stories synced!')
   }).catch((error) => {
     console.log('error', error)

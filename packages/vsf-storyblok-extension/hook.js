@@ -16,11 +16,11 @@ const cacheInvalidate = async (config) => {
   }
 }
 
-const transformStory = (index) => ({ id, ...story } = {}) => {
+const transformStory = ({ id, ...story } = {}) => {
   story.content = JSON.stringify(story.content)
   story.full_slug = story.full_slug.replace(/^\/|\/$/g, '')
   return {
-    index: index,
+    index: 'storyblok_stories',
     type: 'story', // XXX: Change to _doc once VSF supports Elasticsearch 6
     id: id,
     body: story
@@ -43,7 +43,7 @@ const protectRoute = (config) => (req, res, next) => {
   next()
 }
 
-function hook ({ config, db, index, storyblokClient }) {
+function hook ({ config, db, storyblokClient }) {
   if (!config.storyblok || !config.storyblok.hookSecret) {
     throw new Error('🧱 : config.storyblok.hookSecret not found')
   }
@@ -59,20 +59,20 @@ function hook ({ config, db, index, storyblokClient }) {
             cv,
             resolve_links: 'url'
           })
-          const publishedStory = transformStory(index)(story)
+          const publishedStory = transformStory(story)
 
           await db.index(publishedStory)
           log(`Published ${story.full_slug}`)
           break
 
         case 'unpublished':
-          const unpublishedStory = transformStory(index)({ id })
+          const unpublishedStory = transformStory({ id })
           await db.delete(unpublishedStory)
           log(`Unpublished ${id}`)
           break
 
         case 'branch_deployed':
-          await fullSync(db, config, storyblokClient, index)
+          await fullSync(db, config, storyblokClient)
           break
         default:
           break
@@ -88,7 +88,7 @@ function hook ({ config, db, index, storyblokClient }) {
   }
 
   async function fullSyncRoute (req, res) {
-    await fullSync(db, config, storyblokClient, index)
+    await fullSync(db, config, storyblokClient)
     await cacheInvalidate(config.storyblok)
     return apiStatus(res)
   }
