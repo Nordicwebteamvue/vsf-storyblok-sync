@@ -3,7 +3,7 @@ import crypto from 'crypto'
 import { apiStatus } from '../../../lib/util'
 import { getClient } from '../../../lib/elastic'
 import { hook } from './hook'
-import { fullSync } from './fullSync'
+import { fullSync } from './sync'
 import { getHits, getHitsAsStory, queryByPath, log } from './helpers'
 import { initStoryblokClient } from './storyblok'
 
