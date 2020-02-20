@@ -20,5 +20,8 @@ start-ui:
 
 start: build-api start-api build-ui start-ui
 
-submodules:
-	git submodule update --init
+start-db:
+	docker-compose up -d elasticsearch redis
+
+e2e:
+	yarn e2e
