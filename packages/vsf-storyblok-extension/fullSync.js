@@ -1,8 +1,5 @@
 import { syncStories } from './sync-stories'
-
-export const log = (string) => {
-  console.log('📖 : ' + string) // eslint-disable-line no-console
-}
+import { log } from './helpers'
 
 export const fullSync = async (db, config, storyblokClient, index) => {
   log('Syncing published stories!')

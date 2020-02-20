@@ -3,15 +3,8 @@ import crypto from 'crypto'
 import StoryblokClient from 'storyblok-js-client'
 import { apiStatus } from '../../../lib/util'
 import { hook } from './hook'
-import { fullSync, log } from './fullSync'
-
-function getHits (result) {
-  if (result.body) { // differences between ES5 andd ES7
-    return result.body.hits
-  } else {
-    return result.hits
-  }
-}
+import { fullSync } from './fullSync'
+import { getHits, queryByPath, log, index } from './helpers'
 
 module.exports = ({ config, db }) => {
   if (!config.storyblok || !config.storyblok.previewToken) {
@@ -26,45 +19,26 @@ module.exports = ({ config, db }) => {
   }
 
   const storyblokClient = new StoryblokClient(storyblokClientConfig)
-  const index = 'storyblok_stories'
   const api = Router()
 
   api.use(hook({ config, db, index, storyblokClient }))
 
-  const getStory = (res, path) => db.search({
-    index,
-    type: 'story',
-    body: {
-      query: {
-        constant_score: {
-          filter: {
-            term: {
-              'full_slug.keyword': path
-            }
-          }
-        }
+  const getStory = async (res, path) => {
+    try {
+      const response = await db.search(queryByPath(path))
+      const hits = getHits(response)
+      if (hits.total === 0) {
+        throw new Error('Missing story')
       }
-    }
-  }).then((response) => {
-    const hits = getHits(response)
-    if (hits.total > 0) {
       let story = hits.hits[0]._source
       if (typeof story.content === 'string') {
         story.content = JSON.parse(story.content)
       }
-      apiStatus(res, {
-        story
-      })
-    } else {
-      apiStatus(res, {
-        story: false
-      }, 404)
+      apiStatus(res, { story })
+    } catch (error) {
+      apiStatus(res, { story: false }, 404)
     }
-  }).catch(() => {
-    apiStatus(res, {
-      story: false
-    }, 500)
-  })
+  }
 
   db.ping().then(async () => {
     await fullSync(db, config, storyblokClient, index)
