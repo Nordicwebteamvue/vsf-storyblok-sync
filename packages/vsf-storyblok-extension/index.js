@@ -1,28 +1,21 @@
 import { Router } from 'express'
 import crypto from 'crypto'
-import StoryblokClient from 'storyblok-js-client'
 import { apiStatus } from '../../../lib/util'
 import { getClient } from '../../../lib/elastic'
 import { hook } from './hook'
 import { fullSync } from './fullSync'
 import { getHits, getHitsAsStory, queryByPath, log } from './helpers'
+import { initStoryblokClient } from './storyblok'
 
 module.exports = ({ config }) => {
   if (!config.storyblok || !config.storyblok.previewToken) {
     throw new Error('🧱 : config.storyblok.previewToken not found')
   }
+  initStoryblokClient(config)
   const db = getClient(config)
-  const storyblokClientConfig = {
-    accessToken: config.storyblok.previewToken,
-    cache: {
-      type: 'none'
-    }
-  }
-
-  const storyblokClient = new StoryblokClient(storyblokClientConfig)
   const api = Router()
 
-  api.use(hook({ config, db, storyblokClient }))
+  api.use(hook({ config, db }))
 
   const getStory = async (res, path) => {
     try {
@@ -38,9 +31,10 @@ module.exports = ({ config }) => {
   (async () => {
     try {
       await db.ping()
-      await fullSync(db, config, storyblokClient)
+      await fullSync(db, config)
       log('Stories synced!')
     } catch (error) {
+      console.log(error)
       log('Stories not synced!')
     }
   })()

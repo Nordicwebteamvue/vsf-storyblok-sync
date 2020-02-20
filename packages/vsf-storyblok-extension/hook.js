@@ -4,6 +4,8 @@ import { promisify } from 'util'
 import { apiStatus } from '../../../lib/util'
 import { fullSync } from './fullSync'
 import { log } from './helpers'
+import protectRoute from './middleware/protectRoute'
+import { storyblokClient } from './storyblok'
 
 const rp = promisify(request)
 const cacheInvalidate = async (config) => {
@@ -27,23 +29,7 @@ const transformStory = ({ id, ...story } = {}) => {
   }
 }
 
-const protectRoute = (config) => (req, res, next) => {
-  if (process.env.VS_ENV !== 'dev') {
-    if (!req.query.secret) {
-      return apiStatus(res, {
-        error: 'Missing query param: secret'
-      }, 403)
-    }
-    if (req.query.secret !== config.storyblok.hookSecret) {
-      return apiStatus(res, {
-        error: 'Invalid secret'
-      }, 403)
-    }
-  }
-  next()
-}
-
-function hook ({ config, db, storyblokClient }) {
+function hook ({ config, db }) {
   if (!config.storyblok || !config.storyblok.hookSecret) {
     throw new Error('🧱 : config.storyblok.hookSecret not found')
   }
@@ -72,7 +58,7 @@ function hook ({ config, db, storyblokClient }) {
           break
 
         case 'branch_deployed':
-          await fullSync(db, config, storyblokClient)
+          await fullSync(db, config)
           break
         default:
           break
@@ -87,7 +73,7 @@ function hook ({ config, db, storyblokClient }) {
   }
 
   async function fullSyncRoute (req, res) {
-    await fullSync(db, config, storyblokClient)
+    await fullSync(db, config)
     await cacheInvalidate(config.storyblok)
     return apiStatus(res)
   }

@@ -1,3 +1,5 @@
+import { storyblokClient } from './storyblok'
+
 function mapStoryToBulkAction ({ story: { id } }) {
   return {
     index: {
@@ -23,7 +25,7 @@ function indexStories ({ db, stories = [] }) {
   })
 }
 
-async function syncStories ({ db, page = 1, perPage = 100, storyblokClient }) {
+async function syncStories ({ db, page = 1, perPage = 100 }) {
   const { data: { stories }, total } = await storyblokClient.get('cdn/stories', {
     page,
     per_page: perPage,
@@ -41,7 +43,7 @@ async function syncStories ({ db, page = 1, perPage = 100, storyblokClient }) {
 
   if (page < lastPage) {
     page += 1
-    return syncStories({ db, page, perPage, storyblokClient })
+    return syncStories({ db, page, perPage })
   }
 
   return promise
