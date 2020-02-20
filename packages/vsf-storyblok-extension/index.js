@@ -2,15 +2,16 @@ import { Router } from 'express'
 import crypto from 'crypto'
 import StoryblokClient from 'storyblok-js-client'
 import { apiStatus } from '../../../lib/util'
+import { getClient } from '../../../lib/elastic'
 import { hook } from './hook'
 import { fullSync } from './fullSync'
 import { getHits, queryByPath, log } from './helpers'
 
-module.exports = ({ config, db }) => {
+module.exports = ({ config }) => {
   if (!config.storyblok || !config.storyblok.previewToken) {
     throw new Error('🧱 : config.storyblok.previewToken not found')
   }
-
+  const db = getClient(config)
   const storyblokClientConfig = {
     accessToken: config.storyblok.previewToken,
     cache: {
