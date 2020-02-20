@@ -1,3 +1,8 @@
+import request from 'request'
+import { promisify } from 'util'
+
+const rp = promisify(request)
+
 export function getHits (result) {
   if (result.body) { // differences between ES5 andd ES7
     return result.body.hits
@@ -15,6 +20,17 @@ export function getHitsAsStory (hits) {
     story.content = JSON.parse(story.content)
   }
   return story
+}
+
+export const transformStory = ({ id, ...story } = {}) => {
+  story.content = JSON.stringify(story.content)
+  story.full_slug = story.full_slug.replace(/^\/|\/$/g, '')
+  return {
+    index: 'storyblok_stories',
+    type: 'story', // XXX: Change to _doc once VSF supports Elasticsearch 6
+    id: id,
+    body: story
+  }
 }
 
 function mapStoryToBulkAction ({ story: { id } }) {
@@ -73,4 +89,14 @@ export function queryByPath (path) {
 
 export const log = (string) => {
   console.log('📖 : ' + string) // eslint-disable-line no-console
+}
+
+export const cacheInvalidate = async (config) => {
+  if (config.invalidate) {
+    log(`Invalidating cache... (${config.invalidate})`)
+    await rp({
+      uri: config.invalidate
+    })
+    log('Invalidated cache ✅')
+  }
 }

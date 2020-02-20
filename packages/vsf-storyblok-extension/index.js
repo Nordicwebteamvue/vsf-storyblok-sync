@@ -2,10 +2,10 @@ import { Router } from 'express'
 import crypto from 'crypto'
 import { apiStatus } from '../../../lib/util'
 import { getClient } from '../../../lib/elastic'
-import { hook } from './hook'
-import { fullSync } from './sync'
-import { getHits, getHitsAsStory, queryByPath, log } from './helpers'
+import { fullSync, handleHook } from './sync'
+import { getHits, getHitsAsStory, queryByPath, log, cacheInvalidate } from './helpers'
 import { initStoryblokClient } from './storyblok'
+import protectRoute from './middleware/protectRoute'
 
 module.exports = ({ config }) => {
   if (!config.storyblok || !config.storyblok.previewToken) {
@@ -14,8 +14,6 @@ module.exports = ({ config }) => {
   initStoryblokClient(config)
   const db = getClient(config)
   const api = Router()
-
-  api.use(hook({ config, db }))
 
   const getStory = async (res, path) => {
     try {
@@ -28,13 +26,13 @@ module.exports = ({ config }) => {
     }
   }
 
+  // Seed the database on boot
   (async () => {
     try {
       await db.ping()
       await fullSync(db, config)
       log('Stories synced!')
     } catch (error) {
-      console.log(error)
       log('Stories not synced!')
     }
   })()
@@ -68,6 +66,23 @@ module.exports = ({ config }) => {
     return apiStatus(res, {
       error: 'Unauthorized editor'
     }, 403)
+  })
+
+  api.post('/hook', protectRoute(config), async (req, res) => {
+    try {
+      await handleHook(db, config, req.body)
+      return apiStatus(res)
+    } catch (error) {
+      return apiStatus(res, {
+        error: 'Webhook failed'
+      })
+    }
+  })
+  api.get('/full', protectRoute(config), async (req, res) => {
+    await fullSync(db, config)
+    await cacheInvalidate(config.storyblok)
+    log('Stories synced!')
+    return apiStatus(res)
   })
 
   return api
