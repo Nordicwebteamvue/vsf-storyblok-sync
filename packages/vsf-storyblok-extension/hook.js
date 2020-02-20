@@ -80,9 +80,8 @@ function hook ({ config, db, storyblokClient }) {
       await cacheInvalidate(config.storyblok)
       return apiStatus(res)
     } catch (error) {
-      console.log('Failed fetching story', error)
       return apiStatus(res, {
-        error: 'Fetching story failed'
+        error: 'Webhook failed'
       })
     }
   }

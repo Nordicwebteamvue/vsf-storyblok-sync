@@ -7,6 +7,7 @@ export const components = {
 
 export function add (key: string, component: any, options: any = {}) {
   if (components[key] && !options.force) {
+    // eslint-disable-next-line no-console
     console.log(`Component with key ${key} already exists, skipping...`)
     return
   }
