@@ -17,6 +17,27 @@ export function getHitsAsStory (hits) {
   return story
 }
 
+function mapStoryToBulkAction ({ story: { id } }) {
+  return {
+    index: {
+      _id: id,
+      _index: 'storyblok_stories',
+      _type: 'story'
+    }
+  }
+}
+
+export function createBulkOperations (stories = []) {
+  return stories.reduce((accumulator, story) => {
+    accumulator.push(mapStoryToBulkAction({ story }))
+    accumulator.push({
+      ...story,
+      content: JSON.stringify(story.content)
+    })
+    return accumulator
+  }, [])
+}
+
 export function createIndex (config) {
   return {
     index: 'storyblok_stories',

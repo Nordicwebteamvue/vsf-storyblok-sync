@@ -1,25 +1,8 @@
 import { storyblokClient } from './storyblok'
-
-function mapStoryToBulkAction ({ story: { id } }) {
-  return {
-    index: {
-      _id: id,
-      _index: 'storyblok_stories',
-      _type: 'story'
-    }
-  }
-}
+import { log, createIndex, createBulkOperations } from './helpers'
 
 function indexStories ({ db, stories = [] }) {
-  const bulkOps = stories.reduce((accumulator, story) => {
-    accumulator.push(mapStoryToBulkAction({ story }))
-    accumulator.push({
-      ...story,
-      content: JSON.stringify(story.content)
-    })
-    return accumulator
-  }, [])
-
+  const bulkOps = createBulkOperations(stories)
   return db.bulk({
     body: bulkOps
   })
@@ -49,4 +32,11 @@ async function syncStories ({ db, page = 1, perPage = 100 }) {
   return promise
 }
 
-export { syncStories }
+const fullSync = async (db, config) => {
+  log('Syncing published stories!')
+  await db.indices.delete({ ignore_unavailable: true, index: 'storyblok_stories' })
+  await db.indices.create(createIndex(config))
+  await syncStories({ db, perPage: config.storyblok.perPage })
+}
+
+export { syncStories, fullSync }
