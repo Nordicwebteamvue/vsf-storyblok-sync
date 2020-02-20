@@ -1,8 +1,8 @@
 <template>
   <div>
-    <slot v-if="loading" name="loading"></slot>
-    <slot v-else-if="error" name="error"></slot>
-    <slot v-else></slot>
+    <slot v-if="loading" name="loading"/>
+    <slot v-else-if="error" name="error"/>
+    <slot v-else/>
   </div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
     return {
       loading: true,
       error: false,
-      story: null,
+      story: null
     }
   },
   props: {
