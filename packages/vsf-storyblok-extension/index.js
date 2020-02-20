@@ -5,6 +5,14 @@ import { apiStatus } from '../../../lib/util'
 import { hook } from './hook'
 import { fullSync, log } from './fullSync'
 
+function getHits (result) {
+  if (result.body) { // differences between ES5 andd ES7
+    return result.body.hits
+  } else {
+    return result.hits
+  }
+}
+
 module.exports = ({ config, db }) => {
   if (!config.storyblok || !config.storyblok.previewToken) {
     throw new Error('🧱 : config.storyblok.previewToken not found')
@@ -38,7 +46,7 @@ module.exports = ({ config, db }) => {
       }
     }
   }).then((response) => {
-    const { hits } = response
+    const hits = getHits(response)
     if (hits.total > 0) {
       let story = hits.hits[0]._source
       if (typeof story.content === 'string') {
@@ -58,16 +66,11 @@ module.exports = ({ config, db }) => {
     }, 500)
   })
 
-  db.ping({
-    requestTimeout: 30000
-  }).then(async (response) => {
-    try {
-      await fullSync(db, config, storyblokClient, index)
-      log('Stories synced!')
-    } catch (error) {
-      log('Stories not synced!')
-    }
-  }).catch(() => {
+  db.ping().then(async () => {
+    await fullSync(db, config, storyblokClient, index)
+    log('Stories synced!')
+  }).catch((error) => {
+    console.log('error', error)
     log('Stories not synced!')
   })
 
