@@ -65,6 +65,7 @@ module.exports = ({ config, db }) => {
       await fullSync(db, config, storyblokClient, index)
       log('Stories synced!')
     } catch (error) {
+      console.log(error)
       log('Stories not synced!')
     }
   }).catch(() => {
