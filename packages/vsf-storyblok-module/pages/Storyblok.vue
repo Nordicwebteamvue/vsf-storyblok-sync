@@ -17,7 +17,7 @@ export default {
       return {
         title: get(this.story, 'content.seo.title', this.story.name),
         meta: [
-          { description: get(this.story, 'content.seo.description') ? { vmid: 'description', name: 'description', content: this.story.content.seo.description } : {} }
+          { vmid: 'description', name: 'description', content: get(this.story, 'content.seo.description') }
         ],
         link: [
           {
