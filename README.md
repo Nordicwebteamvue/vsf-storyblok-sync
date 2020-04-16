@@ -1,6 +1,6 @@
 # vsf-storyblok-sync ![VSF 1.11.1][vsf badge] ![Build Status][build badge]
 
-![Demo gif](demo.gif)
+![Demo gif](.github/demo.gif)
 
 > Example usage in Storyblok with demo components
 
