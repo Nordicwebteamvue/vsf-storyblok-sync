@@ -22,7 +22,9 @@ function initTheme (app, router, store, config, ssrContext) {
   setupMultistoreRoutes(config, router, routes)
   RouterManager.addRoutes(routes, router)
   // STORYBLOK: Init ssrContext
-  store.dispatch('storyblok/ssrContext', ssrContext)
+  if (ssrContext) {
+    store.dispatch('storyblok/ssrContext', ssrContext)
+  }
 }
 
 export {

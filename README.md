@@ -44,11 +44,11 @@ Notable paths:
 
 ### Built in components
 
-#### `<sb-router-link />`
+#### `<sb-link />`
 
 To be used with the `Weblink/Storylink` field type (https://www.storyblok.com/docs/terminology/field-type)
 
-`<sb-router-link :link="item.link">{{ item.title }}</sb-router-link>`
+`<sb-link :link="item.link">{{ item.title }}</sb-link>`
 
 #### `<sb-img />`
 

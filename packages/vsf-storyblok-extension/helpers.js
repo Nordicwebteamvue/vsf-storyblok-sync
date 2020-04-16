@@ -1,3 +1,4 @@
+import crypto from 'crypto'
 import request from 'request'
 import { promisify } from 'util'
 
@@ -99,4 +100,31 @@ export const cacheInvalidate = async (config) => {
     })
     log('Invalidated cache ✅')
   }
+}
+
+export const getStory = async (db, path) => {
+  try {
+    const response = await db.search(queryByPath(path))
+    const hits = getHits(response)
+    const story = getHitsAsStory(hits)
+    return story
+  } catch (error) {
+    return {
+      story: false
+    }
+  }
+}
+
+export const validateEditor = (config, params) => {
+  const { spaceId, timestamp, token } = params
+
+  const validationString = `${spaceId}:${config.storyblok.previewToken}:${timestamp}`
+  const validationToken = crypto.createHash('sha1').update(validationString).digest('hex')
+  if (token === validationToken && timestamp > Math.floor(Date.now() / 1000) - 3600) {
+    return {
+      previewToken: config.storyblok.previewToken,
+      error: false
+    }
+  }
+  throw new Error('Unauthorized editor')
 }
