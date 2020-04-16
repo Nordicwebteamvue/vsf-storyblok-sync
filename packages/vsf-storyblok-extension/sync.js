@@ -70,4 +70,14 @@ const handleHook = async (db, config, params) => {
   await cacheInvalidate(config.storyblok)
 }
 
-export { syncStories, fullSync, handleHook }
+const seedDatabase = async (db, config) => {
+  try {
+    await db.ping()
+    await fullSync(db, config)
+    log('Stories synced!')
+  } catch (error) {
+    log('Stories not synced!')
+  }
+}
+
+export { syncStories, fullSync, handleHook, seedDatabase }
