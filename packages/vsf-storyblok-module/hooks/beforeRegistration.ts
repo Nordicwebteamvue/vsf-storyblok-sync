@@ -1,7 +1,6 @@
 import StoryblokClient from 'storyblok-js-client'
 import StoryblokVue from 'storyblok-vue'
 import { router } from '@vue-storefront/core/app'
-import { RouterManager } from '@vue-storefront/core/lib/router-manager'
 import { setupMultistoreRoutes } from '@vue-storefront/core/lib/multistore'
 import Render from '../components/global/Render.vue'
 import Img from '../components/global/Img.vue'
@@ -15,7 +14,6 @@ import { getSettings } from '../helpers'
 function beforeRegistration ({ Vue, config, store, isServer }) {
   const settings = getSettings(config.storyblok.settings)
   if (settings.addRoutes) {
-    RouterManager.addRoutes(StoryblokRoutes, router)
     setupMultistoreRoutes(config, router, StoryblokRoutes)
   }
   const storyblokClientConfig = {
