@@ -1,5 +1,5 @@
 import config from 'config'
-import { removeStoreCodeFromRoute } from '@vue-storefront/core/lib/multistore'
+import { removeStoreCodeFromRoute, localizedRouteConfig, currentStoreView } from '@vue-storefront/core/lib/multistore'
 import storeCodeFromRoute from '@vue-storefront/core/lib/storeCodeFromRoute'
 import get from 'lodash-es/get'
 
@@ -11,10 +11,16 @@ const route = {
   }
 }
 
+const localizedRoute = (route) => {
+  const { storeCode, appendStoreCode } = currentStoreView()
+  return storeCode && appendStoreCode ? localizedRouteConfig(route, storeCode) : route
+}
+
 export const forStoryblok = async ({ dispatch, rootState }, { url, params }) => {
   if (params && params._storyblok_c && params._storyblok_c === 'page') {
-    return route
+    return localizedRoute(route)
   }
+  url = (removeStoreCodeFromRoute(url.startsWith('/') ? url.slice(1) : url) as string)
   url = url.replace(/\/?(\?.*)?$/, '') // remove trailing slash and/or qs variables if present
   const storeCode = storeCodeFromRoute(url)
   const addStoreCode = get(config, 'storyblok.settings.appendStoreCodeFromHeader')
@@ -27,6 +33,6 @@ export const forStoryblok = async ({ dispatch, rootState }, { url, params }) => 
   }
   const story = await dispatch(`storyblok/loadStory`, { fullSlug: url }, { root: true })
   if (story) {
-    return route
+    return localizedRoute(route)
   }
 }
