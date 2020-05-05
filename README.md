@@ -12,18 +12,16 @@ Copy `packages/vsf-storyblok-module` to `vue-storefront/src/modules`.
 
 Add the following to `vue-storefront/src/modules/index.ts`
 
-```
-import { extendModule } from '@vue-storefront/core/lib/module'
-...
-import { Storyblok, urlExtend } from './vsf-storyblok-module';
+```js
+import { StoryblokModule } from './vsf-storyblok-module';
 
-extendModule(urlExtend)
-
-export const registerModules: VueStorefrontModule[] = [
+export function registerClientModules () {
   ...
-  Storyblok
-]
+  registerModule(StoryblokModule)
+}
 ```
+
+> **Note:** To get routing working you can use this module: https://github.com/kodbruket/vsf-mapping-fallback/
 
 ### Config
 
