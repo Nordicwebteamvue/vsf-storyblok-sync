@@ -66,7 +66,7 @@ export const actions: ActionTree<StoryblokState, RootState> = {
       return cachedStory
     }
 
-    const url = `${config.storyblok.endpoint}/story/${key}`.replace(/([^:]\/)\/+/g, "$1")
+    const url = `${config.storyblok.endpoint}/story/${key}`.replace(/([^:]\/)\/+/g, '$1')
     const story = await fetchStory(url)
 
     commit('setStory', { key, story })

@@ -2,7 +2,7 @@ export const components = {
   debug: () => import('./defaults/Debug.vue'),
   page: () => import('./defaults/Page.vue'),
   grid: () => import('./defaults/Grid.vue'),
-  tile: () => import('./defaults/Tile.vue'),
+  tile: () => import('./defaults/Tile.vue')
 }
 
 export function add (key: string, component: any, options: any = {}) {
