@@ -32,7 +32,8 @@ export default {
   methods: {
     metaHreflangLinks () {
       const { hreflangPrefix } = getSettings(config.storyblok.settings)
-      if (hreflangPrefix && this.story && this.story.alternates.length > 0) {
+      const alternates = get(this.story, 'alternates', [])
+      if (hreflangPrefix && alternates.length > 0) {
         const alternateHreflangLinks = this.story.alternates.filter(altStory => {
           const storeCode = this.storeCodeFromSlug(altStory.full_slug)
           return get(config.storeViews, [storeCode, 'disabled'], true) === false
