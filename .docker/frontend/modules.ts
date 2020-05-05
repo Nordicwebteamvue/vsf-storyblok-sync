@@ -19,9 +19,18 @@ import { Storyblok } from './vsf-storyblok-module'
 
 import { registerModule } from '@vue-storefront/core/lib/modules'
 
+import { extendMappingFallback } from './vsf-mapping-fallback' 
+import { forProduct, forCategory, tap } from './vsf-mapping-fallback/builtin'
+import { forStoryblok } from './vsf-storyblok-module/mappingFallback' 
+
+const extendUrlModule = extendMappingFallback(
+  tap, forProduct, forCategory, forStoryblok
+)
+
 // TODO:distributed across proper pages BEFORE 1.11
 export function registerClientModules () {
   registerModule(UrlModule)
+  registerModule(extendUrlModule)
   registerModule(CatalogModule)
   registerModule(CheckoutModule) // To Checkout
   registerModule(CartModule)

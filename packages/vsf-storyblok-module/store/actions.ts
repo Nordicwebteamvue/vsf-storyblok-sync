@@ -6,7 +6,7 @@ import { TaskQueue } from '@vue-storefront/core/lib/sync'
 import qs from 'qs'
 
 const fetchStory = async url => {
-  const { result: { story } }: any = await TaskQueue.execute({
+  const { result: story }: any = await TaskQueue.execute({
     url,
     payload: {
       headers: { 'Content-Type': 'application/json' },
@@ -66,7 +66,7 @@ export const actions: ActionTree<StoryblokState, RootState> = {
       return cachedStory
     }
 
-    const url = `${config.storyblok.endpoint}/story/${key}`
+    const url = `${config.storyblok.endpoint}/story/${key}`.replace(/([^:]\/)\/+/g, "$1")
     const story = await fetchStory(url)
 
     commit('setStory', { key, story })
