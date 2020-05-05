@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import StoryblokClient from 'storyblok-js-client'
 import StoryblokVue from 'storyblok-vue'
 import { router } from '@vue-storefront/core/app'
@@ -11,16 +12,16 @@ import { once } from '@vue-storefront/core/helpers'
 import { StoryblokRoutes } from '../pages/routes'
 import { getSettings } from '../helpers'
 
-function beforeRegistration ({ Vue, config, store, isServer }) {
-  const settings = getSettings(config.storyblok.settings)
+function beforeRegistration (appConfig, store) {
+  const settings = getSettings(appConfig.storyblok.settings)
   if (settings.addRoutes) {
-    setupMultistoreRoutes(config, router, StoryblokRoutes)
+    setupMultistoreRoutes(appConfig, router, StoryblokRoutes)
   }
   const storyblokClientConfig = {
     cache: {
       type: 'memory'
     },
-    ...config.storyblok
+    ...appConfig.storyblok
   }
 
   const storyblokClient = new StoryblokClient(storyblokClientConfig)

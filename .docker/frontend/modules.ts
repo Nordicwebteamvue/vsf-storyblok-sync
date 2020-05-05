@@ -15,7 +15,7 @@ import { AmpRendererModule } from './amp-renderer';
 import { PaymentBackendMethodsModule } from './payment-backend-methods'
 import { PaymentCashOnDeliveryModule } from './payment-cash-on-delivery'
 import { NewsletterModule } from '@vue-storefront/core/modules/newsletter'
-import { Storyblok } from './vsf-storyblok-module'
+import { StoryblokModule } from './vsf-storyblok-module'
 
 import { registerModule } from '@vue-storefront/core/lib/modules'
 
@@ -46,9 +46,8 @@ export function registerClientModules () {
   registerModule(AmpRendererModule)
   registerModule(CmsModule)
   registerModule(NewsletterModule)
+  registerModule(StoryblokModule)
 }
 
 // Deprecated API, will be removed in 2.0
-export const registerModules: VueStorefrontModule[] = [
-  Storyblok
-]
+export const registerModules: VueStorefrontModule[] = []
