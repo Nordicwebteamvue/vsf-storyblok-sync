@@ -11,7 +11,7 @@ export const actions: ActionTree<StoryblokState, RootState> = {
     if (request.headers['x-vs-store-code']) {
       dispatch('setStoreCode', request.headers['x-vs-store-code'])
     }
-    const supportsWebp = request.headers.accept.includes('image/webp')
+    const supportsWebp = request.headers.accept && request.headers.accept.includes('image/webp')
     commit('supportsWebp', supportsWebp)
   },
   async setStoreCode ({ commit, state }, storeCode) {
