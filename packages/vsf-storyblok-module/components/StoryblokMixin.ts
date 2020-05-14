@@ -41,7 +41,8 @@ export default {
     return {
       storyblok: {
         prependStorecode: false,
-        path: ''
+        path: '',
+        fetchStory: true
       }
     }
   },
@@ -55,6 +56,9 @@ export default {
       return fullSlug
     },
     async fetchStory () {
+      if (this.storyblok.fetchStory === false) {
+        return
+      }
       const { id, fullSlug, spaceId, timestamp, token } = getStoryblokQueryParams(this.$route)
 
       if (id && !this.storyblokPath) {
