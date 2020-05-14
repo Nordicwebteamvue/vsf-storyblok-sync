@@ -4,9 +4,13 @@ import config from 'config'
 import RootState from '@vue-storefront/core/types/RootState'
 import { TaskQueue } from '@vue-storefront/core/lib/sync'
 import qs from 'qs'
+import { isServer } from '@vue-storefront/core/helpers'
 
 export const actions: ActionTree<StoryblokState, RootState> = {
   async ssrContext ({ commit, dispatch }, ssrContext) {
+    if (!isServer) {
+      return
+    }
     const { request } = ssrContext.server
     if (request.headers['x-vs-store-code']) {
       dispatch('setStoreCode', request.headers['x-vs-store-code'])
