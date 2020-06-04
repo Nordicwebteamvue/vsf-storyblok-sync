@@ -3,7 +3,20 @@ import { ActionTree, ActionContext } from 'vuex'
 import config from 'config'
 import RootState from '@vue-storefront/core/types/RootState'
 import { TaskQueue } from '@vue-storefront/core/lib/sync'
+import { processURLAddress } from '@vue-storefront/core/helpers'
 import qs from 'qs'
+
+const fetchStory = async url => {
+  const { result: story }: any = await TaskQueue.execute({
+    url,
+    payload: {
+      headers: { 'Content-Type': 'application/json' },
+      mode: 'cors'
+    },
+    silent: true
+  })
+  return story
+}
 
 export const actions: ActionTree<StoryblokState, RootState> = {
   async ssrContext ({ commit, dispatch }, ssrContext) {
@@ -22,7 +35,7 @@ export const actions: ActionTree<StoryblokState, RootState> = {
       return state.previewToken
     }
 
-    const url = `${config.storyblok.endpoint}/validate-editor/?${qs.stringify(query)}`
+    const url = processURLAddress(`${config.storyblok.endpoint}/validate-editor/?${qs.stringify(query)}`)
     const { result: { previewToken } }: any = await TaskQueue.execute({
       url,
       silent: true
@@ -54,17 +67,11 @@ export const actions: ActionTree<StoryblokState, RootState> = {
       return cachedStory
     }
 
-    const url = `${config.storyblok.endpoint}/story/${key}`
-    const { result: { story } }: any = await TaskQueue.execute({
-      url,
-      payload: {
-        headers: { 'Content-Type': 'application/json' },
-        mode: 'cors'
-      },
-      silent: true
-    })
+    const url = processURLAddress(`${config.storyblok.endpoint}/story/${key}`.replace(/([^:]\/)\/+/g, '$1'))
+    const story = await fetchStory(url)
 
     commit('setStory', { key, story })
+
     return story
   }
 }

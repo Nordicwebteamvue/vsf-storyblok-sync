@@ -1,5 +1,5 @@
 <template>
-  <sb-render v-if="story && story.content" :item="story.content"/>
+  <sb-render v-if="story && story.content" :item="story.content" />
 </template>
 
 <script>
@@ -31,8 +31,9 @@ export default {
   },
   methods: {
     metaHreflangLinks () {
-      const {hreflangPrefix} = getSettings(config.storyblok.settings)
-      if (hreflangPrefix && this.story && this.story.alternates.length > 0) {
+      const { hreflangPrefix } = getSettings(config.storyblok.settings)
+      const alternates = get(this.story, 'alternates', [])
+      if (hreflangPrefix && alternates.length > 0) {
         const alternateHreflangLinks = this.story.alternates.filter(altStory => {
           const storeCode = this.storeCodeFromSlug(altStory.full_slug)
           return get(config.storeViews, [storeCode, 'disabled'], true) === false
@@ -60,7 +61,7 @@ export default {
     },
     getCanonical (storeView = currentStoreView(), story = this.story) {
       const storeViewUrl = get(storeView, 'url', '')
-      const {hreflangPrefix} = getSettings(config.storyblok.settings)
+      const { hreflangPrefix } = getSettings(config.storyblok.settings)
       const url = this.isAbsoluteUrl(storeViewUrl) ? storeViewUrl + '/' + this.removeStoreCodeFromSlug(story.full_slug) : hreflangPrefix + story.full_slug
       return url.replace(/\/home$/, '')
     },

@@ -1,15 +1,10 @@
+import { StorefrontModule } from '@vue-storefront/core/lib/modules'
 import { module } from './store'
 import { beforeRegistration } from './hooks/beforeRegistration'
-import { VueStorefrontModule, VueStorefrontModuleConfig } from '@vue-storefront/core/lib/module'
 
 export const KEY = 'storyblok'
 
-const moduleConfig: VueStorefrontModuleConfig = {
-  key: KEY,
-  store: { modules: [{ key: KEY, module }] },
-  beforeRegistration
+export const StoryblokModule: StorefrontModule = function ({store, router, appConfig}) {
+  beforeRegistration(appConfig, store)
+  store.registerModule(KEY, module)
 }
-
-export { StoryblokRoutes } from './pages/routes'
-
-export const Storyblok = new VueStorefrontModule(moduleConfig)

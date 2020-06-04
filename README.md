@@ -1,6 +1,6 @@
-# vsf-storyblok-sync [![Build Status](https://travis-ci.org/kodbruket/vsf-storyblok-sync.svg?branch=master)](https://travis-ci.org/kodbruket/vsf-storyblok-sync)
+# vsf-storyblok-sync ![VSF 1.11.1][vsf badge] ![Build Status][build badge]
 
-![Demo gif](demo.gif)
+![Demo gif](.github/demo.gif)
 
 > Example usage in Storyblok with demo components
 
@@ -12,18 +12,16 @@ Copy `packages/vsf-storyblok-module` to `vue-storefront/src/modules`.
 
 Add the following to `vue-storefront/src/modules/index.ts`
 
-```
-import { extendModule } from '@vue-storefront/core/lib/module'
-...
-import { Storyblok, urlExtend } from './vsf-storyblok-module';
+```js
+import { StoryblokModule } from './vsf-storyblok-module';
 
-extendModule(urlExtend)
-
-export const registerModules: VueStorefrontModule[] = [
+export function registerClientModules () {
   ...
-  Storyblok
-]
+  registerModule(StoryblokModule)
+}
 ```
+
+> **Note:** To get routing working you can use this module: https://github.com/kodbruket/vsf-mapping-fallback/
 
 ### Config
 
@@ -44,11 +42,11 @@ Notable paths:
 
 ### Built in components
 
-#### `<sb-router-link />`
+#### `<sb-link />`
 
 To be used with the `Weblink/Storylink` field type (https://www.storyblok.com/docs/terminology/field-type)
 
-`<sb-router-link :link="item.link">{{ item.title }}</sb-router-link>`
+`<sb-link :link="item.link">{{ item.title }}</sb-link>`
 
 #### `<sb-img />`
 
@@ -144,17 +142,18 @@ Follow the Storyblok documentation to enable it: https://www.storyblok.com/docs/
 
 ## Development
 
-```
-git clone --recurse-submodules http://github.com/kodbruket/vsf-storyblok-sync.git
+```sh
+git clone http://github.com/kodbruket/vsf-storyblok-sync.git
+cd vsf-storyblok-sync
+make submodules
 docker-compose up
 ```
 
 Visit http://localhost:3000/ci to see it in action
 
-### Seed products
+### Run full e2e suite
 
-```
-docker-compose exec storefront-api yarn mage2vs import
-docker-compose exec storefront-api yarn restore
-docker-compose exec storefront-api yarn migrate
-```
+`make start-db submodules bundle start e2e`
+
+[build badge]: https://github.com/kodbruket/vsf-storyblok-sync/workflows/Tests/badge.svg
+[vsf badge]: https://img.shields.io/badge/VSF-1.11.1-brightgreen
