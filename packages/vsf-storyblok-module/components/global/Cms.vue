@@ -9,6 +9,7 @@
 <script>
 import config from 'config'
 import fetch from 'isomorphic-fetch'
+import { processURLAddress } from '@vue-storefront/core/helpers'
 import { loadScript } from '../../helpers'
 
 export default {
@@ -31,7 +32,7 @@ export default {
       this.$emit('input', value.content ? value.content : value)
     },
     async fetchStory () {
-      const url = `${config.storyblok.endpoint}/get-by-uuid?uuid=${this.uuid}`
+      const url = processURLAddress(`${config.storyblok.endpoint}/get-by-uuid?uuid=${this.uuid}`)
       const response = await fetch(url)
       const json = await response.json()
       this.loading = false

@@ -3,6 +3,7 @@ import { ActionTree, ActionContext } from 'vuex'
 import config from 'config'
 import RootState from '@vue-storefront/core/types/RootState'
 import { TaskQueue } from '@vue-storefront/core/lib/sync'
+import { processURLAddress } from '@vue-storefront/core/helpers'
 import qs from 'qs'
 
 const fetchStory = async url => {
@@ -34,7 +35,7 @@ export const actions: ActionTree<StoryblokState, RootState> = {
       return state.previewToken
     }
 
-    const url = `${config.storyblok.endpoint}/validate-editor/?${qs.stringify(query)}`
+    const url = processURLAddress(`${config.storyblok.endpoint}/validate-editor/?${qs.stringify(query)}`)
     const { result: { previewToken } }: any = await TaskQueue.execute({
       url,
       silent: true
@@ -66,7 +67,7 @@ export const actions: ActionTree<StoryblokState, RootState> = {
       return cachedStory
     }
 
-    const url = `${config.storyblok.endpoint}/story/${key}`.replace(/([^:]\/)\/+/g, '$1')
+    const url = processURLAddress(`${config.storyblok.endpoint}/story/${key}`.replace(/([^:]\/)\/+/g, '$1'))
     const story = await fetchStory(url)
 
     commit('setStory', { key, story })
