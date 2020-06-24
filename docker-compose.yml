@@ -44,7 +44,6 @@ services:
       - './.docker/vue-storefront-api/var:/var/www/var:delegated'
       # Development
       - './.docker/api/config.json:/var/www/config/local.json'
-      - './.docker/api/db.js:/var/www/src/db.js'
       - './.docker/api/tsconfig.json:/var/www/tsconfig.json'
       # Module
       - './packages/vsf-storyblok-extension:/var/www/src/api/extensions/vsf-storyblok-extension:delegated'
@@ -75,12 +74,12 @@ services:
       - './.docker/vue-storefront/var:/var/www/var:delegated'
       # Development
       - './.docker/frontend/config.json:/var/www/config/local.json'
-      - './.docker/frontend/modules.ts:/var/www/src/modules/index.ts'
-      - './.docker/frontend/tsconfig.json:/var/www/tsconfig.json'
-      - './.docker/vsf-mapping-fallback:/var/www/src/modules/vsf-mapping-fallback'
+      - './.docker/frontend/modules.ts:/var/www/src/modules/client.ts'
+      - './tsconfig.json:/var/www/tsconfig.json'
       - './theme/components/storyblok:/var/www/src/themes/default/components/storyblok'
       - './theme/head.js:/var/www/src/themes/default/head.js'
       - './theme/index.js:/var/www/src/themes/default/index.js'
+      - './.docker/vsf-mapping-fallback:/var/www/src/modules/vsf-mapping-fallback'
       # Module
       - './packages/vsf-storyblok-module:/var/www/src/modules/vsf-storyblok-module:delegated'
     healthcheck:

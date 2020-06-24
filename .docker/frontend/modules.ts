@@ -1,54 +1,53 @@
-import { extendModule } from '@vue-storefront/core/lib/module'
 import { VueStorefrontModule } from '@vue-storefront/core/lib/module'
-import { Catalog } from '@vue-storefront/core/modules/catalog'
-import { Cart } from '@vue-storefront/core/modules/cart'
-import { Checkout } from '@vue-storefront/core/modules/checkout'
-import { Compare } from '@vue-storefront/core/modules/compare'
-import { Review } from '@vue-storefront/core/modules/review'
-import { Mailer } from '@vue-storefront/core/modules/mailer'
-import { Wishlist } from '@vue-storefront/core/modules/wishlist'
-import { Notification } from '@vue-storefront/core/modules/notification'
-import { RecentlyViewed } from '@vue-storefront/core/modules/recently-viewed'
-import { Homepage } from './homepage'
-import { Claims } from './claims'
-import { PromotedOffers } from './promoted-offers'
-import { Ui } from './ui-store'
-import { AmpRenderer } from './amp-renderer'
-import { PaymentBackendMethods } from './payment-backend-methods'
-import { PaymentCashOnDelivery } from './payment-cash-on-delivery'
-import { RawOutputExample } from './raw-output-example'
-import { Magento2CMS } from './magento-2-cms'
-import { Url } from '@vue-storefront/core/modules/url'
-import { InstantCheckout } from './instant-checkout'
-import { Storyblok } from './vsf-storyblok-module'
-import { forStoryblok } from './vsf-storyblok-module/mappingFallback'
-import { extendMappingFallback } from './vsf-mapping-fallback'
-import { forCategory, forProduct, tap } from './vsf-mapping-fallback/builtin'
+import { CatalogModule } from '@vue-storefront/core/modules/catalog'
+import { CatalogNextModule } from '@vue-storefront/core/modules/catalog-next'
+import { CartModule } from '@vue-storefront/core/modules/cart'
+import { CheckoutModule } from '@vue-storefront/core/modules/checkout'
+import { CompareModule } from '@vue-storefront/core/modules/compare'
+import { WishlistModule } from '@vue-storefront/core/modules/wishlist'
+import { NotificationModule } from '@vue-storefront/core/modules/notification'
+import { UrlModule } from '@vue-storefront/core/modules/url'
+import { BreadcrumbsModule } from '@vue-storefront/core/modules/breadcrumbs'
+import { UserModule } from '@vue-storefront/core/modules/user'
+import { CmsModule } from '@vue-storefront/core/modules/cms'
+import { GoogleTagManagerModule } from './google-tag-manager';
+import { AmpRendererModule } from './amp-renderer';
+import { PaymentBackendMethodsModule } from './payment-backend-methods'
+import { PaymentCashOnDeliveryModule } from './payment-cash-on-delivery'
+import { NewsletterModule } from '@vue-storefront/core/modules/newsletter'
+import { StoryblokModule } from './vsf-storyblok-module'
 
-extendMappingFallback(
-  forProduct, forCategory, forStoryblok, tap
+import { registerModule } from '@vue-storefront/core/lib/modules'
+
+import { extendMappingFallback } from './vsf-mapping-fallback' 
+import { forProduct, forCategory, tap } from './vsf-mapping-fallback/builtin'
+import { forStoryblok } from './vsf-storyblok-module/mappingFallback' 
+
+const extendUrlModule = extendMappingFallback(
+  tap, forProduct, forCategory, forStoryblok
 )
 
-export const registerModules: VueStorefrontModule[] = [
-  Checkout,
-  Catalog,
-  Cart,
-  Compare,
-  Review,
-  Mailer,
-  Wishlist,
-  Notification,
-  Ui,
-  RecentlyViewed,
-  Homepage,
-  Claims,
-  PromotedOffers,
-  Magento2CMS,
-  PaymentBackendMethods,
-  PaymentCashOnDelivery,
-  RawOutputExample,
-  AmpRenderer,
-  InstantCheckout,
-  Url,
-  Storyblok
-]
+// TODO:distributed across proper pages BEFORE 1.11
+export function registerClientModules () {
+  registerModule(UrlModule)
+  registerModule(extendUrlModule)
+  registerModule(CatalogModule)
+  registerModule(CheckoutModule) // To Checkout
+  registerModule(CartModule)
+  registerModule(PaymentBackendMethodsModule)
+  registerModule(PaymentCashOnDeliveryModule)
+  registerModule(WishlistModule) // Trigger on wishlist icon click
+  registerModule(NotificationModule)
+  registerModule(UserModule) // Trigger on user icon click
+  registerModule(CatalogNextModule)
+  registerModule(CompareModule)
+  registerModule(BreadcrumbsModule)
+  registerModule(GoogleTagManagerModule)
+  registerModule(AmpRendererModule)
+  registerModule(CmsModule)
+  registerModule(NewsletterModule)
+  registerModule(StoryblokModule)
+}
+
+// Deprecated API, will be removed in 2.0
+export const registerModules: VueStorefrontModule[] = []

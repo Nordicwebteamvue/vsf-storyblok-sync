@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { Blok } from '.'
+import { Blok } from '..'
 
 export default {
   extends: Blok,
