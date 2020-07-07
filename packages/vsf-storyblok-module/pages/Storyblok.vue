@@ -14,11 +14,9 @@ export default {
   mixins: [StoryblokMixin],
   metaInfo () {
     if (this.story) {
-      return {
+      const metaInfo = {
         title: get(this.story, 'content.seo.title', this.story.name),
-        meta: [
-          { description: get(this.story, 'content.seo.description') ? { vmid: 'description', name: 'description', content: this.story.content.seo.description } : {} }
-        ],
+        meta: [],
         link: [
           {
             rel: 'canonical',
@@ -27,6 +25,14 @@ export default {
           ...this.metaHreflangLinks()
         ]
       }
+
+      if (get(this.story, 'content.seo.description')) {
+        metaInfo.meta.push({
+          vmid: 'description', name: 'description', content: this.story.content.seo.description
+        })
+      }
+
+      return metaInfo
     }
   },
   methods: {
