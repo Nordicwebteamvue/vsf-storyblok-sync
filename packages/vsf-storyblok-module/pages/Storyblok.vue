@@ -44,15 +44,15 @@ export default {
           const storeCode = this.storeCodeFromSlug(altStory.full_slug)
           return get(config.storeViews, [storeCode, 'disabled'], true) === false
         })
-          .map(altStory => {
-            const storeCode = this.storeCodeFromSlug(altStory.full_slug)
-            const storeView = get(config.storeViews, storeCode)
-            return {
-              rel: 'alternate',
-              hreflang: get(storeView, 'seo.hreflang') || get(storeView, 'i18n.defaultLocale') || storeCode,
-              href: this.getCanonical(get(config.storeViews, storeCode), altStory)
-            }
-          })
+        .map(altStory => {
+          const storeCode = this.storeCodeFromSlug(altStory.full_slug)
+          const storeView = get(config.storeViews, storeCode)
+          return {
+            rel: 'alternate',
+            hreflang: get(storeView, 'seo.hreflang') || get(storeView, 'i18n.defaultLocale') || storeCode,
+            href: this.getCanonical(get(config.storeViews, storeCode), altStory)
+          }
+        })
         return [
           {
             rel: 'alternate',
