@@ -14,7 +14,7 @@ export default {
   mixins: [StoryblokMixin],
   metaInfo () {
     if (this.story) {
-      const description = get(this.story, 'content.seo.description', get(currentStoreView(), 'seo.description'))
+      const description = get(this.story, 'content.seo.description', get(this.getCurrentStoreView, 'seo.description'))
       return {
         title: get(this.story, 'content.seo.title', this.story.name),
         meta: [
@@ -28,6 +28,11 @@ export default {
           ...this.metaHreflangLinks()
         ]
       }
+    }
+  },
+  computed: {
+    getCurrentStoreView () {
+      return get(config.storeViews, currentStoreView().storeCode)
     }
   },
   methods: {
@@ -51,7 +56,7 @@ export default {
         return [
           {
             rel: 'alternate',
-            hreflang: get(currentStoreView(), 'seo.hreflang') || get(currentStoreView(), 'i18n.defaultLocale') || currentStoreView().storeCode,
+            hreflang: get(this.getCurrentStoreView, 'seo.hreflang') || get(this.getCurrentStoreView, 'i18n.defaultLocale') || get(this.getCurrentStoreView, 'i18n.defaultLanguage'),
             href: this.getCanonical()
           },
           ...alternateHreflangLinks
@@ -60,7 +65,7 @@ export default {
         return []
       }
     },
-    getCanonical (storeView = currentStoreView(), story = this.story) {
+    getCanonical (storeView = this.getCurrentStoreView, story = this.story) {
       const storeViewUrl = get(storeView, 'url', '')
       const { hreflangPrefix } = getSettings(config.storyblok.settings)
       const url = this.isAbsoluteUrl(storeViewUrl) ? storeViewUrl + '/' + this.removeStoreCodeFromSlug(story.full_slug) : hreflangPrefix + story.full_slug
