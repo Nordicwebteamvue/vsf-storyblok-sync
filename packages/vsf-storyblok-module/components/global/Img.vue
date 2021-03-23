@@ -5,8 +5,8 @@
   <div v-else-if="div" :style="{ backgroundImage: `url('${image}')` }">
     <slot />
   </div>
-  <img v-else-if="lazy" v-lazy="image" :src="placeholder">
-  <img v-else :src="image">
+  <img v-else-if="lazy" v-lazy="image" :src="placeholderSrc" :width="intrinsicWidth" :height="intrinsicHeight">
+  <img v-else :src="image" :width="intrinsicWidth" :height="intrinsicHeight">
 </template>
 
 <script>
@@ -45,12 +45,31 @@ export default {
         mod += '/filters:' + this.computedFilters.join(':')
       }
       return 'https://img2.storyblok.com' + mod + resource
+    },
+    intrinsicWidth () {
+      return this.intrinsicSize?.width
+    },
+    intrinsicHeight () {
+      return this.intrinsicSize?.height
+    },
+    intrinsicSize () {
+      try {
+        const widthHeight = this.image.match(/\d+x\d+/g)[0].split('x')
+        return {
+          width: widthHeight[0],
+          height: widthHeight[1]
+        }
+      } catch (e) {
+        return undefined
+      }
+    },
+    placeholderSrc () {
+      return this.placeholder || `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${this.intrinsicWidth} ${this.intrinsicHeight}"%3E%3C/svg%3E`
     }
   },
   props: {
     placeholder: {
-      type: String,
-      default: 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='
+      type: String
     },
     detectWebp: {
       type: Boolean,
@@ -91,3 +110,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  img {
+    height: auto;
+  }
+</style>
