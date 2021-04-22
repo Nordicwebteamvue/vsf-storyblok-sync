@@ -5,7 +5,7 @@ import { router } from '@vue-storefront/core/app'
 import { setupMultistoreRoutes } from '@vue-storefront/core/lib/multistore'
 import Render from '../components/global/Render.vue'
 import Img from '../components/global/Img.vue'
-import Cms from '../components/global/Cms.vue'
+// import Cms from '../components/global/Cms.vue'
 import RouterLink from '../components/global/RouterLink.vue'
 import RichText from '../components/global/RichText.vue'
 import { once } from '@vue-storefront/core/helpers'
@@ -36,7 +36,7 @@ function beforeRegistration (appConfig, store) {
   Vue.component('sb-router-link', RouterLink) // old naming
   Vue.component('sb-link', RouterLink)
   Vue.component('sb-rich-text', RichText)
-  Vue.component('cms', Cms)
+  // Vue.component('cms', Cms)
 }
 
 export { beforeRegistration }
