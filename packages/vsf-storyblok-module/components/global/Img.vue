@@ -62,8 +62,9 @@ export default {
           mod += '/smart'
         }
       }
-      if (format === 'webp') {
-        mod += '/filters:format(webp)'
+      const filters = [...this.filters, ...(format ? [`format(${format})`] : [])]
+      if (filters.length > 0) {
+        mod += '/filters:' + filters.join(':')
       }
       return 'https://img2.storyblok.com' + mod + resource
     }
