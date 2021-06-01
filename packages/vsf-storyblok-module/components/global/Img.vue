@@ -1,9 +1,21 @@
 <template>
-  <div v-if="div && lazy" class="lazyload" :data-bg="getSrc()" :style="{ backgroundImage: `url('${placeholderSrc}')` }">
-    <slot />
+  <div v-if="div && lazy" class="bg">
+    <picture>
+      <source :data-srcset="getSrc('webp')" v-if="!isSvg" type="image/webp">
+      <img class="lazyload" :src="placeholderSrc" :data-src="getSrc()" :width="intrinsicWidth" :height="intrinsicHeight">
+    </picture>
+    <div class="slot">
+      <slot />
+    </div>
   </div>
-  <div v-else-if="div" :style="{ backgroundImage: `url('${getSrc()}')` }">
-    <slot />
+  <div v-else-if="div" class="bg">
+    <picture>
+      <source :srcset="getSrc('webp')" v-if="!isSvg" type="image/webp">
+      <img :src="getSrc()" :width="intrinsicWidth" :height="intrinsicHeight">
+    </picture>
+    <div class="slot">
+      <slot />
+    </div>
   </div>
   <picture v-else-if="lazy">
     <source :data-srcset="getSrc('webp')" v-if="!isSvg" type="image/webp">
@@ -16,8 +28,6 @@
 </template>
 
 <script>
-import get from 'lodash-es/get'
-import config from 'config'
 
 export default {
   name: 'StoryblokImage',
@@ -71,11 +81,8 @@ export default {
   },
   props: {
     placeholder: {
-      type: String
-    },
-    detectWebp: {
-      type: Boolean,
-      default: get(config, 'storyblok.imageService.defaultWebp', true)
+      type: String,
+      default: ''
     },
     height: {
       type: Number,
@@ -117,5 +124,23 @@ export default {
   img {
     width: 100%;
     height: auto;
+  }
+  .bg {
+    overflow: hidden;
+    position: relative;
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+      top: 50% !important;
+      transform: translate(0,-50%);
+      mix-blend-mode: multiply;
+    }
+    .slot{
+      position: relative;
+    }
   }
 </style>
