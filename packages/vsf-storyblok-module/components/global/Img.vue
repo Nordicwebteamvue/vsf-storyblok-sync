@@ -6,11 +6,11 @@
     <slot />
   </div>
   <picture v-else-if="lazy">
-    <source :data-srcset="getSrc('webp')" type="image/webp">
+    <source :data-srcset="getSrc('webp')" v-if="!isSvg" type="image/webp">
     <img class="lazyload" :data-src="getSrc()" :src="placeholderSrc" :width="intrinsicWidth" :height="intrinsicHeight">
   </picture>
   <picture v-else>
-    <source :srcset="getSrc('webp')" type="image/webp">
+    <source :srcset="getSrc('webp')" v-if="!isSvg" type="image/webp">
     <img :src="getSrc()" :width="intrinsicWidth" :height="intrinsicHeight">
   </picture>
 </template>
@@ -41,11 +41,14 @@ export default {
     },
     placeholderSrc () {
       return this.placeholder || `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${this.intrinsicWidth} ${this.intrinsicHeight}"%3E%3C/svg%3E`
+    },
+    isSvg () {
+      return this.src.endsWith('.svg')
     }
   },
   methods: {
     getSrc (format) {
-      if (!this.src.includes('//a.storyblok.com')) {
+      if (this.isSvg || !this.src.includes('//a.storyblok.com')) {
         return this.src
       }
       const [, resource] = this.src.split('//a.storyblok.com')
