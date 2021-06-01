@@ -1,11 +1,11 @@
 <template>
-  <div v-if="div && lazy" v-lazy:background-image="image" :style="{ backgroundImage: `url('${placeholder}')` }">
+  <div v-if="div && lazy" class="lazyload" :data-bg="image" :style="{ backgroundImage: `url('${placeholder}')` }">
     <slot />
   </div>
   <div v-else-if="div" :style="{ backgroundImage: `url('${image}')` }">
     <slot />
   </div>
-  <img v-else-if="lazy" v-lazy="image" :src="placeholderSrc" :width="intrinsicWidth" :height="intrinsicHeight">
+  <img v-else-if="lazy" class="lazyload" :data-src="image" :src="placeholderSrc" :width="intrinsicWidth" :height="intrinsicHeight">
   <img v-else :src="image" :width="intrinsicWidth" :height="intrinsicHeight">
 </template>
 
