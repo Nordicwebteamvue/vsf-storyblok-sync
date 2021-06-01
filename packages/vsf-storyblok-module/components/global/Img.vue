@@ -2,7 +2,7 @@
   <div v-if="div && lazy" class="bg">
     <picture>
       <source :data-srcset="getSrc('webp')" v-if="!isSvg" type="image/webp">
-      <img class="lazyload" :src="placeholderSrc" :data-src="getSrc()" :width="intrinsicWidth" :height="intrinsicHeight">
+      <img class="lazyload" :src="placeholderSrc" :data-src="getSrc()" :width="intrinsicWidth" :height="intrinsicHeight" :alt="alt">
     </picture>
     <div class="slot">
       <slot />
@@ -11,7 +11,7 @@
   <div v-else-if="div" class="bg">
     <picture>
       <source :srcset="getSrc('webp')" v-if="!isSvg" type="image/webp">
-      <img :src="getSrc()" :width="intrinsicWidth" :height="intrinsicHeight">
+      <img :src="getSrc()" :width="intrinsicWidth" :height="intrinsicHeight" :alt="alt">
     </picture>
     <div class="slot">
       <slot />
@@ -19,11 +19,11 @@
   </div>
   <picture v-else-if="lazy">
     <source :data-srcset="getSrc('webp')" v-if="!isSvg" type="image/webp">
-    <img class="lazyload" :data-src="getSrc()" :src="placeholderSrc" :width="intrinsicWidth" :height="intrinsicHeight">
+    <img class="lazyload" :data-src="getSrc()" :src="placeholderSrc" :width="intrinsicWidth" :height="intrinsicHeight" :alt="alt">
   </picture>
   <picture v-else>
     <source :srcset="getSrc('webp')" v-if="!isSvg" type="image/webp">
-    <img :src="getSrc()" :width="intrinsicWidth" :height="intrinsicHeight">
+    <img :src="getSrc()" :width="intrinsicWidth" :height="intrinsicHeight" :alt="alt">
   </picture>
 </template>
 
@@ -115,6 +115,10 @@ export default {
     filters: {
       type: Array,
       default: () => []
+    },
+    alt: {
+      type: String,
+      default: ''
     }
   }
 }
