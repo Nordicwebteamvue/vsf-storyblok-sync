@@ -128,6 +128,7 @@ export default {
   img {
     width: 100%;
     height: auto;
+    display: block;
   }
   .bg {
     overflow: hidden;
