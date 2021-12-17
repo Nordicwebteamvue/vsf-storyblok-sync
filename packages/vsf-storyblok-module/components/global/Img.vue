@@ -1,30 +1,18 @@
 <template>
   <div v-if="div && lazy" class="bg">
-    <picture>
-      <source :data-srcset="getSrc('webp')" v-if="!isSvg" type="image/webp">
-      <img class="lazyload" :src="placeholderSrc" :data-src="getSrc()" :width="intrinsicWidth" :height="intrinsicHeight" :alt="alt">
-    </picture>
+    <img class="lazyload" :src="placeholderSrc" :data-src="getSrc()" :width="intrinsicWidth" :height="intrinsicHeight" :alt="alt">
     <div class="slot">
       <slot />
     </div>
   </div>
   <div v-else-if="div" class="bg">
-    <picture>
-      <source :srcset="getSrc('webp')" v-if="!isSvg" type="image/webp">
-      <img :src="getSrc()" :width="intrinsicWidth" :height="intrinsicHeight" :alt="alt">
-    </picture>
+    <img :src="getSrc()" :width="intrinsicWidth" :height="intrinsicHeight" :alt="alt">
     <div class="slot">
       <slot />
     </div>
   </div>
-  <picture v-else-if="lazy">
-    <source :data-srcset="getSrc('webp')" v-if="!isSvg" type="image/webp">
-    <img class="lazyload" :data-src="getSrc()" :src="placeholderSrc" :width="intrinsicWidth" :height="intrinsicHeight" :alt="alt">
-  </picture>
-  <picture v-else>
-    <source :srcset="getSrc('webp')" v-if="!isSvg" type="image/webp">
-    <img :src="getSrc()" :width="intrinsicWidth" :height="intrinsicHeight" :alt="alt">
-  </picture>
+  <img v-else-if="lazy" class="lazyload" :data-src="getSrc()" :src="placeholderSrc" :width="intrinsicWidth" :height="intrinsicHeight" :alt="alt">
+  <img v-else :src="getSrc()" :width="intrinsicWidth" :height="intrinsicHeight" :alt="alt">
 </template>
 
 <script>
@@ -61,22 +49,20 @@ export default {
       if (this.isSvg || !this.src.includes('//a.storyblok.com')) {
         return this.src
       }
-      const [, resource] = this.src.split('//a.storyblok.com')
-      let mod = ''
+      let mods = []
       if (this.height > 0 || this.width > 0) {
         if (this.fitIn) {
-          mod += '/fit-in'
+          mods.push('fit-in')
         }
-        mod += `/${this.width}x${this.height}`
+        mods.push(`/${this.width}x${this.height}`)
         if (this.smart) {
-          mod += '/smart'
+          mods.push('smart')
         }
       }
-      const filters = [...this.filters, ...(format ? [`format(${format})`] : [])]
-      if (filters.length > 0) {
-        mod += '/filters:' + filters.join(':')
+      if (this.filters.length > 0) {
+        mods.push('filters:' + this.filters.join(':'))
       }
-      return 'https://img2.storyblok.com' + mod + resource
+      return this.src + '/m/' + mods.join('/')
     }
   },
   props: {
