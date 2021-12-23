@@ -54,7 +54,7 @@ export default {
         if (this.fitIn) {
           mods.push('fit-in')
         }
-        mods.push(`/${this.width}x${this.height}`)
+        mods.push(`${this.width}x${this.height}`)
         if (this.smart) {
           mods.push('smart')
         }
