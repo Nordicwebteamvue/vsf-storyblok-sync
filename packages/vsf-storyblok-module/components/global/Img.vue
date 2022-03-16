@@ -45,7 +45,7 @@ export default {
     }
   },
   methods: {
-    getSrc (format) {
+    getSrc () {
       if (this.isSvg || !this.src.includes('//a.storyblok.com')) {
         return this.src
       }
