@@ -65,6 +65,15 @@ export default {
       return this.src + '/m/' + mods.join('/')
     }
   },
+  metaInfo () {
+    if (this.preload) {
+      return {
+        link: [
+          { rel: 'preload', as: 'image', href: this.getSrc() }
+        ]
+      }
+    }
+  },
   props: {
     placeholder: {
       type: String,
@@ -105,6 +114,10 @@ export default {
     alt: {
       type: String,
       default: ''
+    },
+    preload: {
+      type: Boolean,
+      default: false
     }
   }
 }
